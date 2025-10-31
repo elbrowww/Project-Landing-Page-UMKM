@@ -34,7 +34,7 @@ if (isset($_POST['login'])) {
     if ($query->num_rows > 0) {
         $_SESSION['login'] = true;
         $_SESSION['id_user'] = $id_user;
-        header("Location: ../config/dashboard2.php");
+        header("Location: index.php");
         exit();
     } else {
         echo "<script>alert('ID User atau Password salah!');</script>";

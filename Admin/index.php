@@ -82,24 +82,29 @@
                         <input type="text" name="nama_menu" required>
                     </div>  
                     
-                    <div class
-                        <label>Stok:</label>
+                    <div class="form-group">
+                        <label for="stok-menu">Stok:</label>
                         <input type="number" name="stok_menu" required>
+                    </div>
                     
                      <div class="form-group">
                         <label for="harga-menu">Harga (Rp)</label>
-                        <label>Harga:</label>
                         <input type="number" name="harga_menu" required>
+                    </div>
                     
-                        <label>Deskripsi:</label>
+                     <div class="form-group">
+                        <label for="deskripsi-menu">Deskripsi:</label>
                         <textarea name="deskripsi" required></textarea>
+                    </div>
                     
-                        <label>Gambar Menu:</label>
+                     <div class="form-group">
+                        <label for="gambar-menu">Gambar Menu:</label>
                         <input type="file" name="gambar" required>
+                    </div>
                     
                         <button type="submit" class="btn btn-primary" id="submit-btn">Tambah Menu</button>
                         <button type="button" class="btn btn-danger" id="cancel-btn" style="display: none; margin-left: 10px;" onclick="resetForm()">Batal</button>
-                    </form>
+                  
 
                 </form>
             </div>
