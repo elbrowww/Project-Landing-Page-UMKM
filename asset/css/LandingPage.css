@@ -7,7 +7,6 @@
 }
 .gradient-text {
   background: linear-gradient(135deg, #4facfe 0%, #7f53ac 100%);
-  -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 .btn-gradient {
