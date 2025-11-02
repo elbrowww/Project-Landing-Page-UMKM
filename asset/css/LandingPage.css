@@ -1,61 +1,114 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
-* { font-family: "Poppins", sans-serif; scroll-behavior: smooth; }
 
-/* ===== warna gradasi biru ke ungu ===== */
-.gradient-bg {
-  background: linear-gradient(135deg, #4facfe 0%, #7f53ac 100%);
-}
-.gradient-text {
-  background: linear-gradient(135deg, #4facfe 0%, #7f53ac 100%);
-  -webkit-text-fill-color: transparent;
-}
-.btn-gradient {
-  background: linear-gradient(135deg, #4facfe 0%, #7f53ac 100%);
-}
+        * {
+            font-family: 'Poppins', sans-serif;
+        }
 
-/* ===== floating motion untuk gambar ===== */
-.float-animation {
-  animation: float 5s ease-in-out infinite;
-}
-@keyframes float {
-  0%,100% { transform: translateY(0); }
-  50% { transform: translateY(-12px); }
-}
+        .gradient-bg {
+            background: linear-gradient(135deg, #4facfe 0%, #764ba2 100%);
+        }
 
-/* ===== scroll ===== */
-.fade-in { opacity: 0; transform: translateY(24px); transition: all 0.8s ease; }
-.fade-in.visible { opacity: 1; transform: translateY(0); }
+        .gradient-text {
+            background: linear-gradient(135deg, #667eea 0%, #7f53ac 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
 
-/* ===== efek untuk menu ===== */
-.menu-item img { transition: transform 0.5s ease, filter 0.4s ease; }
-.menu-item:hover img { transform: scale(1.06); filter: brightness(1.03); }
+        .float-animation {
+            animation: float 3s ease-in-out infinite;
+        }
 
-/* ===== WA floating button ===== */
-.wa-float {
-  position: fixed;
-  right: 22px;
-  bottom: 22px;
-  width: 64px;
-  height: 64px;
-  border-radius: 9999px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 8px 24px rgba(31,41,55,0.18);
-  z-index: 60;
-  transition: transform .18s ease, box-shadow .18s ease;
-  background: linear-gradient(135deg,#4facfe,#7f53ac);
-  color: white;
-}
-.wa-float:hover { transform: translateY(-6px); box-shadow: 0 14px 36px rgba(31,41,55,0.22); }
+        @keyframes float {
 
-/* ===== navbar scrolled style ===== */
-.sticky-nav { transition: all .25s ease; }
-.sticky-nav.scrolled { background: rgba(255,255,255,0.95); backdrop-filter: blur(8px); box-shadow: 0 6px 24px rgba(2,6,23,0.06); }
+            0%,
+            100% {
+                transform: translateY(0px);
+            }
 
-/* ensure anchored sections not hidden under navbar */
-:root { --nav-h: 80px; }
-section { scroll-margin-top: calc(var(--nav-h) + 8px); }
+            50% {
+                transform: translateY(-20px);
+            }
+        }
 
-/* small adjustments */
-.rounded-3xl { border-radius: 1.25rem; }
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .card-hover {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card-hover:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .menu-item {
+            transition: all 0.3s ease;
+        }
+
+        .menu-item:hover img {
+            transform: scale(1.1);
+        }
+
+        .pulse-btn {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                box-shadow: 0 0 0 0 rgba(102, 126, 234, 0.7);
+            }
+
+            50% {
+                box-shadow: 0 0 0 20px rgba(102, 126, 234, 0);
+            }
+        }
+
+        .sticky-nav {
+            transition: all 0.3s ease;
+            background: transparent;
+        }
+
+        .sticky-nav.scrolled {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Tambahan untuk mengatur warna logo dan menu */
+        .logo-white {
+            color: white;
+        }
+
+        .logo-blue {
+            color: #3b82f6;
+            /* Warna biru Tailwind */
+        }
+
+        .nav-links-white a {
+            color: white;
+        }
+
+        .nav-links-black a {
+            color: #1f2937;
+            /* Warna hitam Tailwind */
+        }
+
+        .menu-btn-white {
+            color: white;
+        }
+
+        .menu-btn-black {
+            color: #1f2937;
+        }
