@@ -188,26 +188,6 @@
             font-size: 12px;
         }
 
-        .recommendations {
-            background: #fef3c7;
-            padding: 20px;
-            border-radius: 8px;
-            margin-top: 20px;
-        }
-
-        .recommendations h3 {
-            color: #92400e;
-            margin-bottom: 15px;
-        }
-
-        .recommendation-item {
-            background: white;
-            padding: 12px;
-            border-radius: 6px;
-            margin-bottom: 10px;
-            border-left: 4px solid #f59e0b;
-        }
-
         .full-width {
             grid-column: 1 / -1;
         }

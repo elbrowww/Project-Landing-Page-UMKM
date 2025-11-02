@@ -2,7 +2,7 @@
     session_start();
 
     if (!isset($_SESSION['login'])) {
-        header("Location: login.php"); // arahkan ke halaman login
+        header("Location: login.php");
         exit();
     }
    
@@ -16,7 +16,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard Admin</title>
+    <title>Dashboard Admin Bu Mon</title>
 
     <link rel="icon" href="../asset/img/logo.png" type="image/x-icon">
     <link rel="stylesheet" href="../asset/css/admin.css">
@@ -25,7 +25,7 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>Dashboard Admin</h1>
+            <h1>Dashboard Admin Bu Mon</h1>
             <p>Sistem Manajemen Menu Catering</p>
         </div>
 
@@ -110,7 +110,7 @@
                 </form>
             </div>
 
-            <div class="panel">
+            <div class="panel full-width">
                 <h2>📋 Daftar Menu</h2>
                 <div class="menu-list">
                     <?php if (empty($menuItems)): ?>
@@ -121,7 +121,6 @@
                                 <div class="menu-info">
                                     <h4><?php echo htmlspecialchars($menu['name']); ?></h4>
                                     <p>
-                                        Kategori: <?php echo htmlspecialchars($menu['category']); ?> | 
                                         Harga: Rp <?php echo number_format($menu['price'], 0, ',', '.'); ?> | 
                                         Stok: <?php echo $menu['stock']; ?> | 
                                         Terjual: <?php echo $menu['sold']; ?>
@@ -138,56 +137,7 @@
                 </div>
             </div>
 
-            <div class="panel full-width">
-                <div class="recommendations">
-                    <h3>💡 Rekomendasi Sistem</h3>
-                    <div>
-                        <?php
-                        $recommendations = [];
-                        
-                        // Low stock recommendation
-                        $lowStockQuery = $pdo->query("SELECT name FROM menu WHERE stock < 10 AND stock > 0");
-                        $lowStock = $lowStockQuery->fetchAll(PDO::FETCH_COLUMN);
-                        if (!empty($lowStock)) {
-                            $recommendations[] = "⚠️ <strong>Stok Menipis:</strong> " . implode(', ', $lowStock) . " perlu direstock segera!";
-                        }
-                        
-                        // Not selling recommendation
-                        $notSellingQuery = $pdo->query("SELECT name FROM menu WHERE sold = 0");
-                        $notSelling = $notSellingQuery->fetchAll(PDO::FETCH_COLUMN);
-                        if (!empty($notSelling)) {
-                            $recommendations[] = "📉 <strong>Menu Kurang Laku:</strong> " . implode(', ', $notSelling) . " - Pertimbangkan promo atau perbaikan menu.";
-                        }
-                        
-                        // Top sellers recommendation
-                        $topSellersQuery = $pdo->query("SELECT name, sold FROM menu WHERE sold > 5 ORDER BY sold DESC LIMIT 3");
-                        $topSellers = $topSellersQuery->fetchAll(PDO::FETCH_ASSOC);
-                        if (!empty($topSellers)) {
-                            $topSellersList = array_map(function($item) {
-                                return $item['name'] . " ({$item['sold']} terjual)";
-                            }, $topSellers);
-                            $recommendations[] = "🏆 <strong>Menu Terlaris:</strong> " . implode(', ', $topSellersList) . " - Pertahankan kualitas!";
-                        }
-                        
-                        // Revenue recommendation
-                        $totalRevenue = $stats['total_revenue'] ?? 0;
-                        if ($totalRevenue > 100000) {
-                            $recommendations[] = "💰 <strong>Penghasilan Bagus:</strong> Total pendapatan Rp " . number_format($totalRevenue, 0, ',', '.') . ". Terus tingkatkan!";
-                        }
-                        
-                        if (empty($recommendations)) {
-                            echo '<p style="color: #92400e;">Semua berjalan lancar! Tidak ada rekomendasi khusus saat ini.</p>';
-                        } else {
-                            foreach ($recommendations as $rec) {
-                                echo "<div class='recommendation-item'>$rec</div>";
-                            }
-                        }
-                        ?>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+           
 
     <script>
         // Handle form submission
