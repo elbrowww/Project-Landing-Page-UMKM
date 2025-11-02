@@ -17,7 +17,7 @@ include '../config/koneksi.php';
 <form method="POST">
     <h3>Login sebagai Admin</h3>
     <input type="text" name="user" placeholder="ID User" required>
-    <input type="password" name="password" placeholder="Password" required>
+    <input pattern=".{8,}" type="password" name="password" placeholder="Password" required>
     <button type="submit" name="login">Login</button>
 </form>
 
