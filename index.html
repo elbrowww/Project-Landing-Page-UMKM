@@ -259,25 +259,47 @@
             </div>
         </div>
     </section>
-    <!-- Info Lokasi -->
-      <div class="fade-in space-y-6 text-center md:text-left">
-        <h3 class="text-2xl font-bold text-purple-700">Alamat Kami</h3>
-        <p class="text-gray-700 text-lg leading-relaxed">
-          📍 <strong>Jl. Raya Catering No. 123, Jakarta</strong><br>
-          Tepat di sebelah minimarket “Cahaya Mart”, hanya 5 menit dari Terminal Pasar Baru.
-        </p>
-        <div class="flex flex-col items-center md:items-start">
-          <p class="text-gray-600 mb-2">Scan barcode di bawah untuk membuka lokasi di Google Maps:</p>
-          <img src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=https://www.google.com/maps?q=-6.200000,106.816666" 
-               alt="QR Code Lokasi" 
-               class="w-40 h-40 border-4 border-purple-300 rounded-xl shadow-md hover:scale-105 transition">
-          <a href="https://www.google.com/maps?q=-6.200000,106.816666" 
-             target="_blank" 
-             class="mt-4 inline-block gradient-bg text-white px-6 py-3 rounded-full font-semibold hover:opacity-90 transition">
-             Buka di Google Maps
-          </a>
+    <!--lokasi kami-->
+    <section id="lokasi" class="py-20 bg-gray-50">
+      <div class="container mx-auto px-6">
+        <h2 class="text-4xl font-bold text-center mb-12 gradient-text fade-in">LOKASI KAMI</h2>
+        <div class="grid md:grid-cols-2 gap-8 items-center">
+
+          <!--map-->
+          <div class="fade-in">
+            <div class="overflow-hidden rounded-2xl shadow-2xl border-4 border-purple-200">
+              <iframe
+              src="https://www.google.com/maps?q=-7.164886,112.651695&hl=id&z=15&output=embed"
+              width="100%"
+              height="350"
+              style="border:0;"
+              allowfullscreen=""
+              loading="lazy">
+            </iframe>
+            </div>
+          </div>
+          <!--info lokasi-->
+          <div class="fade-in space-y-6 text-center md:text-left">
+            <h3 class="text-2xl font-bold text-purple-700">Alamat kami</h3>
+          <p class=" text-gray-700 text-lg leading-relaxed">
+            📍<strong >DAPUR BUK MOND</strong><br>
+            Maduh,Merjoyo,Kec.purwosari,Kab.kediri,JAWA TIMUR.
+            </p>
+            <div class="flex flex-col items-center md:items-start">
+              <img src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=https://goo.gl/maps/7i99mAiHYk2v7FnY8"
+              alt="QR Code lokasi"
+              class="w-40 h-40 border-4 border-purple-300 rounded-xl shadow-md hover:scale-105 transition">
+              <a href="https://goo.gl/maps/7i99mAiHYk2v7FnY8"
+              target="_blank"
+              class="mt-4 inline-block gradient-bg text-white px-6 py-3 rounded-full font-semibold hover:opacity-90 transition">
+            BUKA DI GOOGLE MAPS
+            </a>
+            </div>
+          </p>
+          </div>
         </div>
       </div>
+    </section>
 
 <!-- Footer -->
     <footer class="gradient-bg text-white py-12">
