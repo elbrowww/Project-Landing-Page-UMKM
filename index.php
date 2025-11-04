@@ -97,11 +97,13 @@
       while ($data = mysqli_fetch_array($query)) {
       ?>
         <div class="menu-item fade-in bg-white rounded-2xl overflow-hidden shadow-lg card-hover">
-          <img src="/../asset/uploads/<?php echo $data['gambar']; ?>" alt="<?php echo $data['nama_menu']; ?>" class="w-full h-48 object-cover">
-
+          <img src="asset/img/<?php echo $data['gambar']; ?>" alt="<?php echo $data['nama_menu']; ?>" class="w-full h-48 object-cover">
           <div class="p-6">
             <h3 class="text-xl font-bold mb-2"><?php echo $data['nama_menu']; ?></h3>
             <p class="text-gray-600 mb-4"><?php echo $data['deskripsi']; ?></p>
+            <p class="text-lg font-semibold text-purple-600 mb-4">
+              Rp <?php echo number_format($data['harga_menu'], 0, ',', '.'); ?>
+            </p>
             <a href="https://wa.me/6285236596617?text=Halo%20saya%20ingin%20pesan%20<?php echo urlencode($data['nama_menu']); ?>" target="_blank"
                class="block text-center btn-gradient text-white py-2 rounded-lg hover:opacity-90 transition">
               Pesan Sekarang
