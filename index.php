@@ -93,7 +93,7 @@
       
       include "koneksi landing page.php";
       $query = mysqli_query($koneksi, "SELECT nama_menu, deskripsi, harga_menu, gambar FROM menu");
-      while ($data = mysqli_fetch_array($query)) {
+      while ($data = mysqli_fetch_array($query)) <?php {
       
         <div class="menu-item fade-in bg-white rounded-2xl overflow-hidden shadow-lg card-hover">
           <img src="/../asset/uploads/<?php echo $data['gambar']; ?>" alt="<?php echo $data['nama_menu']; ?>" class="w-full h-48 object-cover">
@@ -107,7 +107,7 @@
             </a>
           </div>
         </div>
-      <?php } ?>
+      } ?>
     </div>
   </div>
 </section>
