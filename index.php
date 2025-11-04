@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -90,11 +91,11 @@
     <p class="text-center text-gray-600 mb-12 fade-in">Beragam menu tersedia untuk berbagai acara</p>
 
     <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-      
+      <?php
       include "koneksi landing page.php";
       $query = mysqli_query($koneksi, "SELECT nama_menu, deskripsi, harga_menu, gambar FROM menu");
       while ($data = mysqli_fetch_array($query)) {
-      
+      ?>
         <div class="menu-item fade-in bg-white rounded-2xl overflow-hidden shadow-lg card-hover">
           <img src="/../asset/uploads/<?php echo $data['gambar']; ?>" alt="<?php echo $data['nama_menu']; ?>" class="w-full h-48 object-cover">
 
