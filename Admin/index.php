@@ -7,9 +7,7 @@ session_start();
     }
    
 include '../config/koneksi.php';
-include '../config/CRUD.php'; // ← file CRUD yang kamu kirim tadi
-
-// variabel $result dan $edit sudah tersedia dari menu.php
+include '../config/CRUD.php';
 ?>
 
 <!DOCTYPE html>
@@ -99,11 +97,11 @@ include '../config/CRUD.php'; // ← file CRUD yang kamu kirim tadi
             <td><?= $no++ ?></td>
             <td><?= htmlspecialchars($row['nama_menu']) ?></td>
             <td><?= htmlspecialchars($row['stok_menu']) ?></td>
-            <td>Rp<?= number_format($row['harga_menu'], 0, ',', '.') ?></td>
+            <td>Rp. <?= number_format($row['harga_menu'], 0, ',', '.') ?></td>
             <td><?= htmlspecialchars($row['deskripsi']) ?></td>
             <td>
   <?php if (!empty($row['gambar'])): ?>
-    <img src="<?= htmlspecialchars($row['gambar']) ?>" alt="Gambar Menu" width="80" class="img-thumbnail">
+    <img src="../Project-Landing-Page-UMKM/asset/uploads/<?php echo $row['gambar'] ?>" alt="Gambar Menu" width="80" class="img-thumbnail">
   <?php else: ?>
     <span class="text-muted">Tidak ada gambar</span>
   <?php endif; ?>
