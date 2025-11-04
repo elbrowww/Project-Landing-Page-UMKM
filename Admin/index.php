@@ -1,256 +1,125 @@
 <?php
-    session_start();
+session_start();
 
-    if (!isset($_SESSION['login'])) {
+  if (!isset($_SESSION['login'])) {
         header("Location: login.php");
         exit();
     }
    
-    include '../config/koneksi.php';
-    include '../config/CURD.php';
+include '../config/koneksi.php';
+include '../config/CRUD.php'; // ← file CRUD yang kamu kirim tadi
 
+// variabel $result dan $edit sudah tersedia dari menu.php
 ?>
 
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard Admin Bu Mon</title>
-
-    <link rel="icon" href="../asset/img/logo.png" type="image/x-icon">
-    <link rel="stylesheet" href="../asset/css/admin.css">
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard Admin | Bu Mon</title>
+  <link rel="icon" href="../asset/img/logo.png" type="image/x-icon">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body>
-    <div class="container">
-        <div class="header">
-            <h1>Dashboard Admin Bu Mon</h1>
-            <p>Sistem Manajemen Menu Catering</p>
+<body class="bg-light">
+
+<div class="container py-4">
+  <h2 class="text-center mb-4">🍽️ Dashboard Admin - Daftar Menu</h2>
+
+  <!-- Form Tambah / Edit -->
+  <div class="card mb-4 shadow-sm">
+    <div class="card-header bg-primary text-white">
+      <?= isset($edit) ? 'Edit Menu' : 'Tambah Menu Baru' ?>
+    </div>
+    <div class="card-body">
+      <form method="POST" enctype="multipart/form-data">
+        <input type="hidden" name="id_menu" value="<?= $edit['id_menu'] ?? '' ?>">
+
+        <div class="mb-3">
+          <label class="form-label">Nama Menu</label>
+          <input type="text" class="form-control" name="nama_menu" required value="<?= $edit['nama_menu'] ?? '' ?>">
         </div>
 
-        <div id="alert-container">
-            <div class="alert" id="alert-box"></div>
+        <div class="mb-3">
+          <label class="form-label">Stok</label>
+          <input type="number" class="form-control" name="stok_menu" required value="<?= $edit['stok_menu'] ?? '' ?>">
         </div>
 
-        <div class="stats">
-            <div class="stat-card">
-                <h3>Total Menu</h3>
-                <div class="value"><?php echo $stats['total_menu'] ?? 0; ?></div>
-            </div>
-            <div class="stat-card">
-                <h3>Total Terjual</h3>
-                <div class="value"><?php echo $stats['total_sold'] ?? 0; ?></div>
-            </div>
-            <div class="stat-card">
-                <h3>Total Penghasilan</h3>
-                <div class="value">Rp <?php echo number_format($stats['total_revenue'] ?? 0, 0, ',', '.'); ?></div>
-            </div>
-            <div class="stat-card">
-                <h3>Menu Terpopuler</h3>
-                <div class="value" style="font-size: 20px;"><?php echo $popularMenu['name'] ?? '-'; ?></div>
-            </div>
+        <div class="mb-3">
+          <label class="form-label">Harga</label>
+          <input type="number" class="form-control" name="harga_menu" required value="<?= $edit['harga_menu'] ?? '' ?>">
         </div>
 
-        <div class="content">
-            <div class="panel">
-                <h2 id="form-title">➕ Tambah Menu Baru</h2>
-                <form id="menu-form">
-                    <!-- <input type="hidden" id="menu-id" name="id" value="">
-                    <input type="hidden" id="action" name="action" value="add">
-                    
-                    <div class="form-group">
-                        <label for="menu-name">Nama Menu</label>
-                        <input type="text" id="menu-name" name="name" placeholder="Contoh: Nasi Goreng Special" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="menu-price">Harga (Rp)</label>
-                        <input type="number" id="menu-price" name="price" placeholder="25000" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="menu-stock">Stok</label>
-                        <input type="number" id="menu-stock" name="stock" placeholder="50" required>
-                    </div>
-                    <button type="submit" class="btn btn-primary" id="submit-btn">Tambah Menu</button>
-                    <button type="button" class="btn btn-danger" id="cancel-btn" style="display: none; margin-left: 10px;" onclick="resetForm()">Batal</button> -->
+        <div class="mb-3">
+          <label class="form-label">Deskripsi</label>
+          <textarea class="form-control" name="deskripsi" rows="3"><?= $edit['deskripsi'] ?? '' ?></textarea>
+        </div>
 
-                    
-                    <form method="POST" enctype="multipart/form-data">
-
-                    <div class="form-group">
-                        <label for="menu-name">Nama Menu</label>
-                        <input type="text" name="nama_menu" required>
-                    </div>  
-                    
-                    <div class="form-group">
-                        <label for="stok-menu">Stok:</label>
-                        <input type="number" name="stok_menu" required>
-                    </div>
-                    
-                     <div class="form-group">
-                        <label for="harga-menu">Harga (Rp)</label>
-                        <input type="number" name="harga_menu" required>
-                    </div>
-                    
-                     <div class="form-group">
-                        <label for="deskripsi-menu">Deskripsi:</label>
-                        <textarea name="deskripsi" required></textarea>
-                    </div>
-                    
-                     <div class="form-group">
-                        <label for="gambar-menu">Gambar Menu:</label>
-                        <input type="file" name="gambar" required>
-                    </div>
-                    
-                        <button type="submit" class="btn btn-primary" id="submit-btn">Tambah Menu</button>
-                        <button type="button" class="btn btn-danger" id="cancel-btn" style="display: none; margin-left: 10px;" onclick="resetForm()">Batal</button>
-                  
-
-                </form>
+        <div class="mb-3">
+          <label class="form-label">Gambar</label>
+          <?php if (!empty($edit['gambar'])): ?>
+            <div class="mb-2">
+              <img src="<?= $edit['gambar'] ?>" alt="Gambar Menu" width="120">
             </div>
+          <?php endif; ?>
+          <input type="file" class="form-control" name="gambar">
+        </div>
 
-            <div class="panel full-width">
-                <h2>📋 Daftar Menu</h2>
-                <div class="menu-list">
-                    <?php if (empty($menuItems)): ?>
-                        <p style="text-align: center; color: #999;">Belum ada menu. Tambahkan menu pertama Anda!</p>
-                    <?php else: ?>
-                        <?php foreach ($menuItems as $menu): ?>
-                            <div class="menu-item" id="menu-<?php echo $menu['id']; ?>">
-                                <div class="menu-info">
-                                    <h4><?php echo htmlspecialchars($menu['name']); ?></h4>
-                                    <p>
-                                        Harga: Rp <?php echo number_format($menu['price'], 0, ',', '.'); ?> | 
-                                        Stok: <?php echo $menu['stock']; ?> | 
-                                        Terjual: <?php echo $menu['sold']; ?>
-                                    </p>
-                                </div>
-                                <div class="menu-actions">
-                                    <button class="btn btn-success" onclick="sellMenu(<?php echo $menu['id']; ?>)">Jual</button>
-                                    <button class="btn btn-edit" onclick="editMenu(<?php echo $menu['id']; ?>, '<?php echo htmlspecialchars($menu['name'], ENT_QUOTES); ?>', '<?php echo $menu['category']; ?>', <?php echo $menu['price']; ?>, <?php echo $menu['stock']; ?>)">Edit</button>
-                                    <button class="btn btn-danger" onclick="deleteMenu(<?php echo $menu['id']; ?>)">Hapus</button>
-                                </div>
-                            </div>
-                        <?php endforeach; ?>
-                    <?php endif; ?>
-                </div>
-            </div>
+        <button type="submit" name="simpan" class="btn btn-success">
+          💾 <?= isset($edit) ? 'Update' : 'Simpan' ?>
+        </button>
+        <a href="index.php" class="btn btn-secondary">Batal</a>
+      </form>
+    </div>
+  </div>
 
-           
+  <!-- Tabel Data Menu -->
+  <div class="card shadow-sm">
+    <div class="card-header bg-dark text-white">
+      Daftar Menu
+    </div>
+    <div class="card-body table-responsive">
+      <table class="table table-bordered align-middle">
+        <thead class="table-dark">
+          <tr>
+            <th width="5%">No</th>
+            <th>Nama</th>
+            <th>Stok</th>
+            <th>Harga</th>
+            <th>Deskripsi</th>
+            <th>Gambar</th>
+            <th width="15%">Aksi</th>
+          </tr>
+        </thead>
+        <tbody>
+          <?php 
+          $no = 1;
+          while ($row = $result->fetch_assoc()): ?>
+          <tr>
+            <td><?= $no++ ?></td>
+            <td><?= htmlspecialchars($row['nama_menu']) ?></td>
+            <td><?= htmlspecialchars($row['stok_menu']) ?></td>
+            <td>Rp<?= number_format($row['harga_menu'], 0, ',', '.') ?></td>
+            <td><?= htmlspecialchars($row['deskripsi']) ?></td>
+            <td>
+              <?php if (!empty($row['gambar'])): ?>
+                <img src="../asset/uploads/"<?= $row['gambar'] ?>" alt="Gambar" width="80">
+              <?php else: ?>
+                <span class="text-muted">Tidak ada</span>
+              <?php endif; ?>
+            </td>
+            <td>
+              <a href="?edit=<?= $row['id_menu'] ?>" class="btn btn-warning btn-sm">✏️ Edit</a>
+              <a href="?hapus=<?= $row['id_menu'] ?>" class="btn btn-danger btn-sm"
+                 onclick="return confirm('Yakin ingin menghapus menu ini?')">🗑️ Hapus</a>
+            </td>
+          </tr>
+          <?php endwhile; ?>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
 
-    <script>
-        // Handle form submission
-        document.getElementById('menu-form').addEventListener('submit', async function(e) {
-            e.preventDefault();
-            
-            const formData = new FormData(this);
-            
-            try {
-                const response = await fetch('', {
-                    method: 'POST',
-                    body: formData
-                });
-                
-                const result = await response.json();
-                
-                if (result.success) {
-                    showAlert(result.message, 'success');
-                    setTimeout(() => location.reload(), 1000);
-                } else {
-                    showAlert(result.message, 'error');
-                }
-            } catch (error) {
-                showAlert('Terjadi kesalahan: ' + error.message, 'error');
-            }
-        });
-
-        function showAlert(message, type) {
-            const alertBox = document.getElementById('alert-box');
-            alertBox.textContent = message;
-            alertBox.className = 'alert alert-' + type;
-            alertBox.style.display = 'block';
-            
-            setTimeout(() => {
-                alertBox.style.display = 'none';
-            }, 3000);
-        }
-
-        function editMenu(id, name, category, price, stock) {
-            document.getElementById('menu-id').value = id;
-            document.getElementById('action').value = 'update';
-            document.getElementById('menu-name').value = name;
-            document.getElementById('menu-category').value = category;
-            document.getElementById('menu-price').value = price;
-            document.getElementById('menu-stock').value = stock;
-            
-            document.getElementById('form-title').textContent = '✏️ Edit Menu';
-            document.getElementById('submit-btn').textContent = 'Update Menu';
-            document.getElementById('submit-btn').className = 'btn btn-success';
-            document.getElementById('cancel-btn').style.display = 'inline-block';
-            
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-
-        function resetForm() {
-            document.getElementById('menu-form').reset();
-            document.getElementById('menu-id').value = '';
-            document.getElementById('action').value = 'add';
-            document.getElementById('form-title').textContent = '➕ Tambah Menu Baru';
-            document.getElementById('submit-btn').textContent = 'Tambah Menu';
-            document.getElementById('submit-btn').className = 'btn btn-primary';
-            document.getElementById('cancel-btn').style.display = 'none';
-        }
-
-        async function deleteMenu(id) {
-            if (!confirm('Apakah Anda yakin ingin menghapus menu ini?')) return;
-            
-            const formData = new FormData();
-            formData.append('action', 'delete');
-            formData.append('id', id);
-            
-            try {
-                const response = await fetch('', {
-                    method: 'POST',
-                    body: formData
-                });
-                
-                const result = await response.json();
-                
-                if (result.success) {
-                    showAlert(result.message, 'success');
-                    setTimeout(() => location.reload(), 1000);
-                } else {
-                    showAlert(result.message, 'error');
-                }
-            } catch (error) {
-                showAlert('Terjadi kesalahan: ' + error.message, 'error');
-            }
-        }
-
-        async function sellMenu(id) {
-            const formData = new FormData();
-            formData.append('action', 'sell');
-            formData.append('id', id);
-            
-            try {
-                const response = await fetch('', {
-                    method: 'POST',
-                    body: formData
-                });
-                
-                const result = await response.json();
-                
-                if (result.success) {
-                    showAlert(result.message, 'success');
-                    setTimeout(() => location.reload(), 500);
-                } else {
-                    showAlert(result.message, 'error');
-                }
-            } catch (error) {
-                showAlert('Terjadi kesalahan: ' + error.message, 'error');
-            }
-        }
-    </script>
 </body>
 </html>
