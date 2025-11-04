@@ -102,12 +102,13 @@ include '../config/CRUD.php'; // ← file CRUD yang kamu kirim tadi
             <td>Rp<?= number_format($row['harga_menu'], 0, ',', '.') ?></td>
             <td><?= htmlspecialchars($row['deskripsi']) ?></td>
             <td>
-              <?php if (!empty($row['gambar'])): ?>
-                <img src="../asset/uploads/"<?= $row['gambar'] ?>" alt="Gambar" width="80">
-              <?php else: ?>
-                <span class="text-muted">Tidak ada</span>
-              <?php endif; ?>
-            </td>
+  <?php if (!empty($row['gambar'])): ?>
+    <img src="<?= htmlspecialchars($row['gambar']) ?>" alt="Gambar Menu" width="80" class="img-thumbnail">
+  <?php else: ?>
+    <span class="text-muted">Tidak ada gambar</span>
+  <?php endif; ?>
+</td>
+
             <td>
               <a href="?edit=<?= $row['id_menu'] ?>" class="btn btn-warning btn-sm">✏️ Edit</a>
               <a href="?hapus=<?= $row['id_menu'] ?>" class="btn btn-danger btn-sm"

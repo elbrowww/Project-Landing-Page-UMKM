@@ -96,7 +96,8 @@
       while ($data = mysqli_fetch_array($query)) {
       ?>
         <div class="menu-item fade-in bg-white rounded-2xl overflow-hidden shadow-lg card-hover">
-          <img src="asset/img/<?php echo $data['gambar']; ?>" alt="<?php echo $data['nama_menu']; ?>" class="w-full h-48 object-cover">
+          <img src="../Project-Landing-Page-UMKM/asset/uploads/<?php echo $data['gambar']; ?>" alt="<?php echo $data['nama_menu']; ?>" class="w-full h-48 object-cover">
+
           <div class="p-6">
             <h3 class="text-xl font-bold mb-2"><?php echo $data['nama_menu']; ?></h3>
             <p class="text-gray-600 mb-4"><?php echo $data['deskripsi']; ?></p>
