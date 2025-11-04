@@ -100,6 +100,9 @@
           <div class="p-6">
             <h3 class="text-xl font-bold mb-2"><?php echo $data['nama_menu']; ?></h3>
             <p class="text-gray-600 mb-4"><?php echo $data['deskripsi']; ?></p>
+            <p class="text-lg font-semibold text-purple-600 mb-4">
+              Rp <?php echo number_format($data['harga_menu'], 0, ',', '.'); ?>
+            </p>
             <a href="https://wa.me/6285236596617?text=Halo%20saya%20ingin%20pesan%20<?php echo urlencode($data['nama_menu']); ?>" target="_blank"
                class="block text-center btn-gradient text-white py-2 rounded-lg hover:opacity-90 transition">
               Pesan Sekarang
