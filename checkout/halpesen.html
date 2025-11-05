@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pemesanan Produk UMKM</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <section class="menu-container">
+    <h1>Menu UMKM</h1>
+    <div class="product-list">
+
+      <div class="product" data-id="1" data-nama="Nasi Goreng" data-harga="15000">
+        <img src="img/nasigoreng.jpg" alt="Nasi Goreng">
+        <h3>Nasi Goreng</h3>
+        <p class="harga">Rp15.000</p>
+        <div class="counter">
+          <button class="minus">-</button>
+          <span class="jumlah">0</span>
+          <button class="plus">+</button>
+        </div>
+      </div>
+
+      <div class="product" data-id="2" data-nama="Ayam Geprek" data-harga="18000">
+        <img src="img/ayamgeprek.jpg" alt="Ayam Geprek">
+        <h3>Ayam Geprek</h3>
+        <p class="harga">Rp18.000</p>
+        <div class="counter">
+          <button class="minus">-</button>
+          <span class="jumlah">0</span>
+          <button class="plus">+</button>
+        </div>
+      </div>
+
+    </div>
+    <button id="pesanBtn" class="btn">Pesan Sekarang</button>
+  </section>
+
+  <div id="notif" class="notif">Pesanan berhasil dikirim!</div>
+  <script src="script.js"></script>
+</body>
+</html>
