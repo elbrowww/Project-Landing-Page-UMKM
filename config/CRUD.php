@@ -13,14 +13,14 @@ if (isset($_POST['simpan'])) {
 
    // Upload gambar jika ada
 if (!empty($_FILES['gambar']['name'])) {
-    $targetDir = __DIR__ . "/../asset/uploads/";  // 🔹 gunakan path absolut agar Linux tidak bingung
+    $targetDir = __DIR__ . "/../asset/uploads/";  
     if (!file_exists($targetDir)) mkdir($targetDir, 0777, true);
 
-    $filename = time() . "_" . basename($_FILES["gambar"]["name"]);
+    $filename = basename($_FILES["gambar"]["name"]);
     $targetFile = $targetDir . $filename;
 
     if (move_uploaded_file($_FILES["gambar"]["tmp_name"], $targetFile)) {
-        $gambar = "" . $filename; // 🔹 simpan path relatif agar mudah ditampilkan di <img>
+        $gambar = $filename; // 
     } else {
         echo "<p style='color:red;'>❌ Gagal upload gambar ke $targetFile</p>";
     }
