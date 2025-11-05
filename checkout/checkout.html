@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Checkout - Dapur Buk Mon</title>
+  <link rel="stylesheet" href="checkout.css">
+</head>
+<body>
+  <header class="header">
+    <h1>🧾 Checkout Pesanan</h1>
+    <a href="menu.html" class="back-btn">⬅ Kembali ke Menu</a>
+  </header>
+
+  <section class="checkout-container">
+    <div class="cart-items" id="cart-items"></div>
+
+    <div class="summary">
+      <h3>Ringkasan Pembayaran</h3>
+      <p>Total: <span id="total-price">Rp 0</span></p>
+
+      <div class="payment-info">
+        <label>Pilih Metode Pembayaran:</label>
+        <select id="payment-method">
+          <option value="BRI">BRI - 124567788909</option>
+          <option value="BCA">BCA - 6678899000</option>
+        </select>
+      </div>
+
+      <button id="confirm-btn">Konfirmasi Pesanan</button>
+    </div>
+  </section>
+
+  <div id="success-popup" class="popup hidden">
+    <div class="popup-content">
+      <h2>✅ Pesanan Berhasil!</h2>
+      <p>Terima kasih sudah memesan di <b>Dapur Buk Mon</b> 🍱</p>
+      <a href="menu.html" class="btn-back">Kembali ke Menu</a>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <p>© 2025 Dapur Buk Mon</p>
+  </footer>
+
+  <script src="asset/js/checkout.js"></script>
+</body>
+</html>
