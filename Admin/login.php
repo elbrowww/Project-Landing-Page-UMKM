@@ -10,7 +10,7 @@ include '../config/koneksi.php';
 <title>Login sebagai Admin</title>
 
 <link rel="icon" href="../asset/img/logo.png" type="image/x-icon">
-<link rel="stylesheet" href="../asset/css/loginadmin.css">
+<link rel="stylesheet" href="../asset/css/loginadmin2.css">
 
 </head>
 <body>
