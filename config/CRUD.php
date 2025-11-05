@@ -38,7 +38,7 @@ if (!empty($_FILES['gambar']['name'])) {
             $stmt->bind_param("sidssi", $nama, $stok, $harga, $deskripsi, $gambar, $id);
         } else {
             $stmt = $koneksi->prepare("UPDATE menu SET nama_menu=?, stok_menu=?, harga_menu=?, deskripsi=? WHERE id_menu=?");
-            $stmt->bind_param("sid si", $nama, $stok, $harga, $deskripsi, $id);
+            $stmt->bind_param("sidsi", $nama, $stok, $harga, $deskripsi, $id);
         }
     }
 
@@ -55,13 +55,19 @@ if (isset($_GET['hapus'])) {
     exit;
 }
 
-// ==== TAMPILKAN DATA UNTUK EDIT ====
-
+$edit = [
+    'id_menu' => '',
+    'nama_menu' => '',
+    'stok_menu' => '',
+    'harga_menu' => '',
+    'deskripsi' => '',
+    'gambar' => ''
+];
 
 if (isset($_GET['edit'])) {
     $id = $_GET['edit'];
     $result = $koneksi->query("SELECT * FROM menu WHERE id_menu=$id");
-    $edit = $result->fetch_assoc();
+    $edit = $result->fetch_assoc();  
 }
 
 // ==== TAMPILKAN SEMUA DATA ====
