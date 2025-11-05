@@ -5,9 +5,16 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Dapur Buk Mon - Cita Rasa Istimewa</title>
+
  <link rel="icon" href="asset/img/logo.png" type="image/x-icon">
  <script src="https://cdn.tailwindcss.com"></script>
  <link rel="stylesheet" href="asset/css/LandingPage.css">
+
+ <?php 
+ include '../Project-Landing-Page-UMKM/config/koneksi.php';
+ include '../Project-Landing-Page-UMKM/config/FormPesan.php';
+ ?>
+
 </head>
 <body class="bg-gray-50 text-gray-800">
 
@@ -92,9 +99,10 @@
 
     <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
       <?php
-      include '../Project-Landing-Page-UMKM/config/koneksi.php';
+     
       $query = mysqli_query($koneksi, "SELECT nama_menu, deskripsi, harga_menu, gambar FROM menu");
       while ($data = mysqli_fetch_array($query)) {
+
       ?>
         <div class="menu-item fade-in bg-white rounded-2xl overflow-hidden shadow-lg card-hover">
           <img src="asset/uploads/<?php echo $data['gambar']; ?>" alt="<?php echo $data['nama_menu']; ?>" class="w-full h-48 object-cover">
@@ -261,25 +269,25 @@
                     <form class="space-y-4">
                         <div>
                             <label class="block text-sm font-semibold mb-2">Nama Lengkap</label>
-                            <input type="text"
+                            <input type="text" name="nama_pelanggan"
                                 class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-purple-500 focus:outline-none transition"
                                 placeholder="Masukkan nama Anda">
                         </div>
                         <div>
                             <label class="block text-sm font-semibold mb-2">Email</label>
-                            <input type="email"
+                            <input type="email" name="email_pelanggan"
                                 class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-purple-500 focus:outline-none transition"
                                 placeholder="email@contoh.com">
                         </div>
                         <div>
                             <label class="block text-sm font-semibold mb-2">No. Telepon</label>
-                            <input type="tel"
+                            <input type="tel" name="notelp_pelanggan"
                                 class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-purple-500 focus:outline-none transition"
                                 placeholder="+62 812-xxxx-xxxx">
                         </div>
                         <div>
                             <label class="block text-sm font-semibold mb-2">Pesan</label>
-                            <textarea rows="4"
+                            <textarea name="isi_pesan" rows="4" 
                                 class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-purple-500 focus:outline-none transition"
                                 placeholder="Ceritakan kebutuhan acara Anda..."></textarea>
                         </div>
