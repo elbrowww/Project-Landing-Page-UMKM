@@ -1,31 +1,62 @@
+/* Reset dasar */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-/* Background gradasi lembut */
+/* Latar belakang futuristik */
 body {
     font-family: 'Poppins', sans-serif;
     height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
-    background: linear-gradient(135deg, #74ABE2, #5563DE);
+    background: radial-gradient(circle at top left, #1a1a2e, #0f0f1a);
+    color: #fff;
+    overflow: hidden;
 }
 
-/* Kotak form login */
+/* Efek cahaya neon di belakang */
+body::before {
+    content: "";
+    position: absolute;
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(155, 89, 182, 0.4), transparent 70%);
+    top: -100px;
+    left: -100px;
+    filter: blur(100px);
+    z-index: 0;
+}
+
+body::after {
+    content: "";
+    position: absolute;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(85, 99, 222, 0.5), transparent 70%);
+    bottom: -100px;
+    right: -100px;
+    filter: blur(120px);
+    z-index: 0;
+}
+
+/* Kotak utama */
 form {
-    background: #fff;
+    position: relative;
+    z-index: 2;
+    background: rgba(20, 20, 40, 0.85);
     padding: 40px 35px;
     border-radius: 15px;
-    width: 320px;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    width: 350px;
+    box-shadow: 0 0 30px rgba(138, 43, 226, 0.4);
+    backdrop-filter: blur(10px);
     text-align: center;
-    animation: fadeIn 0.6s ease-in-out;
+    animation: fadeIn 0.7s ease;
 }
 
-/* Animasi muncul */
+/* Animasi */
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(-15px); }
     to { opacity: 1; transform: translateY(0); }
@@ -33,53 +64,92 @@ form {
 
 /* Judul */
 form h3 {
-    margin-bottom: 25px;
-    color: #333;
+    font-size: 22px;
     font-weight: 600;
-    letter-spacing: 0.5px;
+    margin-bottom: 25px;
+    color: #b3b3ff;
 }
 
-/* Input field */
+/* Input */
 input {
     width: 100%;
     margin-bottom: 15px;
     padding: 12px 14px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    background: #f9f9f9;
+    border: 1px solid #333;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.05);
+    color: #fff;
     font-size: 14px;
-    transition: 0.3s;
+    transition: all 0.3s ease;
 }
 
-/* Efek fokus input */
+/* Placeholder */
+input::placeholder {
+    color: #aaa;
+}
+
+/* Fokus input */
 input:focus {
-    border-color: #5563DE;
-    background: #fff;
-    box-shadow: 0 0 5px rgba(85, 99, 222, 0.4);
+    border-color: #7d5fff;
+    box-shadow: 0 0 10px rgba(125, 95, 255, 0.5);
     outline: none;
 }
 
 /* Tombol login */
 button {
     width: 100%;
-    background: linear-gradient(135deg, #5563DE, #74ABE2);
-    color: white;
+    background: linear-gradient(135deg, #6e44ff, #8e2de2);
     border: none;
     padding: 12px;
-    font-size: 15px;
+    color: white;
+    font-weight: 600;
     border-radius: 8px;
     cursor: pointer;
-    transition: 0.3s ease;
+    transition: 0.3s;
 }
 
-/* Efek hover tombol */
 button:hover {
-    background: linear-gradient(135deg, #4b55c1, #6ca1de);
     transform: translateY(-2px);
-    box-shadow: 0 4px 10px rgba(85, 99, 222, 0.3);
+    box-shadow: 0 4px 15px rgba(125, 95, 255, 0.5);
 }
 
-/* Responsif untuk layar kecil */
+/* Teks link */
+a {
+    color: #8e2de2;
+    text-decoration: none;
+    font-size: 13px;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Tombol Google */
+.google-btn {
+    margin-top: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    background: #fff;
+    color: #333;
+    border-radius: 8px;
+    padding: 10px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.google-btn img {
+    width: 20px;
+}
+
+.google-btn:hover {
+    background: #f2f2f2;
+}
+
+/* Responsif */
 @media (max-width: 400px) {
     form {
         width: 90%;
