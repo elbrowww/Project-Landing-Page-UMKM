@@ -101,7 +101,7 @@ include '../config/CRUD.php';
             <td><?= htmlspecialchars($row['deskripsi']) ?></td>
             <td>
   <?php if (!empty($row['gambar'])): ?>
-    <img src="../Project-Landing-Page-UMKM/asset/uploads/<?php echo $row['gambar'] ?>" alt="Gambar Menu" width="80" class="img-thumbnail">
+    <img src="../asset/uploads/<?php echo $row['gambar'] ?>" alt="Gambar Menu" width="80" class="img-thumbnail">
   <?php else: ?>
     <span class="text-muted">Tidak ada gambar</span>
   <?php endif; ?>

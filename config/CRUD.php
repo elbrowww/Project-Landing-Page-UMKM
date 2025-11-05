@@ -20,7 +20,7 @@ if (!empty($_FILES['gambar']['name'])) {
     $targetFile = $targetDir . $filename;
 
     if (move_uploaded_file($_FILES["gambar"]["tmp_name"], $targetFile)) {
-        $gambar = "/../asset/uploads/" . $filename; // 🔹 simpan path relatif agar mudah ditampilkan di <img>
+        $gambar = "" . $filename; // 🔹 simpan path relatif agar mudah ditampilkan di <img>
     } else {
         echo "<p style='color:red;'>❌ Gagal upload gambar ke $targetFile</p>";
     }

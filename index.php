@@ -92,7 +92,7 @@
 
     <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
       <?php
-      include "koneksi landing page.php";
+      include "config/koneksi.php";
       $query = mysqli_query($koneksi, "SELECT nama_menu, deskripsi, harga_menu, gambar FROM menu");
       while ($data = mysqli_fetch_array($query)) {
       ?>
@@ -349,6 +349,6 @@
     💬
   </a>
  
-  <script src="asset/js/HalamanUser.JS"></script>
+  <script src="/asset/js/HalamanUser.JS"></script>
 </body>
 </html>
