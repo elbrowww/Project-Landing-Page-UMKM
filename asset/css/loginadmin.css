@@ -1,28 +1,73 @@
-body { 
-    font-family: Arial; 
-    display: flex; 
-    height: 100vh; 
-    justify-content: center; 
-    align-items: center; 
-    background: #f2f2f2; 
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-form { 
-    background: white; 
-    padding: 30px; 
-    border-radius: 8px; 
-    width: 300px; 
-    box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+/* Background gradasi lembut */
+body {
+    font-family: 'Poppins', sans-serif;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #74ABE2, #5563DE);
+}
 
-input { 
-    width: 100%; 
-    margin: 10px 0; 
-    padding: 8px; }
+/* Kotak form login */
+form {
+    background: #fff;
+    padding: 40px 35px;
+    border-radius: 15px;
+    width: 320px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    text-align: center;
+    animation: fadeIn 0.6s ease-in-out;
+}
 
-button { 
-    width: 100%; 
-    background: #4CAF50; 
-    color: white; 
-    border: none; 
-    padding: 8px; 
-    cursor: pointer; }
+/* Animasi muncul */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-15px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Judul */
+form h3 {
+    margin-bottom: 25px;
+    color: #333;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+/* Input field */
+input {
+    width: 100%;
+    margin-bottom: 15px;
+    padding: 12px 14px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background: #f9f9f9;
+    font-size: 14px;
+    transition: 0.3s;
+}
+
+/* Efek fokus input */
+input:focus {
+    border-color: #5563DE;
+    background: #fff;
+    box-shadow: 0 0 5px rgba(85, 99, 222, 0.4);
+    outline: none;
+}
+
+/* Tombol login */
+button {
+    width: 100%;
+    background: linear-gradient(135deg, #5563DE, #74ABE2);
+    color: white;
+    border: none;
+    padding: 12px;
+    font-size: 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
