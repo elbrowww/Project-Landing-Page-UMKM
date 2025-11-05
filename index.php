@@ -349,6 +349,6 @@
     💬
   </a>
  
-  <script src="SCRIPT.JS"></script>
+  <script src="asset/js/HalamanUser.JS"></script>
 </body>
 </html>
