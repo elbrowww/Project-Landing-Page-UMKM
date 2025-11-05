@@ -92,7 +92,7 @@
 
     <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
       <?php
-      include "config/koneksi.php";
+      include '../Project-Landing-Page-UMKM/config/koneksi.php';
       $query = mysqli_query($koneksi, "SELECT nama_menu, deskripsi, harga_menu, gambar FROM menu");
       while ($data = mysqli_fetch_array($query)) {
       ?>

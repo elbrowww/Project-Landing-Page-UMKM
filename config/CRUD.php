@@ -29,15 +29,15 @@ if (!empty($_FILES['gambar']['name'])) {
 
     if ($id == "") {
         // CREATE
-        $stmt = $conn->prepare("INSERT INTO menu (nama_menu, stok_menu, harga_menu, deskripsi, gambar) VALUES (?, ?, ?, ?, ?)");
+        $stmt = $koneksi->prepare("INSERT INTO menu (nama_menu, stok_menu, harga_menu, deskripsi, gambar) VALUES (?, ?, ?, ?, ?)");
         $stmt->bind_param("sidss", $nama, $stok, $harga, $deskripsi, $gambar);
     } else {
         // UPDATE
         if ($gambar != "") {
-            $stmt = $conn->prepare("UPDATE menu SET nama_menu=?, stok_menu=?, harga_menu=?, deskripsi=?, gambar=? WHERE id_menu=?");
+            $stmt = $koneksi->prepare("UPDATE menu SET nama_menu=?, stok_menu=?, harga_menu=?, deskripsi=?, gambar=? WHERE id_menu=?");
             $stmt->bind_param("sidssi", $nama, $stok, $harga, $deskripsi, $gambar, $id);
         } else {
-            $stmt = $conn->prepare("UPDATE menu SET nama_menu=?, stok_menu=?, harga_menu=?, deskripsi=? WHERE id_menu=?");
+            $stmt = $koneksi->prepare("UPDATE menu SET nama_menu=?, stok_menu=?, harga_menu=?, deskripsi=? WHERE id_menu=?");
             $stmt->bind_param("sid si", $nama, $stok, $harga, $deskripsi, $id);
         }
     }
@@ -50,7 +50,7 @@ if (!empty($_FILES['gambar']['name'])) {
 // ==== PROSES HAPUS ====
 if (isset($_GET['hapus'])) {
     $id = $_GET['hapus'];
-    $conn->query("DELETE FROM menu WHERE id_menu=$id");
+    $koneksi->query("DELETE FROM menu WHERE id_menu=$id");
     header("Location: index.php");
     exit;
 }
@@ -60,10 +60,10 @@ if (isset($_GET['hapus'])) {
 
 if (isset($_GET['edit'])) {
     $id = $_GET['edit'];
-    $result = $conn->query("SELECT * FROM menu WHERE id_menu=$id");
+    $result = $koneksi->query("SELECT * FROM menu WHERE id_menu=$id");
     $edit = $result->fetch_assoc();
 }
 
 // ==== TAMPILKAN SEMUA DATA ====
-$result = $conn->query("SELECT * FROM menu ORDER BY id_menu DESC");
+$result = $koneksi->query("SELECT * FROM menu ORDER BY id_menu DESC");
 ?>
