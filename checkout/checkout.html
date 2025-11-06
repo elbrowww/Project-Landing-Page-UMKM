@@ -13,14 +13,16 @@
   </header>
 
   <section class="checkout-container">
-    <div class="cart-items" id="cart-items"></div>
+    <div class="cart-items" id="cart-items">
+      <!-- Item pesanan akan dimasukkan oleh JS -->
+    </div>
 
     <div class="summary">
       <h3>Ringkasan Pembayaran</h3>
-      <p>Total: <span id="total-price">Rp 0</span></p>
+      <p class="total-text">Total: <span id="total-price">Rp 0</span></p>
 
       <div class="payment-info">
-        <label>Pilih Metode Pembayaran:</label>
+        <label for="payment-method">Pilih Metode Pembayaran:</label>
         <select id="payment-method">
           <option value="BRI">BRI - 124567788909</option>
           <option value="BCA">BCA - 6678899000</option>
@@ -31,6 +33,7 @@
     </div>
   </section>
 
+  <!-- Popup sukses -->
   <div id="success-popup" class="popup hidden">
     <div class="popup-content">
       <h2>✅ Pesanan Berhasil!</h2>
