@@ -28,7 +28,7 @@ if (isset($_POST['login'])) {
     $password_user = ($_POST['password']); 
 
     // Query sesuai dengan di database
-    $query = $conn->query("SELECT * FROM user 
+    $query = $koneksi->query("SELECT * FROM user 
                            WHERE id_user='$id_user' 
                            AND password_user='$password_user'");
 

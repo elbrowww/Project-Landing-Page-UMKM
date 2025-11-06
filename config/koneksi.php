@@ -4,10 +4,10 @@ $user = "root";
 $pass = "";
 $db   = "database_bu_mon"; 
 
-$conn = new mysqli($host, $user, $pass, $db);
+$koneksi = mysqli_connect ($host, $user, $pass, $db);
 
-if ($conn->connect_error) {
-    die("Koneksi gagal: " . $conn->connect_error);
+if (!$koneksi) {
+    die("Koneksi database gagal: " . mysqli_connect_error());
 }
 
 ?>

@@ -6,6 +6,10 @@ session_start();
         exit();
     }
    
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+
 include '../config/koneksi.php';
 include '../config/CRUD.php';
 ?>
@@ -40,12 +44,12 @@ include '../config/CRUD.php';
 
         <div class="mb-3">
           <label class="form-label">Stok</label>
-          <input type="number" class="form-control" name="stok_menu" required value="<?= $edit['stok_menu'] ?? '' ?>">
+          <input type="number" min=0 class="form-control" name="stok_menu" required value="<?= $edit['stok_menu'] ?? '' ?>">
         </div>
 
         <div class="mb-3">
           <label class="form-label">Harga</label>
-          <input type="number" class="form-control" name="harga_menu" required value="<?= $edit['harga_menu'] ?? '' ?>">
+          <input type="number" min=0 class="form-control" name="harga_menu" required value="<?= $edit['harga_menu'] ?? '' ?>">
         </div>
 
         <div class="mb-3">
@@ -57,7 +61,7 @@ include '../config/CRUD.php';
           <label class="form-label">Gambar</label>
           <?php if (!empty($edit['gambar'])): ?>
             <div class="mb-2">
-              <img src="<?= $edit['gambar'] ?>" alt="Gambar Menu" width="120">
+              <img src="../asset/uploads/<?php echo $edit['gambar'] ?>" alt="Gambar Menu" width="120">
             </div>
           <?php endif; ?>
           <input type="file" class="form-control" name="gambar">
@@ -101,7 +105,7 @@ include '../config/CRUD.php';
             <td><?= htmlspecialchars($row['deskripsi']) ?></td>
             <td>
   <?php if (!empty($row['gambar'])): ?>
-    <img src="../Project-Landing-Page-UMKM/asset/uploads/<?php echo $row['gambar'] ?>" alt="Gambar Menu" width="80" class="img-thumbnail">
+    <img src="../asset/uploads/<?php echo $row['gambar'] ?>" alt="Gambar Menu" width="80" class="img-thumbnail">
   <?php else: ?>
     <span class="text-muted">Tidak ada gambar</span>
   <?php endif; ?>
