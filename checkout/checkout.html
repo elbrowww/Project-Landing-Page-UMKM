@@ -1,51 +1,57 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Checkout - Dapur Buk Mon</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Aplikasi Pembelanjaan - Demo</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
   <link rel="stylesheet" href="checkout.css">
 </head>
 <body>
-  <header class="header">
-    <h1>🧾 Checkout Pesanan</h1>
-    <a href="menu.html" class="back-btn">⬅ Kembali ke Menu</a>
+
+  <header>
+    <div class="brand">
+      <div class="logo">SP</div>
+      <div>
+        <div style="font-weight:700">DAPUR BUK MON </div>
+        <div class="muted" style="font-size:12px">MENU YANG TERSEDIA</div>
+      </div>
+    </div>
+    <nav>
+      <button id="btn-clear" class="btn">Reset Data</button>
+      <button id="open-cart" class="primary">Keranjang (<span id="cart-count">0</span>)</button>
+    </nav>
   </header>
 
-  <section class="checkout-container">
-    <div class="cart-items" id="cart-items">
-      <!-- Item pesanan akan dimasukkan oleh JS -->
+  <main class="container">
+    <div class="grid">
+      <section>
+        <h2 style="margin:0 0 12px">MENU Populer</h2>
+        <div class="products" id="products"></div>
+      </section>
+
+      <!-- Cart -->
+      <aside class="cart" id="cart-panel">
+        <h3>Keranjang</h3>
+        <div class="cart-list" id="cart-list"></div>
+        <div class="cart-footer">
+          <div>
+            <div class="muted">Total</div>
+            <div id="cart-total" class="cart-total">Rp 0</div>
+          </div>
+          <div class="cart-buttons">
+            <button id="checkout" class="primary">Checkout</button>
+            <button id="clear-cart" class="btn">Kosongkan</button>
+          </div>
+        </div>
+      </aside>
     </div>
+  </main>
 
-    <div class="summary">
-      <h3>Ringkasan Pembayaran</h3>
-      <p class="total-text">Total: <span id="total-price">Rp 0</span></p>
-
-      <div class="payment-info">
-        <label for="payment-method">Pilih Metode Pembayaran:</label>
-        <select id="payment-method">
-          <option value="BRI">BRI - 124567788909</option>
-          <option value="BCA">BCA - 6678899000</option>
-        </select>
-      </div>
-
-      <button id="confirm-btn">Konfirmasi Pesanan</button>
-    </div>
-  </section>
-
-  <!-- Popup sukses -->
-  <div id="success-popup" class="popup hidden">
-    <div class="popup-content">
-      <h2>✅ Pesanan Berhasil!</h2>
-      <p>Terima kasih sudah memesan di <b>Dapur Buk Mon</b> 🍱</p>
-      <a href="menu.html" class="btn-back">Kembali ke Menu</a>
-    </div>
-  </div>
-
-  <footer class="footer">
-    <p>© 2025 Dapur Buk Mon</p>
-  </footer>
-
-  <script src="asset/js/checkout.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
