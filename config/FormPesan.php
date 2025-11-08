@@ -1,5 +1,5 @@
 <?php
-include '../config/koneksi.php';
+include '../Project-Landing-Page-UMKM/config/koneksi.php';
 
 if (isset($_POST['simpan'])) {
     $nama   = ['nama_pelanggan'];
