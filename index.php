@@ -113,7 +113,7 @@
               Rp <?php echo number_format($data['harga_menu'], 0, ',', '.'); ?>
             </p>
             <a href="https://wa.me/6285236596617?text=Halo%20saya%20ingin%20pesan%20<?php echo urlencode($data['nama_menu']); ?>" target="_blank"
-               class="block text-center btn-gradient text-white py-2 rounded-lg hover:opacity-90 transition">
+               class="block text-center btn-gradient text-blue py-2 rounded-lg hover:opacity-90 transition">
               Pesan Sekarang
             </a>
           </div>
