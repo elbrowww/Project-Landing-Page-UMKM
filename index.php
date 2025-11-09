@@ -114,7 +114,7 @@
             </p>
             <!--tombol klik-->
             <div class="text-center mt-12">
-            <a href="checkout.html<?php echo urlencode($data['nama_menu']); ?>" target="_blank"
+            <a href="checkout/checkout.html<?php echo urlencode($data['nama_menu']); ?>" target="_blank"
                class="inline-block bg bg-purple-600 text-white px-6 py-3 rounded-xl hover:bg-purple-700 transition">
               Pesan Sekarang
             </a>
@@ -128,7 +128,6 @@
 </section>
   </div>
 </section>
-
 
   <!-- LAYANAN -->
    <section id="layanan" class="py-20 bg-white">
