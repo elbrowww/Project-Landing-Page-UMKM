@@ -684,3 +684,40 @@
   right: 10px;
 }
 
+/* === Pilihan Rekening === */
+.rekening-container {
+  margin-top: 25px;
+  background: #f9f9f9;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+}
+
+.rekening-container label {
+  font-weight: 600;
+  color: #4a56ab;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.rekening-container select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  outline: none;
+  transition: all 0.3s ease;
+  font-size: 1rem;
+}
+
+.rekening-container select:focus {
+  border-color: #4a56ab;
+  box-shadow: 0 0 5px rgba(74, 86, 171, 0.3);
+}
+
+#rekeningInfo {
+  margin-top: 10px;
+  font-size: 0.95rem;
+  color: #333;
+  font-weight: 500;
+}
