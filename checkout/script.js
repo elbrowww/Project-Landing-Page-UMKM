@@ -90,3 +90,33 @@ function scrollMenu(direction) {
     container.scrollLeft += scrollAmount;
   }
 }
+function scrollMenu(direction) {
+  const container = document.querySelector('.menu-container');
+  const scrollAmount = 300;
+
+  if (direction === 'left') {
+    container.scrollLeft -= scrollAmount;
+  } else {
+    container.scrollLeft += scrollAmount;
+  }
+}
+
+// 🔽 Tambahkan mulai dari sini
+function showRekeningInfo() {
+  const rekeningSelect = document.getElementById('rekening');
+  const rekeningInfo = document.getElementById('rekeningInfo');
+  const bank = rekeningSelect.value;
+
+  let info = '';
+  if (bank === 'bri') {
+    info = 'BRI – 1234-5678-9012 a.n. Dapur Bu Mon';
+  } else if (bank === 'bca') {
+    info = 'BCA – 9876-5432-1098 a.n. Dapur Bu Mon';
+  } else if (bank === 'bni') {
+    info = 'BNI – 1122-3344-5566 a.n. Dapur Bu Mon';
+  } else if (bank === 'mandiri') {
+    info = 'Mandiri – 2233-4455-6677 a.n. Dapur Bu Mon';
+  }
+
+  rekeningInfo.textContent = info;
+}
