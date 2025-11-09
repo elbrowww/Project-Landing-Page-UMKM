@@ -112,14 +112,20 @@
             <p class="text-lg font-semibold text-purple-600 mb-4">
               Rp <?php echo number_format($data['harga_menu'], 0, ',', '.'); ?>
             </p>
-            <a href="https://wa.me/6285236596617?text=Halo%20saya%20ingin%20pesan%20<?php echo urlencode($data['nama_menu']); ?>" target="_blank"
-               class="block text-center btn-gradient text-blue py-2 rounded-lg hover:opacity-90 transition">
+            <!--tombol klik-->
+            <div class="text-center mt-12">
+            <a href="checkout.html<?php echo urlencode($data['nama_menu']); ?>" target="_blank"
+               class="inline-block bg bg-purple-600 text-white px-6 py-3 rounded-xl hover:bg-purple-700 transition">
               Pesan Sekarang
             </a>
           </div>
         </div>
       <?php } ?>
     </div>
+
+    </div>
+  </div>
+</section>
   </div>
 </section>
 
