@@ -1,59 +1,159 @@
 <!doctype html>
 <html lang="id">
+
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>KERANJANG MAKAN</title><head>
-<link rel="icon" href="favicon.png.png" type="image/x-icon" />
+  <title>KERANJANG MAKAN</title>
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <head>
+    <link rel="icon" href="favicon.png.png" type="image/x-icon" />
 
-  <link rel="stylesheet" href="checkout.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 
-</head>
+    <link rel="stylesheet" href="checkout.css">
+
+  </head>
+
+
 <body>
-
   <header>
-    <div class="brand">
-      <div class="logo">SP</div>
-      <div>
-        <div style="font-weight:700">DAPUR BUK MON </div>
-        <div class="muted" style="font-size:12px">MENU YANG TERSEDIA</div>
-      </div>
+    <div class="logo">
+      <i class="fas fa-utensils"></i>
+      <span>DAPUR BU MON</span>
     </div>
     <nav>
-      <button id="btn-clear" class="btn">Reset Data</button>
-      <button id="open-cart" class="primary">Keranjang (<span id="cart-count">0</span>)</button>
     </nav>
   </header>
 
-  <main class="container">
-    <div class="grid">
-      <section>
-        <h2 style="margin:0 0 12px">MENU Populer</h2>
-        <div class="products" id="products"></div>
-      </section>
+  <section class="hero" id="home">
+    <div class="hero-text">
+      <h1>Pesan <span>Makanan Favoritmu</span></h1>
+      <p>Pilih menu terbaik kami dan nikmati makanan sehat setiap hari!</p>
+    </div>
+  </section>
 
-      <!-- Cart -->
-      <aside class="cart" id="cart-panel">
-        <h3>Keranjang</h3>
-        <div class="cart-list" id="cart-list"></div>
-        <div class="cart-footer">
-          <div>
-            <div class="muted">Total</div>
-            <div id="cart-total" class="cart-total">Rp 0</div>
-          </div>
-          <div class="cart-buttons">
-            <button id="checkout" class="primary">Checkout</button>
-            <button id="clear-cart" class="btn">Kosongkan</button>
+  <section class="menu" id="menu">
+    <h2>Daftar Menu</h2>
+    <div class="menu-container-wrapper">
+      <button class="scroll-btn left" onclick="scrollMenu('left')">
+        <i class="fas fa-chevron-left"></i>
+      </button>
+      <div class="menu-container">
+        <div class="card fade-in">
+          <img src="https://images.unsplash.com/photo-1626645738196-c2a7c87a8f58?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="Ayam Panggang">
+          <h3>Ayam Panggang</h3>
+          <p class="description">Ayam panggang dengan bumbu rempah pilihan</p>
+          <p class="price">Rp 25.000</p>
+          <div class="action-buttons">
+            <button class="view-btn" onclick="showMenuDetail('Ayam Panggang', 25000, 'https://images.unsplash.com/photo-1626645738196-c2a7c87a8f58?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80', 'Ayam panggang dengan bumbu rempah pilihan', ['Ayam kampung pilihan', 'Bumbu rempah tradisional', 'Dipanggang dengan teknik khusus', 'Sajian hangat langsung dari oven'])">Lihat</button>
+            <button class="add-btn" onclick="addToCart('Ayam Panggang', 25000)">Tambah</button>
           </div>
         </div>
-      </aside>
+        <div class="card fade-in">
+          <img src="https://images.unsplash.com/photo-1563245372-f21724e3856d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="Nasi Tumpeng">
+          <h3>Nasi Tumpeng</h3>
+          <p class="description">Nasi tumpeng dengan lauk-pauk komplit</p>
+          <p class="price">Rp 150.000</p>
+          <div class="action-buttons">
+            <button class="view-btn" onclick="showMenuDetail('Nasi Tumpeng', 150000, 'https://images.unsplash.com/photo-1563245372-f21724e3856d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80', 'Nasi tumpeng dengan lauk-pauk komplit', ['Nasi kuning berbentuk tumpeng', 'Ayam goreng dan bakar', 'Telur balado', 'Perkedel kentang', 'Ikan teri kacang', 'Sayur urap'])">Lihat</button>
+            <button class="add-btn" onclick="addToCart('Nasi Tumpeng', 150000)">Tambah</button>
+          </div>
+        </div>
+        <div class="card fade-in">
+          <img src="https://images.unsplash.com/photo-1563729784474-d77dbb933a9e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1287&q=80" alt="Jajanan">
+          <h3>Jajanan Tradisional</h3>
+          <p class="description">Berbagai jajanan tradisional Indonesia</p>
+          <p class="price">Rp 1.000/PCS</p>
+          <div class="action-buttons">
+            <button class="view-btn" onclick="showMenuDetail('Jajanan Tradisional', 1000, 'https://images.unsplash.com/photo-1563729784474-d77dbb933a9e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1287&q=80', 'Berbagai jajanan tradisional Indonesia', ['Klepon', 'Lumpur', 'Dadar gulung', 'Putu ayu', 'Kue cucur', 'Serabi'])">Lihat</button>
+            <button class="add-btn" onclick="addToCart('Jajanan Tradisional', 1000)">Tambah</button>
+          </div>
+        </div>
+        <div class="card fade-in">
+          <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1081&q=80" alt="Nasi Goreng">
+          <h3>Nasi Goreng Spesial</h3>
+          <p class="description">Nasi goreng dengan bumbu rahasia keluarga</p>
+          <p class="price">Rp 30.000</p>
+          <div class="action-buttons">
+            <button class="view-btn" onclick="showMenuDetail('Nasi Goreng Spesial', 30000, 'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1081&q=80', '
+            dengan bumbu rahasia keluarga', ['Nasi putih premium', 'Ayam suwir', 'Udang segar', 'Telur mata sapi', 'Kerupuk', 'Acar timun'])">Lihat</button>
+            <button class="add-btn" onclick="addToCart('Nasi Goreng Spesial', 30000)">Tambah</button>
+          </div>
+        </div>
+        <div class="card fade-in">
+          <img src="https://images.unsplash.com/photo-1563379926898-05f4575a45d8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="Gado-gado">
+          <h3>Gado-gado</h3>
+          <p class="description">Sayuran segar dengan bumbu kacang spesial</p>
+          <p class="price">Rp 22.000</p>
+          <div class="action-buttons">
+            <button class="view-btn" onclick="showMenuDetail('Gado-gado', 22000, 'https://images.unsplash.com/photo-1563379926898-05f4575a45d8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80', 'Sayuran segar dengan bumbu kacang spesial', ['Sayuran segar rebus', 'Bumbu kacang khas', 'Kerupuk', 'Telur rebus', 'Tahu dan tempe', 'Lontong'])">Lihat</button>
+            <button class="add-btn" onclick="addToCart('Gado-gado', 22000)">Tambah</button>
+          </div>
+        </div>
+        <div class="card fade-in">
+          <img src="https://images.unsplash.com/photo-1598515214211-89d3c73ae83b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="Sate Ayam">
+          <h3>Sate Ayam</h3>
+          <p class="description">Sate ayam dengan bumbu kacang khas</p>
+          <p class="price">Rp 35.000</p>
+          <div class="action-buttons">
+            <button class="view-btn" onclick="showMenuDetail('Sate Ayam', 35000, 'https://images.unsplash.com/photo-1598515214211-89d3c73ae83b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80', 'Sate ayam dengan bumbu kacang khas', ['Daging ayam pilihan', 'Bumbu kacang spesial', 'Kecap manis', 'Bawang goreng', 'Lontong', 'Irisan cabai'])">Lihat</button>
+            <button class="add-btn" onclick="addToCart('Sate Ayam', 35000)">Tambah</button>
+          </div>
+        </div>
+        <div class="card fade-in">
+          <img src="https://images.unsplash.com/photo-1586190848861-99aa4a171e90?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1180&q=80" alt="Bakso">
+          <h3>Bakso Malang</h3>
+          <p class="description">Bakso daging sapi dengan kuah kaldu spesial</p>
+          <p class="price">Rp 28.000</p>
+          <div class="action-buttons">
+            <button class="view-btn" onclick="showMenuDetail('Bakso Malang', 28000, 'https://images.unsplash.com/photo-1586190848861-99aa4a171e90?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1180&q=80', 'Bakso daging sapi dengan kuah kaldu spesial', ['Bakso daging sapi', 'Kuah kaldu sapi', 'Mie kuning', 'Tahu goreng', 'Pangsit goreng', 'Daun bawang'])">Lihat</button>
+            <button class="add-btn" onclick="addToCart('Bakso Malang', 28000)">Tambah</button>
+          </div>
+        </div>
+      </div>
+      <button class="scroll-btn right" onclick="scrollMenu('right')">
+        <i class="fas fa-chevron-right"></i>
+      </button>
     </div>
-  </main>
+  </section>
 
-  <script src="script.js"></script>
+  <!-- Modal untuk detail menu -->
+  <div class="modal" id="menuModal">
+    <div class="modal-content">
+      <span class="close-modal" onclick="closeModal()">&times;</span>
+      <img class="modal-image" id="modalImage" src="" alt="">
+      <h3 class="modal-title" id="modalTitle"></h3>
+      <p class="modal-price" id="modalPrice"></p>
+      <p class="modal-description" id="modalDescription"></p>
+      <div class="modal-details">
+        <h4>Komposisi:</h4>
+        <ul id="modalIngredients"></ul>
+      </div>
+      <button class="modal-add-btn" id="modalAddBtn">Tambah ke Keranjang</button>
+    </div>
+  </div>
+
+  <section class="cart" id="cart">
+    <h2>Keranjang Belanja</h2>
+    <div class="cart-items" id="cartItems">
+      <!-- Item keranjang akan ditambahkan di sini -->
+    </div>
+    <div class="cart-total" id="cartTotal">
+      Total: Rp 0
+    </div>
+    <button class="checkout-btn" onclick="checkout()">Checkout</button>
+  </section>
+
+  <footer>
+    <p>© 2025 Dapur bu Mon. All Rights Reserved.</p>
+  </footer>
+ <script src="../checkout/script.js"></script>
+
+
 </body>
+
+
 </html>
