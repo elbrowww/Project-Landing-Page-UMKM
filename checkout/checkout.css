@@ -124,6 +124,7 @@
       padding: 80px 0;
       text-align: center;
       position: relative;
+      overflow: hidden;
     }
 
     .menu h2 {
@@ -147,6 +148,7 @@
 
     .menu-container-wrapper {
       position: relative;
+      overflow: visible;
       max-width: 1200px;
       margin: 0 auto;
       padding: 0 60px;
@@ -501,40 +503,40 @@
     }
 
     /* Tombol panah kiri dan kanan */
-    .scroll-btn {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      background: rgba(255, 255, 255, 0.9);
-      color: #4a56ab;
-      border: none;
-      border-radius: 50%;
-      font-size: 24px;
-      width: 50px;
-      height: 50px;
-      cursor: pointer;
-      z-index: 10;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.3s ease;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    }
+    .menu-container-wrapper {
+  position: relative;
+  overflow: visible;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 60px;
+}
 
-    .scroll-btn:hover {
-      background: white;
-      transform: translateY(-50%) scale(1.1);
-      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
-    }
+.scroll-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 999;
+  background: rgba(255, 255, 255, 0.9);
+  color: #4a56ab;
+  border: 2px solid #4a56ab;
+  border-radius: 50%;
+  width: 45px;
+  height: 45px;
+  cursor: pointer;
+  font-size: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
 
-    .scroll-btn.left {
-      left: 10px;
-    }
+.scroll-btn.left { left: -25px; }
+.scroll-btn.right { right: -25px; }
 
-    .scroll-btn.right {
-      right: 10px;
-    }
-
+.scroll-btn:hover {
+  transform: translateY(-50%) scale(1.1);
+  background: white;
+}
     /* Footer */
     footer {
       text-align: center;

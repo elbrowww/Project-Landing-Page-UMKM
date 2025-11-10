@@ -120,3 +120,22 @@ function showRekeningInfo() {
 
   rekeningInfo.textContent = info;
 }
+  const menuContainer = document.querySelector('.menu-container');
+  const leftBtn = document.querySelector('.scroll-btn.left');
+  const rightBtn = document.querySelector('.scroll-btn.right');
+
+  // Geser ke kiri
+  leftBtn.addEventListener('click', () => {
+    menuContainer.scrollBy({
+      left: -300, // jumlah pixel geser ke kiri
+      behavior: 'smooth'
+    });
+  });
+
+  // Geser ke kanan
+  rightBtn.addEventListener('click', () => {
+    menuContainer.scrollBy({
+      left: 300, // jumlah pixel geser ke kanan
+      behavior: 'smooth'
+    });
+  });
