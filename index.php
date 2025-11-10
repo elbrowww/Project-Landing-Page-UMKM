@@ -114,10 +114,10 @@
             </p>
             <!--tombol klik-->
             <div class="text-center mt-12">
-            <a href="checkout/checkout.html<?php echo urlencode($data['nama_menu']); ?>" target="_blank"
-               class="inline-block bg bg-purple-600 text-white px-6 py-3 rounded-xl hover:bg-purple-700 transition">
+            <a href="../Project-Landing-Page-UMKM/checkout/checkout.html" target="blank"
+               class="inline-block bg bg-purple-600 text-white px-6 py-3 rounded-xl hover:bg-purple-700 transition"><button>
               Pesan Sekarang
-            </a>
+            </button></a>
           </div>
         </div>
       <?php } ?>
