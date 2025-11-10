@@ -142,18 +142,28 @@
       Total: Rp 0
     </div>
 
-<!-- Pilihan Rekening -->
-<div class="rekening-container">
-  <label for="rekening">Pilih Rekening Pembayaran:</label>
-  <select id="rekening" onchange="tampilkanRekening()">
-    <option value="">-- Pilih Rekening --</option>
-    <option value="BRI">Bank BRI</option>
-    <option value="BCA">Bank BCA</option>
-    <option value="Mandiri">Bank Mandiri</option>
-    <option value="BNI">Bank BNI</option>
-  </select>
-  <div id="rekeningInfo"></div>
-</div>
+<!-- Metode Pembayaran -->
+<div class="pembayaran-container">
+    <label for="metode">Pilih Metode Pembayaran:</label>
+    <select id="metode" onchange="ubahMetodePembayaran()">
+      <option value="">-- Pilih Metode Pembayaran --</option>
+      <option value="tunai">Tunai (Bayar di Tempat)</option>
+      <option value="transfer">Transfer Bank</option>
+    </select>
+  </div>
+   <!-- Pilihan Rekening -->
+  <div class="rekening-container" id="rekeningContainer" style="display: none;">
+    <label for="rekening">Pilih Rekening Pembayaran:</label>
+    <select id="rekening" onchange="tampilkanRekening()">
+      <option value="">-- Pilih Rekening --</option>
+      <option value="BRI">Bank BRI</option>
+      <option value="BCA">Bank BCA</option>
+      <option value="Mandiri">Bank Mandiri</option>
+      <option value="BNI">Bank BNI</option>
+    </select>
+    <div id="rekeningInfo"></div>
+  </div>
+</section>
 
     <button class="checkout-btn" onclick="checkout()">Checkout</button>
   </section>
