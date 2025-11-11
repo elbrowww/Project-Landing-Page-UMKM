@@ -9,6 +9,7 @@
  <link rel="icon" href="asset/img/logo.png" type="image/x-icon">
  <script src="https://cdn.tailwindcss.com"></script>
  <link rel="stylesheet" href="asset/css/LandingPage.css">
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
 
  <?php 
  include '../Project-Landing-Page-UMKM/config/koneksi.php';
@@ -31,6 +32,24 @@
         <a class="text-purple hover:text-sky-100" href="#testimoni">Testimoni</a>
         <a class="text-purple hover:text-sky-100" href="#kontak">Kontak</a>
         <a class="text-purple hover:text-sky-100" href="#lokasi">Lokasi</a>
+        <a href="../Project-Landing-Page-UMKM/checkout/checkout.php" 
+         class="relative ml-4 flex items-center justify-center hover:scale-105 transition">
+        <div class="bg-purple-100 p-2 rounded-full shadow-sm hover:bg-purple-200 transition">
+          <i class="fa-solid fa-cart-shopping text-purple text-xl"></i>
+        </div>
+        <span id="cart-count"
+              class="absolute -top-1 -right-1 bg-red-500 text-white text-[10px] font-bold px-1.5 rounded-full shadow">0</span>
+      </a>
+    </div>
+
+    <!-- Tombol Menu Mobile -->
+    <button id="menuBtn" class="md:hidden text-purple" aria-label="Buka menu">
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M4 6h16M4 12h16M4 18h16" />
+      </svg>
+    </button>
+  </div>
       </div>
       <button id="menuBtn" class="md:hidden text-white" aria-label="Buka menu">
         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
