@@ -647,6 +647,56 @@ document.addEventListener("DOMContentLoaded", () => {
     if (cart.length === 0) popup.classList.add("hidden"); // sembunyikan popup kalau kosong
   };
 });
+document.addEventListener("DOMContentLoaded", () => {
+  console.log("✅ Script aktif");
+
+  const buttons = document.querySelectorAll(".add-to-cart");
+  console.log("Jumlah tombol:", buttons.length);
+
+  buttons.forEach((btn) => {
+    btn.addEventListener("click", (e) => {
+      e.preventDefault();
+
+      const item = {
+        name: btn.dataset.name,
+        price: parseInt(btn.dataset.price),
+        image: btn.dataset.image,
+        quantity: 1,
+      };
+
+      let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+      const existing = cart.find((i) => i.name === item.name);
+      if (existing) {
+        existing.quantity++;
+      } else {
+        cart.push(item);
+      }
+
+      localStorage.setItem("cart", JSON.stringify(cart));
+      updateCartCount();
+
+      // Notifikasi kecil
+      const notif = document.createElement("div");
+      notif.textContent = `${item.name} ditambahkan ke keranjang 🛒`;
+      notif.className =
+        "fixed bottom-6 right-6 bg-purple-600 text-white px-4 py-2 rounded-lg shadow-lg z-[9999]";
+      document.body.appendChild(notif);
+      setTimeout(() => notif.remove(), 1500);
+    });
+  });
+
+  updateCartCount();
+});
+
+function updateCartCount() {
+  const cart = JSON.parse(localStorage.getItem("cart")) || [];
+  const count = cart.reduce((sum, i) => sum + i.quantity, 0);
+  const badge = document.getElementById("cart-count");
+  if (badge) badge.textContent = count;
+}
+
+
 </script>
 
 
