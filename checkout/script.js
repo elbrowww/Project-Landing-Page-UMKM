@@ -124,6 +124,21 @@ function showRekeningInfo() {
   const leftBtn = document.querySelector('.scroll-btn.left');
   const rightBtn = document.querySelector('.scroll-btn.right');
 
+  function checkout() {
+  const nama = document.getElementById("nama").value;
+  const telp = document.getElementById("telp").value;
+  const email = document.getElementById("email").value;
+  const alamat = document.getElementById("alamat").value;
+
+  if (!nama || !telp || !email || !alamat) {
+    alert("Harap lengkapi semua data pemesan sebelum checkout!");
+    return;
+  }
+
+  // Lanjutkan proses checkout
+  alert(`Terima kasih ${nama}! Pesananmu sedang diproses.`);
+}
+
   // Geser ke kiri
   leftBtn.addEventListener('click', () => {
     menuContainer.scrollBy({
