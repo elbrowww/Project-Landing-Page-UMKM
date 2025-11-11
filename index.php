@@ -409,6 +409,9 @@
   scrollRightBtn.addEventListener('click', () => {
     container.scrollBy({ left: 300, behavior: 'smooth' });
   });
+  </script>
+
+  <script>
 
   
 document.addEventListener("DOMContentLoaded", () => {
