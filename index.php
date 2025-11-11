@@ -280,7 +280,7 @@
                     </div>
                 </div>
                 <div class="fade-in">
-                    <form method="POST" action="" class="space-y-4">
+                    <form method="POST" action="FormPesan.php" class="space-y-4">
                         <div>
                             <label class="block text-sm font-semibold mb-2">Nama Lengkap</label>
                             <input type="text" name="nama_pelanggan"
