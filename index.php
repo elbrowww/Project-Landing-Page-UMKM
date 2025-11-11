@@ -140,10 +140,15 @@
       Rp <?php echo number_format($data['harga_menu'], 0, ',', '.'); ?>
     </p>
     <div class="text-center">
-      <a href="../Project-Landing-Page-UMKM/checkout/checkout.php"
-         class="inline-block bg-purple-600 text-white px-6 py-3 rounded-xl hover:bg-purple-700 transition"><button>
-        Pesan Sekarang </button></a>
-    </div>
+  <button 
+    class="add-to-cart bg-purple-600 text-white px-6 py-3 rounded-xl hover:bg-purple-700 transition"
+    data-name="<?php echo $data['nama_menu']; ?>"
+    data-price="<?php echo $data['harga_menu']; ?>"
+    data-image="asset/uploads/<?php echo $data['gambar']; ?>">
+    Pesan Sekarang
+  </button>
+</div>
+
   </div>
 </div>
 
@@ -404,6 +409,58 @@
   scrollRightBtn.addEventListener('click', () => {
     container.scrollBy({ left: 300, behavior: 'smooth' });
   });
+
+  <script>
+document.addEventListener("DOMContentLoaded", () => {
+  console.log("✅ Script aktif");
+
+  const buttons = document.querySelectorAll(".add-to-cart");
+  console.log("Jumlah tombol:", buttons.length);
+
+  buttons.forEach((btn) => {
+    btn.addEventListener("click", (e) => {
+      e.preventDefault();
+
+      const item = {
+        name: btn.dataset.name,
+        price: parseInt(btn.dataset.price),
+        image: btn.dataset.image,
+        quantity: 1,
+      };
+
+      let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+      const existing = cart.find((i) => i.name === item.name);
+      if (existing) {
+        existing.quantity++;
+      } else {
+        cart.push(item);
+      }
+
+      localStorage.setItem("cart", JSON.stringify(cart));
+      updateCartCount();
+
+      // Notifikasi kecil
+      const notif = document.createElement("div");
+      notif.textContent = `${item.name} ditambahkan ke keranjang 🛒`;
+      notif.className =
+        "fixed bottom-6 right-6 bg-purple-600 text-white px-4 py-2 rounded-lg shadow-lg z-[9999]";
+      document.body.appendChild(notif);
+      setTimeout(() => notif.remove(), 1500);
+    });
+  });
+
+  updateCartCount();
+});
+
+function updateCartCount() {
+  const cart = JSON.parse(localStorage.getItem("cart")) || [];
+  const count = cart.reduce((sum, i) => sum + i.quantity, 0);
+  const badge = document.getElementById("cart-count");
+  if (badge) badge.textContent = count;
+}
+</script>
+
 </script>
 
 </body>

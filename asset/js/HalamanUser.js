@@ -68,3 +68,4 @@
             alert('Terima kasih! Pesan Anda telah dikirim. Kami akan segera menghubungi Anda.');
             e.target.reset();
         });
+        
