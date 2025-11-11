@@ -16,6 +16,11 @@
     <link rel="stylesheet" href="checkout.css">
 
   </head>
+  <?php 
+  
+  include '../Project-Landing-Page-UMKM/config/koneksi.php';
+
+  ?>
 
 
 <body>
@@ -40,6 +45,7 @@
     <div class="menu-container-wrapper">
     <!-- 🔽 Tombol kiri -->
     <button class="scroll-btn left">‹</button>
+    
       <div class="menu-container">
         <div class="card fade-in">
           <img src="https://images.unsplash.com/photo-1626645738196-c2a7c87a8f58?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="Ayam Panggang">
