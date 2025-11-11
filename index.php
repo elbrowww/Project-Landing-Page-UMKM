@@ -590,119 +590,129 @@ function updateCartCount() {
   </div>
 </div>
 
+<div id="cartPopup" class="hidden fixed top-16 right-6 w-72 bg-white shadow-2xl rounded-xl border border-gray-200 p-4 z-50">
+  <div class="flex justify-between items-start">
+    <div>
+      <p class="font-semibold text-purple-700" id="popupName"></p>
+      <p class="text-sm text-gray-500" id="popupPrice"></p>
+    </div>
+    <button id="popupClose" class="text-gray-500 hover:text-red-500 text-xl leading-none">&times;</button>
+  </div>
+
+  <div class="flex justify-between items-center mt-3">
+    <div class="flex items-center gap-2">
+      <button id="popupMinus" class="text-purple-600 font-bold text-lg">−</button>
+      <span id="popupQty" class="text-lg font-semibold">1</span>
+      <button id="popupPlus" class="text-purple-600 font-bold text-lg">+</button>
+    </div>
+    <div class="text-right">
+      <span class="text-sm font-semibold">Total:</span>
+      <p id="popupTotal" class="text-purple-700 font-bold text-lg">Rp 0</p>
+    </div>
+  </div>
+
+  <div class="flex justify-end gap-2 mt-4">
+    <button id="popupCancel" class="border border-gray-300 px-3 py-1 rounded-lg text-sm">Batal</button>
+    <button id="popupAdd" class="bg-purple-600 text-white px-3 py-1 rounded-lg text-sm hover:bg-purple-700">Tambah ke Keranjang</button>
+  </div>
+</div>
+
+<!-- ================= MINI CART (keranjang muncul dari kanan) ================= -->
+<div id="cartSidebar" class="fixed top-0 right-0 w-80 h-full bg-white shadow-2xl transform translate-x-full transition-transform duration-300 z-50 overflow-y-auto">
+  <div class="p-4 border-b flex justify-between items-center">
+    <h2 class="text-xl font-bold text-purple-700">Keranjang</h2>
+    <button id="closeCart" class="text-gray-500 hover:text-red-500 text-xl">&times;</button>
+  </div>
+  <div id="cartItems" class="p-4 space-y-4"></div>
+  <div class="p-4 border-t">
+    <div class="flex justify-between font-semibold text-lg mb-4">
+      <span>Total:</span>
+      <span id="cartTotal">Rp 0</span>
+    </div>
+    <button class="w-full bg-purple-600 text-white py-3 rounded-lg hover:bg-purple-700 transition">Checkout</button>
+  </div>
+</div>
+
 <script>
-document.addEventListener("DOMContentLoaded", () => {
-  const popup = document.getElementById("cartPopup");
-  const popupItems = document.getElementById("popupItems");
-  const popupTotal = document.getElementById("popupTotal");
-  let cart = [];
+// ==================== LOGIKA KERANJANG ====================
+const cartBtn = document.querySelector('.fa-cart-shopping')?.parentElement;
+const cartSidebar = document.getElementById('cartSidebar');
+const closeCart = document.getElementById('closeCart');
+const cartCount = document.getElementById('cart-count');
+const cartItemsContainer = document.getElementById('cartItems');
+const cartTotal = document.getElementById('cartTotal');
 
-  // Klik tombol Pesan Sekarang
-  document.querySelectorAll(".menu-item button").forEach((btn) => {
-    btn.addEventListener("click", (e) => {
-      e.preventDefault();
-      const card = e.target.closest(".menu-item");
-      const name = card.querySelector("h3").textContent;
-      const priceText = card.querySelector(".text-purple-600").textContent.replace("Rp","").replace(/\./g,"").trim();
-      const price = parseInt(priceText);
+let cart = [];
 
-      const existing = cart.find(item => item.name === name);
-      if (existing) existing.qty++;
-      else cart.push({ name, price, qty: 1 });
-
-      updatePopup();
-      popup.classList.remove("hidden"); // tampilkan popup
-    });
+// Buka & Tutup Sidebar Keranjang
+if (cartBtn) {
+  cartBtn.addEventListener('click', e => {
+    e.preventDefault();
+    cartSidebar.classList.remove('translate-x-full');
   });
-
-  // Update isi popup + total
-  function updatePopup() {
-    popupItems.innerHTML = "";
-    let total = 0;
-    cart.forEach((item, index) => {
-      total += item.price * item.qty;
-      const div = document.createElement("div");
-      div.className = "flex justify-between items-center border-b pb-1";
-      div.innerHTML = `
-        <div>
-          <p class="font-medium">${item.name}</p>
-          <p class="text-sm text-gray-500">Rp ${item.price.toLocaleString()}</p>
-        </div>
-        <div class="flex items-center gap-2">
-          <button class="text-purple-600 font-bold" onclick="changeQty(${index}, -1)">-</button>
-          <span>${item.qty}</span>
-          <button class="text-purple-600 font-bold" onclick="changeQty(${index}, 1)">+</button>
-        </div>
-      `;
-      popupItems.appendChild(div);
-    });
-    popupTotal.textContent = "Rp " + total.toLocaleString();
-  }
-
-  // Fungsi global supaya tombol + dan - bisa diklik
-  window.changeQty = function(index, amount) {
-    cart[index].qty += amount;
-    if (cart[index].qty <= 0) cart.splice(index, 1);
-    updatePopup();
-    if (cart.length === 0) popup.classList.add("hidden"); // sembunyikan popup kalau kosong
-  };
-});
-document.addEventListener("DOMContentLoaded", () => {
-  console.log("✅ Script aktif");
-
-  const buttons = document.querySelectorAll(".add-to-cart");
-  console.log("Jumlah tombol:", buttons.length);
-
-  buttons.forEach((btn) => {
-    btn.addEventListener("click", (e) => {
-      e.preventDefault();
-
-      const item = {
-        name: btn.dataset.name,
-        price: parseInt(btn.dataset.price),
-        image: btn.dataset.image,
-        quantity: 1,
-      };
-
-      let cart = JSON.parse(localStorage.getItem("cart")) || [];
-
-      const existing = cart.find((i) => i.name === item.name);
-      if (existing) {
-        existing.quantity++;
-      } else {
-        cart.push(item);
-      }
-
-      localStorage.setItem("cart", JSON.stringify(cart));
-      updateCartCount();
-
-      // Notifikasi kecil
-      const notif = document.createElement("div");
-      notif.textContent = `${item.name} ditambahkan ke keranjang 🛒`;
-      notif.className =
-        "fixed bottom-6 right-6 bg-purple-600 text-white px-4 py-2 rounded-lg shadow-lg z-[9999]";
-      document.body.appendChild(notif);
-      setTimeout(() => notif.remove(), 1500);
-    });
+}
+if (closeCart) {
+  closeCart.addEventListener('click', () => {
+    cartSidebar.classList.add('translate-x-full');
   });
-
-  updateCartCount();
-});
-
-function updateCartCount() {
-  const cart = JSON.parse(localStorage.getItem("cart")) || [];
-  const count = cart.reduce((sum, i) => sum + i.quantity, 0);
-  const badge = document.getElementById("cart-count");
-  if (badge) badge.textContent = count;
 }
 
+// Tombol "Pesan Sekarang"
+document.querySelectorAll('.menu-item button').forEach(btn => {
+  btn.addEventListener('click', e => {
+    e.preventDefault();
+    const card = e.target.closest('.menu-item');
+    if (!card) return;
+    const name = card.querySelector('h3')?.textContent || 'Menu';
+    const priceText = card.querySelector('.text-purple-600')?.textContent || '0';
+    const price = parseInt(priceText.replace(/[^\d]/g, '')) || 0;
 
+    addToCart(name, price);
+  });
+});
+
+function addToCart(name, price) {
+  const existing = cart.find(item => item.name === name);
+  if (existing) {
+    existing.qty++;
+  } else {
+    cart.push({ name, price, qty: 1 });
+  }
+  updateCart();
+}
+
+function updateCart() {
+  cartItemsContainer.innerHTML = '';
+  let total = 0;
+  cart.forEach((item, index) => {
+    total += item.price * item.qty;
+
+    const div = document.createElement('div');
+    div.classList.add('flex','justify-between','items-center','border-b','pb-2');
+    div.innerHTML = `
+      <div>
+        <p class="font-semibold">${item.name}</p>
+        <p class="text-sm text-gray-500">Rp ${item.price.toLocaleString()}</p>
+      </div>
+      <div class="flex items-center gap-2">
+        <button class="text-purple-600 font-bold" onclick="changeQty(${index}, -1)">-</button>
+        <span>${item.qty}</span>
+        <button class="text-purple-600 font-bold" onclick="changeQty(${index}, 1)">+</button>
+      </div>
+    `;
+    cartItemsContainer.appendChild(div);
+  });
+
+  cartTotal.textContent = 'Rp ' + total.toLocaleString();
+  if (cartCount) cartCount.textContent = cart.reduce((a,b) => a+b.qty, 0);
+}
+
+function changeQty(index, amount) {
+  cart[index].qty += amount;
+  if (cart[index].qty <= 0) cart.splice(index, 1);
+  updateCart();
+}
 </script>
-
-
-
-
-
 
 </body>
 </html>
