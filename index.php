@@ -553,68 +553,104 @@ function updateCartCount() {
   </div>
 </div>
 
+<div id="cartPopup" class="hidden fixed top-16 right-6 w-72 bg-white shadow-2xl rounded-xl border border-gray-200 p-4 z-50">
+  <div class="flex justify-between items-start">
+    <div>
+      <p class="font-semibold text-purple-700" id="popupName"></p>
+      <p class="text-sm text-gray-500" id="popupPrice"></p>
+    </div>
+    <button id="popupClose" class="text-gray-500 hover:text-red-500 text-xl leading-none">&times;</button>
+  </div>
+
+  <div class="flex justify-between items-center mt-3">
+    <div class="flex items-center gap-2">
+      <button id="popupMinus" class="text-purple-600 font-bold text-lg">−</button>
+      <span id="popupQty" class="text-lg font-semibold">1</span>
+      <button id="popupPlus" class="text-purple-600 font-bold text-lg">+</button>
+    </div>
+    <div class="text-right">
+      <span class="text-sm font-semibold">Total:</span>
+      <p id="popupTotal" class="text-purple-700 font-bold text-lg">Rp 0</p>
+    </div>
+  </div>
+
+  <div class="flex justify-end gap-2 mt-4">
+    <button id="popupCancel" class="border border-gray-300 px-3 py-1 rounded-lg text-sm">Batal</button>
+    <button id="popupAdd" class="bg-purple-600 text-white px-3 py-1 rounded-lg text-sm hover:bg-purple-700">Tambah ke Keranjang</button>
+  </div>
+</div>
+
+<!-- === POPUP KERANJANG DI KANAN ATAS === -->
+<div id="cartPopup" class="fixed top-20 right-4 bg-white shadow-2xl rounded-lg p-4 w-72 border z-50 hidden">
+  <h3 class="text-lg font-semibold mb-2 text-purple-700">Keranjang</h3>
+  <div id="popupItems" class="space-y-2 max-h-60 overflow-y-auto"></div>
+  <div class="flex justify-between mt-3 font-semibold">
+    <span>Total:</span>
+    <span id="popupTotal">Rp 0</span>
+  </div>
+</div>
+
 <script>
-// === POPUP DI BAWAH IKON KERANJANG ===
-const cartPopup = document.getElementById('cartPopup');
-const popupName = document.getElementById('popupName');
-const popupPrice = document.getElementById('popupPrice');
-const popupQty = document.getElementById('popupQty');
-const popupTotal = document.getElementById('popupTotal');
-const popupClose = document.getElementById('popupClose');
-const popupPlus = document.getElementById('popupPlus');
-const popupMinus = document.getElementById('popupMinus');
-const popupAdd = document.getElementById('popupAdd');
-const popupCancel = document.getElementById('popupCancel');
+document.addEventListener("DOMContentLoaded", () => {
+  const popup = document.getElementById("cartPopup");
+  const popupItems = document.getElementById("popupItems");
+  const popupTotal = document.getElementById("popupTotal");
+  let cart = [];
 
-let currentPopupItem = { name: '', price: 0, qty: 1 };
+  // Klik tombol Pesan Sekarang
+  document.querySelectorAll(".menu-item button").forEach((btn) => {
+    btn.addEventListener("click", (e) => {
+      e.preventDefault();
+      const card = e.target.closest(".menu-item");
+      const name = card.querySelector("h3").textContent;
+      const priceText = card.querySelector(".text-purple-600").textContent.replace("Rp","").replace(/\./g,"").trim();
+      const price = parseInt(priceText);
 
-// Saat klik "Pesan Sekarang"
-document.querySelectorAll('.menu-item button').forEach(btn => {
-  btn.addEventListener('click', e => {
-    e.preventDefault();
-    const card = e.target.closest('.menu-item');
-    const name = card.querySelector('h3').textContent;
-    const priceText = card.querySelector('.text-purple-600').textContent.replace('Rp','').replace(/\./g,'').trim();
-    const price = parseInt(priceText);
+      const existing = cart.find(item => item.name === name);
+      if (existing) existing.qty++;
+      else cart.push({ name, price, qty: 1 });
 
-    currentPopupItem = { name, price, qty: 1 };
-    popupName.textContent = name;
-    popupPrice.textContent = 'Rp ' + price.toLocaleString();
-    popupQty.textContent = 1;
-    popupTotal.textContent = 'Rp ' + price.toLocaleString();
-    cartPopup.classList.remove('hidden');
+      updatePopup();
+      popup.classList.remove("hidden"); // tampilkan popup
+    });
   });
-});
 
-// Tombol + dan -
-popupPlus.addEventListener('click', () => {
-  currentPopupItem.qty++;
-  popupQty.textContent = currentPopupItem.qty;
-  popupTotal.textContent = 'Rp ' + (currentPopupItem.price * currentPopupItem.qty).toLocaleString();
-});
-
-popupMinus.addEventListener('click', () => {
-  if (currentPopupItem.qty > 1) {
-    currentPopupItem.qty--;
-    popupQty.textContent = currentPopupItem.qty;
-    popupTotal.textContent = 'Rp ' + (currentPopupItem.price * currentPopupItem.qty).toLocaleString();
+  // Update isi popup + total
+  function updatePopup() {
+    popupItems.innerHTML = "";
+    let total = 0;
+    cart.forEach((item, index) => {
+      total += item.price * item.qty;
+      const div = document.createElement("div");
+      div.className = "flex justify-between items-center border-b pb-1";
+      div.innerHTML = `
+        <div>
+          <p class="font-medium">${item.name}</p>
+          <p class="text-sm text-gray-500">Rp ${item.price.toLocaleString()}</p>
+        </div>
+        <div class="flex items-center gap-2">
+          <button class="text-purple-600 font-bold" onclick="changeQty(${index}, -1)">-</button>
+          <span>${item.qty}</span>
+          <button class="text-purple-600 font-bold" onclick="changeQty(${index}, 1)">+</button>
+        </div>
+      `;
+      popupItems.appendChild(div);
+    });
+    popupTotal.textContent = "Rp " + total.toLocaleString();
   }
-});
 
-// Tutup popup
-popupClose.addEventListener('click', () => cartPopup.classList.add('hidden'));
-popupCancel.addEventListener('click', () => cartPopup.classList.add('hidden'));
-
-// Tambah ke keranjang
-popupAdd.addEventListener('click', () => {
-  for (let i = 0; i < currentPopupItem.qty; i++) {
-    addToCart(currentPopupItem.name, currentPopupItem.price);
-  }
-  updateCart();
-  cartSidebar.classList.remove('translate-x-full'); // buka sidebar langsung
-  cartPopup.classList.add('hidden');
+  // Fungsi global supaya tombol + dan - bisa diklik
+  window.changeQty = function(index, amount) {
+    cart[index].qty += amount;
+    if (cart[index].qty <= 0) cart.splice(index, 1);
+    updatePopup();
+    if (cart.length === 0) popup.classList.add("hidden"); // sembunyikan popup kalau kosong
+  };
 });
 </script>
+
+
+
 
 
 
