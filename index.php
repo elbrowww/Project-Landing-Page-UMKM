@@ -121,7 +121,7 @@
       Rp <?php echo number_format($data['harga_menu'], 0, ',', '.'); ?>
     </p>
     <div class="text-center">
-      <a href="../Project-Landing-Page-UMKM/checkout/checkout.php" target="_blank"
+      <a href="../Project-Landing-Page-UMKM/checkout/checkout.php"
          class="inline-block bg-purple-600 text-white px-6 py-3 rounded-xl hover:bg-purple-700 transition"><button>
         Pesan Sekarang </button></a>
     </div>
