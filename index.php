@@ -9,6 +9,7 @@
  <link rel="icon" href="asset/img/logo.png" type="image/x-icon">
  <script src="https://cdn.tailwindcss.com"></script>
  <link rel="stylesheet" href="asset/css/LandingPage.css">
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
 
  <?php 
  include '../Project-Landing-Page-UMKM/config/koneksi.php';
@@ -31,6 +32,24 @@
         <a class="text-purple hover:text-sky-100" href="#testimoni">Testimoni</a>
         <a class="text-purple hover:text-sky-100" href="#kontak">Kontak</a>
         <a class="text-purple hover:text-sky-100" href="#lokasi">Lokasi</a>
+        <a href="../Project-Landing-Page-UMKM/checkout/checkout.php" 
+         class="relative ml-4 flex items-center justify-center hover:scale-105 transition">
+        <div class="bg-purple-100 p-2 rounded-full shadow-sm hover:bg-purple-200 transition">
+          <i class="fa-solid fa-cart-shopping text-purple text-xl"></i>
+        </div>
+        <span id="cart-count"
+              class="absolute -top-1 -right-1 bg-red-500 text-white text-[10px] font-bold px-1.5 rounded-full shadow">0</span>
+      </a>
+    </div>
+
+    <!-- Tombol Menu Mobile -->
+    <button id="menuBtn" class="md:hidden text-purple" aria-label="Buka menu">
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M4 6h16M4 12h16M4 18h16" />
+      </svg>
+    </button>
+  </div>
       </div>
       <button id="menuBtn" class="md:hidden text-white" aria-label="Buka menu">
         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -121,10 +140,15 @@
       Rp <?php echo number_format($data['harga_menu'], 0, ',', '.'); ?>
     </p>
     <div class="text-center">
-      <a href="../Project-Landing-Page-UMKM/checkout/checkout.php"
-         class="inline-block bg-purple-600 text-white px-6 py-3 rounded-xl hover:bg-purple-700 transition"><button>
-        Pesan Sekarang </button></a>
-    </div>
+  <button 
+    class="add-to-cart bg-purple-600 text-white px-6 py-3 rounded-xl hover:bg-purple-700 transition"
+    data-name="<?php echo $data['nama_menu']; ?>"
+    data-price="<?php echo $data['harga_menu']; ?>"
+    data-image="asset/uploads/<?php echo $data['gambar']; ?>">
+    Pesan Sekarang
+  </button>
+</div>
+
   </div>
 </div>
 
@@ -385,7 +409,214 @@
   scrollRightBtn.addEventListener('click', () => {
     container.scrollBy({ left: 300, behavior: 'smooth' });
   });
+
+  <script>
+document.addEventListener("DOMContentLoaded", () => {
+  console.log("✅ Script aktif");
+
+  const buttons = document.querySelectorAll(".add-to-cart");
+  console.log("Jumlah tombol:", buttons.length);
+
+  buttons.forEach((btn) => {
+    btn.addEventListener("click", (e) => {
+      e.preventDefault();
+
+      const item = {
+        name: btn.dataset.name,
+        price: parseInt(btn.dataset.price),
+        image: btn.dataset.image,
+        quantity: 1,
+      };
+
+      let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+      const existing = cart.find((i) => i.name === item.name);
+      if (existing) {
+        existing.quantity++;
+      } else {
+        cart.push(item);
+      }
+
+      localStorage.setItem("cart", JSON.stringify(cart));
+      updateCartCount();
+
+      // Notifikasi kecil
+      const notif = document.createElement("div");
+      notif.textContent = `${item.name} ditambahkan ke keranjang 🛒`;
+      notif.className =
+        "fixed bottom-6 right-6 bg-purple-600 text-white px-4 py-2 rounded-lg shadow-lg z-[9999]";
+      document.body.appendChild(notif);
+      setTimeout(() => notif.remove(), 1500);
+    });
+  });
+
+  updateCartCount();
+});
+
+function updateCartCount() {
+  const cart = JSON.parse(localStorage.getItem("cart")) || [];
+  const count = cart.reduce((sum, i) => sum + i.quantity, 0);
+  const badge = document.getElementById("cart-count");
+  if (badge) badge.textContent = count;
+}
 </script>
+
+</script>
+
+<!-- ================= MINI CART (keranjang muncul dari kanan) ================= -->
+<div id="cartSidebar" class="fixed top-0 right-0 w-80 h-full bg-white shadow-2xl transform translate-x-full transition-transform duration-300 z-50 overflow-y-auto">
+  <div class="p-4 border-b flex justify-between items-center">
+    <h2 class="text-xl font-bold text-purple-700">Keranjang</h2>
+    <button id="closeCart" class="text-gray-500 hover:text-red-500 text-xl">&times;</button>
+  </div>
+  <div id="cartItems" class="p-4 space-y-4"></div>
+  <div class="p-4 border-t">
+    <div class="flex justify-between font-semibold text-lg mb-4">
+      <span>Total:</span>
+      <span id="cartTotal">Rp 0</span>
+    </div>
+    <button class="w-full bg-purple-600 text-white py-3 rounded-lg hover:bg-purple-700 transition">Checkout</button>
+  </div>
+</div>
+
+<!-- POPUP KONFIRMASI PESAN -->
+<div id="orderPopup" class="hidden fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+  <div class="bg-white rounded-lg p-6 w-80">
+    <h3 class="text-lg font-semibold mb-2" id="popupItemName"></h3>
+    <p class="text-gray-600 mb-4" id="popupItemPrice"></p>
+    <div class="flex justify-center items-center gap-4 mb-4">
+      <button id="minusQty" class="text-purple-600 text-xl font-bold">-</button>
+      <span id="popupQty" class="text-lg font-semibold">1</span>
+      <button id="plusQty" class="text-purple-600 text-xl font-bold">+</button>
+    </div>
+    <div class="flex justify-between items-center font-semibold mb-4">
+      <span>Total:</span>
+      <span id="popupTotal">Rp 0</span>
+    </div>
+    <div class="flex justify-end gap-2">
+      <button id="cancelPopup" class="px-3 py-2 border rounded-lg">Lanjut Belanja</button>
+      <button id="addToCartPopup" class="bg-purple-600 text-white px-3 py-2 rounded-lg">Lihat Keranjang</button>
+    </div>
+  </div>
+</div>
+
+<!-- MINI POPUP DI BAWAH KERANJANG -->
+<div id="bottomPopup" class="hidden fixed bottom-0 right-0 w-80 bg-white shadow-2xl border-t border-gray-300 z-40 p-4">
+  <div class="flex justify-between items-center">
+    <div>
+      <p class="font-semibold text-purple-700" id="popupItemName"></p>
+      <p class="text-sm text-gray-500" id="popupItemPrice"></p>
+    </div>
+    <div class="flex items-center gap-2">
+      <button id="minusQty" class="text-purple-600 font-bold text-lg">-</button>
+      <span id="popupQty" class="text-lg font-semibold">1</span>
+      <button id="plusQty" class="text-purple-600 font-bold text-lg">+</button>
+    </div>
+  </div>
+
+  <div class="flex justify-between items-center mt-3">
+    <span class="font-semibold">Total:</span>
+    <span id="popupTotal" class="font-bold text-purple-700">Rp 0</span>
+  </div>
+
+  <div class="flex justify-end gap-2 mt-3">
+    <button id="cancelPopup" class="border px-3 py-1 rounded-lg text-sm">Batal</button>
+    <button id="addToCartPopup" class="bg-purple-600 text-white px-3 py-1 rounded-lg text-sm">Tambah</button>
+  </div>
+</div>
+
+<!-- POPUP DI BAWAH IKON KERANJANG -->
+<div id="cartPopup" class="hidden fixed top-16 right-6 w-72 bg-white shadow-2xl rounded-xl border border-gray-200 p-4 z-50">
+  <div class="flex justify-between items-start">
+    <div>
+      <p class="font-semibold text-purple-700" id="popupName"></p>
+      <p class="text-sm text-gray-500" id="popupPrice"></p>
+    </div>
+    <button id="popupClose" class="text-gray-500 hover:text-red-500 text-xl leading-none">&times;</button>
+  </div>
+
+  <div class="flex justify-between items-center mt-3">
+    <div class="flex items-center gap-2">
+      <button id="popupMinus" class="text-purple-600 font-bold text-lg">-</button>
+      <span id="popupQty" class="text-lg font-semibold">1</span>
+      <button id="popupPlus" class="text-purple-600 font-bold text-lg">+</button>
+    </div>
+    <div class="text-right">
+      <span class="text-sm font-semibold">Total:</span>
+      <p id="popupTotal" class="text-purple-700 font-bold text-lg">Rp 0</p>
+    </div>
+  </div>
+
+  <div class="flex justify-end gap-2 mt-4">
+    <button id="popupCancel" class="border border-gray-300 px-3 py-1 rounded-lg text-sm">Batal</button>
+    <button id="popupAdd" class="bg-purple-600 text-white px-3 py-1 rounded-lg text-sm hover:bg-purple-700">Tambah ke Keranjang</button>
+  </div>
+</div>
+
+<script>
+// === POPUP DI BAWAH IKON KERANJANG ===
+const cartPopup = document.getElementById('cartPopup');
+const popupName = document.getElementById('popupName');
+const popupPrice = document.getElementById('popupPrice');
+const popupQty = document.getElementById('popupQty');
+const popupTotal = document.getElementById('popupTotal');
+const popupClose = document.getElementById('popupClose');
+const popupPlus = document.getElementById('popupPlus');
+const popupMinus = document.getElementById('popupMinus');
+const popupAdd = document.getElementById('popupAdd');
+const popupCancel = document.getElementById('popupCancel');
+
+let currentPopupItem = { name: '', price: 0, qty: 1 };
+
+// Saat klik "Pesan Sekarang"
+document.querySelectorAll('.menu-item button').forEach(btn => {
+  btn.addEventListener('click', e => {
+    e.preventDefault();
+    const card = e.target.closest('.menu-item');
+    const name = card.querySelector('h3').textContent;
+    const priceText = card.querySelector('.text-purple-600').textContent.replace('Rp','').replace(/\./g,'').trim();
+    const price = parseInt(priceText);
+
+    currentPopupItem = { name, price, qty: 1 };
+    popupName.textContent = name;
+    popupPrice.textContent = 'Rp ' + price.toLocaleString();
+    popupQty.textContent = 1;
+    popupTotal.textContent = 'Rp ' + price.toLocaleString();
+    cartPopup.classList.remove('hidden');
+  });
+});
+
+// Tombol + dan -
+popupPlus.addEventListener('click', () => {
+  currentPopupItem.qty++;
+  popupQty.textContent = currentPopupItem.qty;
+  popupTotal.textContent = 'Rp ' + (currentPopupItem.price * currentPopupItem.qty).toLocaleString();
+});
+
+popupMinus.addEventListener('click', () => {
+  if (currentPopupItem.qty > 1) {
+    currentPopupItem.qty--;
+    popupQty.textContent = currentPopupItem.qty;
+    popupTotal.textContent = 'Rp ' + (currentPopupItem.price * currentPopupItem.qty).toLocaleString();
+  }
+});
+
+// Tutup popup
+popupClose.addEventListener('click', () => cartPopup.classList.add('hidden'));
+popupCancel.addEventListener('click', () => cartPopup.classList.add('hidden'));
+
+// Tambah ke keranjang
+popupAdd.addEventListener('click', () => {
+  for (let i = 0; i < currentPopupItem.qty; i++) {
+    addToCart(currentPopupItem.name, currentPopupItem.price);
+  }
+  updateCart();
+  cartSidebar.classList.remove('translate-x-full'); // buka sidebar langsung
+  cartPopup.classList.add('hidden');
+});
+</script>
+
+
 
 </body>
 </html>
