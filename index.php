@@ -463,5 +463,102 @@ function updateCartCount() {
 
 </script>
 
+<!-- ================= MINI CART (keranjang muncul dari kanan) ================= -->
+<div id="cartSidebar" class="fixed top-0 right-0 w-80 h-full bg-white shadow-2xl transform translate-x-full transition-transform duration-300 z-50 overflow-y-auto">
+  <div class="p-4 border-b flex justify-between items-center">
+    <h2 class="text-xl font-bold text-purple-700">Keranjang</h2>
+    <button id="closeCart" class="text-gray-500 hover:text-red-500 text-xl">&times;</button>
+  </div>
+  <div id="cartItems" class="p-4 space-y-4"></div>
+  <div class="p-4 border-t">
+    <div class="flex justify-between font-semibold text-lg mb-4">
+      <span>Total:</span>
+      <span id="cartTotal">Rp 0</span>
+    </div>
+    <button class="w-full bg-purple-600 text-white py-3 rounded-lg hover:bg-purple-700 transition">Checkout</button>
+  </div>
+</div>
+
+<script>
+// ==================== LOGIKA KERANJANG ====================
+const cartBtn = document.querySelector('.fa-cart-shopping')?.parentElement;
+const cartSidebar = document.getElementById('cartSidebar');
+const closeCart = document.getElementById('closeCart');
+const cartCount = document.getElementById('cart-count');
+const cartItemsContainer = document.getElementById('cartItems');
+const cartTotal = document.getElementById('cartTotal');
+
+let cart = [];
+
+// Buka & Tutup Sidebar Keranjang
+if (cartBtn) {
+  cartBtn.addEventListener('click', e => {
+    e.preventDefault();
+    cartSidebar.classList.remove('translate-x-full');
+  });
+}
+if (closeCart) {
+  closeCart.addEventListener('click', () => {
+    cartSidebar.classList.add('translate-x-full');
+  });
+}
+
+// Tombol "Pesan Sekarang"
+document.querySelectorAll('.menu-item button').forEach(btn => {
+  btn.addEventListener('click', e => {
+    e.preventDefault();
+    const card = e.target.closest('.menu-item');
+    if (!card) return;
+    const name = card.querySelector('h3')?.textContent || 'Menu';
+    const priceText = card.querySelector('.text-purple-600')?.textContent || '0';
+    const price = parseInt(priceText.replace(/[^\d]/g, '')) || 0;
+
+    addToCart(name, price);
+  });
+});
+
+function addToCart(name, price) {
+  const existing = cart.find(item => item.name === name);
+  if (existing) {
+    existing.qty++;
+  } else {
+    cart.push({ name, price, qty: 1 });
+  }
+  updateCart();
+}
+
+function updateCart() {
+  cartItemsContainer.innerHTML = '';
+  let total = 0;
+  cart.forEach((item, index) => {
+    total += item.price * item.qty;
+
+    const div = document.createElement('div');
+    div.classList.add('flex','justify-between','items-center','border-b','pb-2');
+    div.innerHTML = `
+      <div>
+        <p class="font-semibold">${item.name}</p>
+        <p class="text-sm text-gray-500">Rp ${item.price.toLocaleString()}</p>
+      </div>
+      <div class="flex items-center gap-2">
+        <button class="text-purple-600 font-bold" onclick="changeQty(${index}, -1)">-</button>
+        <span>${item.qty}</span>
+        <button class="text-purple-600 font-bold" onclick="changeQty(${index}, 1)">+</button>
+      </div>
+    `;
+    cartItemsContainer.appendChild(div);
+  });
+
+  cartTotal.textContent = 'Rp ' + total.toLocaleString();
+  if (cartCount) cartCount.textContent = cart.reduce((a,b) => a+b.qty, 0);
+}
+
+function changeQty(index, amount) {
+  cart[index].qty += amount;
+  if (cart[index].qty <= 0) cart.splice(index, 1);
+  updateCart();
+}
+</script>
+
 </body>
 </html>
