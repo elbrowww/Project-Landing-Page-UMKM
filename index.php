@@ -280,7 +280,7 @@
                     </div>
                 </div>
                 <div class="fade-in">
-                    <form class="space-y-4">
+                    <form method="POST" action="" class="space-y-4">
                         <div>
                             <label class="block text-sm font-semibold mb-2">Nama Lengkap</label>
                             <input type="text" name="nama_pelanggan"
@@ -305,7 +305,7 @@
                                 class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-purple-500 focus:outline-none transition"
                                 placeholder="Ceritakan kebutuhan acara Anda..."></textarea>
                         </div>
-                        <button type="submit"
+                        <button type="submit" name="simpan"
                             class="w-full gradient-bg text-white py-4 rounded-lg font-semibold hover:opacity-90 transition">Kirim
                             Pesan</button>
                     </form>
