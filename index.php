@@ -410,7 +410,7 @@
     container.scrollBy({ left: 300, behavior: 'smooth' });
   });
 
-  <script>
+  
 document.addEventListener("DOMContentLoaded", () => {
   console.log("✅ Script aktif");
 
