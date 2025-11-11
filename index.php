@@ -97,35 +97,45 @@
     <h2 class="text-4xl font-bold text-center mb-6 gradient-text fade-in">Menu Pilihan Kami</h2>
     <p class="text-center text-gray-600 mb-12 fade-in">Beragam menu tersedia untuk berbagai acara</p>
 
-    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-      <?php
-     
-      $query = mysqli_query($koneksi, "SELECT nama_menu, deskripsi, harga_menu, gambar FROM menu");
-      while ($data = mysqli_fetch_array($query)) {
+    <!-- Tombol scroll kiri-kanan -->
+    <div class="relative">
+      <button id="scrollLeft" class="absolute left-0 top-1/2 -translate-y-1/2 bg-purple-600 text-white p-3 rounded-full shadow-md hover:bg-purple-700 z-10">
+        ◀
+      </button>
 
-      ?>
-        <div class="menu-item fade-in bg-white rounded-2xl overflow-hidden shadow-lg card-hover">
-          <img src="asset/uploads/<?php echo $data['gambar']; ?>" alt="<?php echo $data['nama_menu']; ?>" class="w-full h-48 object-cover">
-          <div class="p-6">
-            <h3 class="text-xl font-bold mb-2"><?php echo $data['nama_menu']; ?></h3>
-            <p class="text-gray-600 mb-4"><?php echo $data['deskripsi']; ?></p>
-            <p class="text-lg font-semibold text-purple-600 mb-4">
-              Rp <?php echo number_format($data['harga_menu'], 0, ',', '.'); ?>
-            </p>
-            <!--tombol klik-->
-            <div class="text-center mt-12">
-            <a href="../Project-Landing-Page-UMKM/checkout/checkout.html" target="blank"
-               class="inline-block bg bg-purple-600 text-white px-6 py-3 rounded-xl hover:bg-purple-700 transition"><button>
-              Pesan Sekarang
-            </button></a>
-          </div>
-        </div>
-      <?php } ?>
-    </div>
-
+      <div id="menuContainer" class="flex overflow-x-auto gap-6 scroll-smooth px-10 pb-4 no-scrollbar">
+        <?php
+        $query = mysqli_query($koneksi, "SELECT nama_menu, deskripsi, harga_menu, gambar FROM menu");
+        while ($data = mysqli_fetch_array($query)) {
+        ?>
+          <div class="menu-item fade-in bg-white rounded-2xl shadow-lg hover:shadow-2xl hover:scale-[1.03] transition-all duration-300 overflow-hidden min-w-[280px] max-w-[320px] flex-shrink-0 cursor-pointer">
+  <div class="relative">
+    <img src="asset/uploads/<?php echo $data['gambar']; ?>"
+         alt="<?php echo $data['nama_menu']; ?>"
+         class="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-105">
+  </div>
+  <div class="p-6">
+    <h3 class="text-xl font-bold mb-2"><?php echo $data['nama_menu']; ?></h3>
+    <p class="text-gray-600 mb-4"><?php echo $data['deskripsi']; ?></p>
+    <p class="text-lg font-semibold text-purple-600 mb-4">
+      Rp <?php echo number_format($data['harga_menu'], 0, ',', '.'); ?>
+    </p>
+    <div class="text-center">
+      <a href="../Project-Landing-Page-UMKM/checkout/checkout.html" target="_blank"
+         class="inline-block bg-purple-600 text-white px-6 py-3 rounded-xl hover:bg-purple-700 transition">
+        Pesan Sekarang
+      </a>
     </div>
   </div>
-</section>
+</div>
+
+        <?php } ?>
+      </div>
+
+      <button id="scrollRight" class="absolute right-0 top-1/2 -translate-y-1/2 bg-purple-600 text-white p-3 rounded-full shadow-md hover:bg-purple-700 z-10">
+        ▶
+      </button>
+    </div>
   </div>
 </section>
 
@@ -363,5 +373,20 @@
   </a>
  
   <script src="asset/js/HalamanUser.js"></script>
+
+  <script>
+  const container = document.getElementById('menuContainer');
+  const scrollLeftBtn = document.getElementById('scrollLeft');
+  const scrollRightBtn = document.getElementById('scrollRight');
+
+  scrollLeftBtn.addEventListener('click', () => {
+    container.scrollBy({ left: -300, behavior: 'smooth' });
+  });
+
+  scrollRightBtn.addEventListener('click', () => {
+    container.scrollBy({ left: 300, behavior: 'smooth' });
+  });
+</script>
+
 </body>
 </html>
