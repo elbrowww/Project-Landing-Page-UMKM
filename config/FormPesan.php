@@ -8,7 +8,7 @@ echo '</pre>';
 ?>
 
 <?php
-include '../Project-Landing-Page-UMKM/config/koneksi.php';
+include 'koneksi.php';
 
 if (isset($_POST['simpan'])) {
     $nama   = $_POST['nama_pelanggan'];
@@ -22,7 +22,7 @@ if (isset($_POST['simpan'])) {
 
     if ($stmt->execute()) {
         // Jika Berhasil
-        echo "<script>alert('Pesan berhasil dikirim!'); window.location.href='index.php#kontak';</script>";
+        echo "<script>alert('Pesan berhasil dikirim!'); window.location.href='../index.php#kontak';</script>";
     } else {
         // Jika Gagal
         echo "<script>alert('Terjadi kesalahan saat mengirim pesan.');</script>";
