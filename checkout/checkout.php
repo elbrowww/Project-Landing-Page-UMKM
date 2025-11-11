@@ -92,29 +92,48 @@ $query = mysqli_query($koneksi, "SELECT * FROM menu");
   </div>
 
 <section class="cart" id="cart">
-    <h2>Keranjang Belanja</h2>
-    <div class="cart-items" id="cartItems">
-      <!-- Item keranjang akan ditambahkan di sini -->
-    </div>
-    <div class="cart-total" id="cartTotal">
-      Total: Rp 0
-    </div>
+  <h2>Keranjang Belanja</h2>
+  <div class="cart-items" id="cartItems">
+    <!-- Item keranjang akan ditambahkan di sini -->
+  </div>
 
-<!-- Pilihan Rekening -->
-<div class="rekening-container">
-  <label for="rekening">Pilih Rekening Pembayaran:</label>
-  <select id="rekening" onchange="tampilkanRekening()">
-    <option value="">-- Pilih Rekening --</option>
-    <option value="BRI">Bank BRI</option>
-    <option value="BCA">Bank BCA</option>
-    <option value="Mandiri">Bank Mandiri</option>
-    <option value="BNI">Bank BNI</option>
-  </select>
-  <div id="rekeningInfo"></div>
-</div>
+  <div class="cart-total" id="cartTotal">
+    Total: Rp 0
+  </div>
 
-    <button class="checkout-btn" onclick="checkout()">Checkout</button>
-  </section>
+  <!-- 🔽 Form Data Pelanggan -->
+  <div class="customer-info">
+    <h3>Data Pemesan</h3>
+
+    <label for="nama">Nama Lengkap:</label>
+    <input type="text" id="nama" placeholder="Masukkan nama Anda" required>
+
+    <label for="telp">Nomor Telepon:</label>
+    <input type="tel" id="telp" placeholder="08xxxxxxxxxx" required>
+
+    <label for="email">Email:</label>
+    <input type="email" id="email" placeholder="contoh@email.com" required>
+
+    <label for="alamat">Alamat Lengkap:</label>
+    <textarea id="alamat" rows="3" placeholder="Masukkan alamat lengkap Anda" required></textarea>
+  </div>
+
+  <!-- 🔽 Pilihan Rekening -->
+  <div class="rekening-container">
+    <label for="rekening">Pilih Rekening Pembayaran:</label>
+    <select id="rekening" onchange="tampilkanRekening()">
+      <option value="">-- Pilih Rekening --</option>
+      <option value="BRI">Bank BRI</option>
+      <option value="BCA">Bank BCA</option>
+      <option value="Mandiri">Bank Mandiri</option>
+      <option value="BNI">Bank BNI</option>
+    </select>
+    <div id="rekeningInfo"></div>
+  </div>
+
+  <button class="checkout-btn" onclick="checkout()">Checkout</button>
+</section>
+
 
   <footer>
     <p>© 2025 Dapur bu Mon. All Rights Reserved.</p>
