@@ -40,79 +40,37 @@
     <div class="menu-container-wrapper">
     <!-- 🔽 Tombol kiri -->
     <button class="scroll-btn left">‹</button>
-      <div class="menu-container">
-        <div class="card fade-in">
-          <img src="https://images.unsplash.com/photo-1626645738196-c2a7c87a8f58?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="Ayam Panggang">
-          <h3>Ayam Panggang</h3>
-          <p class="description">Ayam panggang dengan bumbu rempah pilihan</p>
-          <p class="price">Rp 25.000</p>
-          <div class="action-buttons">
-            <button class="view-btn" onclick="showMenuDetail('Ayam Panggang', 25000, 'https://images.unsplash.com/photo-1626645738196-c2a7c87a8f58?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80', 'Ayam panggang dengan bumbu rempah pilihan', ['Ayam kampung pilihan', 'Bumbu rempah tradisional', 'Dipanggang dengan teknik khusus', 'Sajian hangat langsung dari oven'])">Lihat</button>
-            <button class="add-btn" onclick="addToCart('Ayam Panggang', 25000)">Tambah</button>
-          </div>
-        </div>
-        <div class="card fade-in">
-          <img src="https://images.unsplash.com/photo-1563245372-f21724e3856d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="Nasi Tumpeng">
-          <h3>Nasi Tumpeng</h3>
-          <p class="description">Nasi tumpeng dengan lauk-pauk komplit</p>
-          <p class="price">Rp 150.000</p>
-          <div class="action-buttons">
-            <button class="view-btn" onclick="showMenuDetail('Nasi Tumpeng', 150000, 'https://images.unsplash.com/photo-1563245372-f21724e3856d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80', 'Nasi tumpeng dengan lauk-pauk komplit', ['Nasi kuning berbentuk tumpeng', 'Ayam goreng dan bakar', 'Telur balado', 'Perkedel kentang', 'Ikan teri kacang', 'Sayur urap'])">Lihat</button>
-            <button class="add-btn" onclick="addToCart('Nasi Tumpeng', 150000)">Tambah</button>
-          </div>
-        </div>
-        <div class="card fade-in">
-          <img src="https://images.unsplash.com/photo-1563729784474-d77dbb933a9e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1287&q=80" alt="Jajanan">
-          <h3>Jajanan Tradisional</h3>
-          <p class="description">Berbagai jajanan tradisional Indonesia</p>
-          <p class="price">Rp 1.000/PCS</p>
-          <div class="action-buttons">
-            <button class="view-btn" onclick="showMenuDetail('Jajanan Tradisional', 1000, 'https://images.unsplash.com/photo-1563729784474-d77dbb933a9e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1287&q=80', 'Berbagai jajanan tradisional Indonesia', ['Klepon', 'Lumpur', 'Dadar gulung', 'Putu ayu', 'Kue cucur', 'Serabi'])">Lihat</button>
-            <button class="add-btn" onclick="addToCart('Jajanan Tradisional', 1000)">Tambah</button>
-          </div>
-        </div>
-        <div class="card fade-in">
-          <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1081&q=80" alt="Nasi Goreng">
-          <h3>Nasi Kuning</h3>
-          <p class="description">Nasi goreng dengan bumbu rahasia keluarga</p>
-          <p class="price">Rp 30.000</p>
-          <div class="action-buttons">
-            <button class="view-btn" onclick="showMenuDetail('Nasi Goreng Spesial', 30000, 'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1081&q=80', 
-            'dengan bumbu rahasia keluarga', ['Nasi putih premium', 'Ayam suwir', 'Udang segar', 'Telur mata sapi', 'Kerupuk', 'Acar timun'])">Lihat</button>
-            <button class="add-btn" onclick="addToCart('Nasi Goreng Spesial', 30000)">Tambah</button>
-          </div>
-        </div>
-        <div class="card fade-in">
-          <img src="https://images.unsplash.com/photo-1563379926898-05f4575a45d8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="Gado-gado">
-          <h3>Gado-gado</h3>
-          <p class="description">Sayuran segar dengan bumbu kacang spesial</p>
-          <p class="price">Rp 22.000</p>
-          <div class="action-buttons">
-            <button class="view-btn" onclick="showMenuDetail('Gado-gado', 22000, 'https://images.unsplash.com/photo-1563379926898-05f4575a45d8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80', 'Sayuran segar dengan bumbu kacang spesial', ['Sayuran segar rebus', 'Bumbu kacang khas', 'Kerupuk', 'Telur rebus', 'Tahu dan tempe', 'Lontong'])">Lihat</button>
-            <button class="add-btn" onclick="addToCart('Gado-gado', 22000)">Tambah</button>
-          </div>
-        </div>
-        <div class="card fade-in">
-          <img src="https://images.unsplash.com/photo-1598515214211-89d3c73ae83b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="Sate Ayam">
-          <h3>Apapun itu</h3>
-          <p class="description">Sate ayam dengan bumbu kacang khas</p>
-          <p class="price">Rp 35.000</p>
-          <div class="action-buttons">
-            <button class="view-btn" onclick="showMenuDetail('Sate Ayam', 35000, 'https://images.unsplash.com/photo-1598515214211-89d3c73ae83b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80', 'Sate ayam dengan bumbu kacang khas', ['Daging ayam pilihan', 'Bumbu kacang spesial', 'Kecap manis', 'Bawang goreng', 'Lontong', 'Irisan cabai'])">Lihat</button>
-            <button class="add-btn" onclick="addToCart('Sate Ayam', 35000)">Tambah</button>
-          </div>
-        </div>
-        <div class="card fade-in">
-          <img src="https://images.unsplash.com/photo-1586190848861-99aa4a171e90?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1180&q=80" alt="Bakso">
-          <h3>Bakso B2</h3>
-          <p class="description">Bakso daging B2 dengan kuah kaldu spesial</p>
-          <p class="price">Rp 28.000</p>
-          <div class="action-buttons">
-            <button class="view-btn" onclick="showMenuDetail('Bakso Malang', 28000, 'https://images.unsplash.com/photo-1586190848861-99aa4a171e90?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1180&q=80', 'Bakso daging sapi dengan kuah kaldu spesial', ['Bakso daging sapi', 'Kuah kaldu sapi', 'Mie kuning', 'Tahu goreng', 'Pangsit goreng', 'Daun bawang'])">Lihat</button>
-            <button class="add-btn" onclick="addToCart('Bakso Malang', 28000)">Tambah</button>
-          </div>
-        </div>
+      <?php
+include '../config/koneksi.php';
+$query = mysqli_query($koneksi, "SELECT * FROM menu");
+?>
+
+<div class="menu-container">
+  <?php while ($data = mysqli_fetch_assoc($query)) : ?>
+    <div class="card fade-in">
+      <img src="../asset/uploads/<?php echo $data['gambar']; ?>" alt="<?php echo $data['nama_menu']; ?>">
+      <h3><?php echo $data['nama_menu']; ?></h3>
+      <p class="description"><?php echo $data['deskripsi']; ?></p>
+      <p class="price">Rp <?php echo number_format($data['harga_menu'], 0, ',', '.'); ?></p>
+      <div class="action-buttons">
+        <button class="view-btn"
+          onclick="showMenuDetail('<?php echo addslashes($data['nama_menu']); ?>',
+                                  <?php echo $data['harga_menu']; ?>,
+                                  '../asset/uploads/<?php echo $data['gambar']; ?>',
+                                  '<?php echo addslashes($data['deskripsi']); ?>',
+                                  ['Bahan belum ditentukan'])">
+          Lihat
+        </button>
+
+        <button class="add-btn"
+          onclick="addToCart('<?php echo addslashes($data['nama_menu']); ?>', <?php echo $data['harga_menu']; ?>)">
+          Tambah
+        </button>
       </div>
+    </div>
+  <?php endwhile; ?>
+</div>
+
       <!-- tombol kanan -->
     <button class="scroll-btn right">›</button>
   </section>
