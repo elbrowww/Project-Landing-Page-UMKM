@@ -500,20 +500,75 @@ function updateCartCount() {
   </div>
 </div>
 
+<!-- MINI POPUP DI BAWAH KERANJANG -->
+<div id="bottomPopup" class="hidden fixed bottom-0 right-0 w-80 bg-white shadow-2xl border-t border-gray-300 z-40 p-4">
+  <div class="flex justify-between items-center">
+    <div>
+      <p class="font-semibold text-purple-700" id="popupItemName"></p>
+      <p class="text-sm text-gray-500" id="popupItemPrice"></p>
+    </div>
+    <div class="flex items-center gap-2">
+      <button id="minusQty" class="text-purple-600 font-bold text-lg">-</button>
+      <span id="popupQty" class="text-lg font-semibold">1</span>
+      <button id="plusQty" class="text-purple-600 font-bold text-lg">+</button>
+    </div>
+  </div>
+
+  <div class="flex justify-between items-center mt-3">
+    <span class="font-semibold">Total:</span>
+    <span id="popupTotal" class="font-bold text-purple-700">Rp 0</span>
+  </div>
+
+  <div class="flex justify-end gap-2 mt-3">
+    <button id="cancelPopup" class="border px-3 py-1 rounded-lg text-sm">Batal</button>
+    <button id="addToCartPopup" class="bg-purple-600 text-white px-3 py-1 rounded-lg text-sm">Tambah</button>
+  </div>
+</div>
+
+<!-- POPUP DI BAWAH IKON KERANJANG -->
+<div id="cartPopup" class="hidden fixed top-16 right-6 w-72 bg-white shadow-2xl rounded-xl border border-gray-200 p-4 z-50">
+  <div class="flex justify-between items-start">
+    <div>
+      <p class="font-semibold text-purple-700" id="popupName"></p>
+      <p class="text-sm text-gray-500" id="popupPrice"></p>
+    </div>
+    <button id="popupClose" class="text-gray-500 hover:text-red-500 text-xl leading-none">&times;</button>
+  </div>
+
+  <div class="flex justify-between items-center mt-3">
+    <div class="flex items-center gap-2">
+      <button id="popupMinus" class="text-purple-600 font-bold text-lg">-</button>
+      <span id="popupQty" class="text-lg font-semibold">1</span>
+      <button id="popupPlus" class="text-purple-600 font-bold text-lg">+</button>
+    </div>
+    <div class="text-right">
+      <span class="text-sm font-semibold">Total:</span>
+      <p id="popupTotal" class="text-purple-700 font-bold text-lg">Rp 0</p>
+    </div>
+  </div>
+
+  <div class="flex justify-end gap-2 mt-4">
+    <button id="popupCancel" class="border border-gray-300 px-3 py-1 rounded-lg text-sm">Batal</button>
+    <button id="popupAdd" class="bg-purple-600 text-white px-3 py-1 rounded-lg text-sm hover:bg-purple-700">Tambah ke Keranjang</button>
+  </div>
+</div>
+
 <script>
-// --- LOGIKA POPUP ---
-const popup = document.getElementById('orderPopup');
-const popupItemName = document.getElementById('popupItemName');
-const popupItemPrice = document.getElementById('popupItemPrice');
+// === POPUP DI BAWAH IKON KERANJANG ===
+const cartPopup = document.getElementById('cartPopup');
+const popupName = document.getElementById('popupName');
+const popupPrice = document.getElementById('popupPrice');
 const popupQty = document.getElementById('popupQty');
 const popupTotal = document.getElementById('popupTotal');
-const addToCartPopup = document.getElementById('addToCartPopup');
-const cancelPopup = document.getElementById('cancelPopup');
-const plusQty = document.getElementById('plusQty');
-const minusQty = document.getElementById('minusQty');
+const popupClose = document.getElementById('popupClose');
+const popupPlus = document.getElementById('popupPlus');
+const popupMinus = document.getElementById('popupMinus');
+const popupAdd = document.getElementById('popupAdd');
+const popupCancel = document.getElementById('popupCancel');
 
-let selectedItem = { name: '', price: 0, qty: 1 };
+let currentPopupItem = { name: '', price: 0, qty: 1 };
 
+// Saat klik "Pesan Sekarang"
 document.querySelectorAll('.menu-item button').forEach(btn => {
   btn.addEventListener('click', e => {
     e.preventDefault();
@@ -522,40 +577,45 @@ document.querySelectorAll('.menu-item button').forEach(btn => {
     const priceText = card.querySelector('.text-purple-600').textContent.replace('Rp','').replace(/\./g,'').trim();
     const price = parseInt(priceText);
 
-    selectedItem = { name, price, qty: 1 };
-    popupItemName.textContent = name;
-    popupItemPrice.textContent = 'Rp ' + price.toLocaleString();
+    currentPopupItem = { name, price, qty: 1 };
+    popupName.textContent = name;
+    popupPrice.textContent = 'Rp ' + price.toLocaleString();
     popupQty.textContent = 1;
     popupTotal.textContent = 'Rp ' + price.toLocaleString();
-    popup.classList.remove('hidden');
+    cartPopup.classList.remove('hidden');
   });
 });
 
-plusQty.addEventListener('click', () => {
-  selectedItem.qty++;
-  popupQty.textContent = selectedItem.qty;
-  popupTotal.textContent = 'Rp ' + (selectedItem.price * selectedItem.qty).toLocaleString();
+// Tombol + dan -
+popupPlus.addEventListener('click', () => {
+  currentPopupItem.qty++;
+  popupQty.textContent = currentPopupItem.qty;
+  popupTotal.textContent = 'Rp ' + (currentPopupItem.price * currentPopupItem.qty).toLocaleString();
 });
 
-minusQty.addEventListener('click', () => {
-  if (selectedItem.qty > 1) {
-    selectedItem.qty--;
-    popupQty.textContent = selectedItem.qty;
-    popupTotal.textContent = 'Rp ' + (selectedItem.price * selectedItem.qty).toLocaleString();
+popupMinus.addEventListener('click', () => {
+  if (currentPopupItem.qty > 1) {
+    currentPopupItem.qty--;
+    popupQty.textContent = currentPopupItem.qty;
+    popupTotal.textContent = 'Rp ' + (currentPopupItem.price * currentPopupItem.qty).toLocaleString();
   }
 });
 
-cancelPopup.addEventListener('click', () => {
-  popup.classList.add('hidden');
-});
+// Tutup popup
+popupClose.addEventListener('click', () => cartPopup.classList.add('hidden'));
+popupCancel.addEventListener('click', () => cartPopup.classList.add('hidden'));
 
-addToCartPopup.addEventListener('click', () => {
-  addToCart(selectedItem.name, selectedItem.price);
-  for (let i = 1; i < selectedItem.qty; i++) addToCart(selectedItem.name, selectedItem.price);
-  popup.classList.add('hidden');
-  cartSidebar.classList.remove('translate-x-full');
+// Tambah ke keranjang
+popupAdd.addEventListener('click', () => {
+  for (let i = 0; i < currentPopupItem.qty; i++) {
+    addToCart(currentPopupItem.name, currentPopupItem.price);
+  }
+  updateCart();
+  cartSidebar.classList.remove('translate-x-full'); // buka sidebar langsung
+  cartPopup.classList.add('hidden');
 });
 </script>
+
 
 
 </body>
