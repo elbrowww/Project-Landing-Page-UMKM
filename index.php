@@ -422,86 +422,84 @@
   </div>
 </div>
 
+<!-- POPUP KONFIRMASI PESAN -->
+<div id="orderPopup" class="hidden fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+  <div class="bg-white rounded-lg p-6 w-80">
+    <h3 class="text-lg font-semibold mb-2" id="popupItemName"></h3>
+    <p class="text-gray-600 mb-4" id="popupItemPrice"></p>
+    <div class="flex justify-center items-center gap-4 mb-4">
+      <button id="minusQty" class="text-purple-600 text-xl font-bold">-</button>
+      <span id="popupQty" class="text-lg font-semibold">1</span>
+      <button id="plusQty" class="text-purple-600 text-xl font-bold">+</button>
+    </div>
+    <div class="flex justify-between items-center font-semibold mb-4">
+      <span>Total:</span>
+      <span id="popupTotal">Rp 0</span>
+    </div>
+    <div class="flex justify-end gap-2">
+      <button id="cancelPopup" class="px-3 py-2 border rounded-lg">Lanjut Belanja</button>
+      <button id="addToCartPopup" class="bg-purple-600 text-white px-3 py-2 rounded-lg">Lihat Keranjang</button>
+    </div>
+  </div>
+</div>
+
 <script>
-// ==================== LOGIKA KERANJANG ====================
-const cartBtn = document.querySelector('.fa-cart-shopping')?.parentElement;
-const cartSidebar = document.getElementById('cartSidebar');
-const closeCart = document.getElementById('closeCart');
-const cartCount = document.getElementById('cart-count');
-const cartItemsContainer = document.getElementById('cartItems');
-const cartTotal = document.getElementById('cartTotal');
+// --- LOGIKA POPUP ---
+const popup = document.getElementById('orderPopup');
+const popupItemName = document.getElementById('popupItemName');
+const popupItemPrice = document.getElementById('popupItemPrice');
+const popupQty = document.getElementById('popupQty');
+const popupTotal = document.getElementById('popupTotal');
+const addToCartPopup = document.getElementById('addToCartPopup');
+const cancelPopup = document.getElementById('cancelPopup');
+const plusQty = document.getElementById('plusQty');
+const minusQty = document.getElementById('minusQty');
 
-let cart = [];
+let selectedItem = { name: '', price: 0, qty: 1 };
 
-// Buka & Tutup Sidebar Keranjang
-if (cartBtn) {
-  cartBtn.addEventListener('click', e => {
-    e.preventDefault();
-    cartSidebar.classList.remove('translate-x-full');
-  });
-}
-if (closeCart) {
-  closeCart.addEventListener('click', () => {
-    cartSidebar.classList.add('translate-x-full');
-  });
-}
-
-// Tombol "Pesan Sekarang"
 document.querySelectorAll('.menu-item button').forEach(btn => {
   btn.addEventListener('click', e => {
     e.preventDefault();
     const card = e.target.closest('.menu-item');
-    if (!card) return;
-    const name = card.querySelector('h3')?.textContent || 'Menu';
-    const priceText = card.querySelector('.text-purple-600')?.textContent || '0';
-    const price = parseInt(priceText.replace(/[^\d]/g, '')) || 0;
+    const name = card.querySelector('h3').textContent;
+    const priceText = card.querySelector('.text-purple-600').textContent.replace('Rp','').replace(/\./g,'').trim();
+    const price = parseInt(priceText);
 
-    addToCart(name, price);
+    selectedItem = { name, price, qty: 1 };
+    popupItemName.textContent = name;
+    popupItemPrice.textContent = 'Rp ' + price.toLocaleString();
+    popupQty.textContent = 1;
+    popupTotal.textContent = 'Rp ' + price.toLocaleString();
+    popup.classList.remove('hidden');
   });
 });
 
-function addToCart(name, price) {
-  const existing = cart.find(item => item.name === name);
-  if (existing) {
-    existing.qty++;
-  } else {
-    cart.push({ name, price, qty: 1 });
+plusQty.addEventListener('click', () => {
+  selectedItem.qty++;
+  popupQty.textContent = selectedItem.qty;
+  popupTotal.textContent = 'Rp ' + (selectedItem.price * selectedItem.qty).toLocaleString();
+});
+
+minusQty.addEventListener('click', () => {
+  if (selectedItem.qty > 1) {
+    selectedItem.qty--;
+    popupQty.textContent = selectedItem.qty;
+    popupTotal.textContent = 'Rp ' + (selectedItem.price * selectedItem.qty).toLocaleString();
   }
-  updateCart();
-}
+});
 
-function updateCart() {
-  cartItemsContainer.innerHTML = '';
-  let total = 0;
-  cart.forEach((item, index) => {
-    total += item.price * item.qty;
+cancelPopup.addEventListener('click', () => {
+  popup.classList.add('hidden');
+});
 
-    const div = document.createElement('div');
-    div.classList.add('flex','justify-between','items-center','border-b','pb-2');
-    div.innerHTML = `
-      <div>
-        <p class="font-semibold">${item.name}</p>
-        <p class="text-sm text-gray-500">Rp ${item.price.toLocaleString()}</p>
-      </div>
-      <div class="flex items-center gap-2">
-        <button class="text-purple-600 font-bold" onclick="changeQty(${index}, -1)">-</button>
-        <span>${item.qty}</span>
-        <button class="text-purple-600 font-bold" onclick="changeQty(${index}, 1)">+</button>
-      </div>
-    `;
-    cartItemsContainer.appendChild(div);
-  });
-
-  cartTotal.textContent = 'Rp ' + total.toLocaleString();
-  if (cartCount) cartCount.textContent = cart.reduce((a,b) => a+b.qty, 0);
-}
-
-function changeQty(index, amount) {
-  cart[index].qty += amount;
-  if (cart[index].qty <= 0) cart.splice(index, 1);
-  updateCart();
-}
+addToCartPopup.addEventListener('click', () => {
+  addToCart(selectedItem.name, selectedItem.price);
+  for (let i = 1; i < selectedItem.qty; i++) addToCart(selectedItem.name, selectedItem.price);
+  popup.classList.add('hidden');
+  cartSidebar.classList.remove('translate-x-full');
+});
 </script>
+
 
 </body>
 </html>
