@@ -599,57 +599,10 @@ function updateCartCount() {
 </div>
 
 <!-- === POPUP KERANJANG DI KANAN ATAS === -->
-<div id="cartPopup" class="fixed top-20 right-4 bg-white shadow-2xl rounded-lg p-4 w-72 border z-50 hidden">
-  <h3 class="text-lg font-semibold mb-2 text-purple-700">Keranjang</h3>
-  <div id="popupItems" class="space-y-2 max-h-60 overflow-y-auto"></div>
-  <div class="flex justify-between mt-3 font-semibold">
-    <span>Total:</span>
-    <span id="popupTotal">Rp 0</span>
-  </div>
-</div>
 
-<div id="cartPopup" class="hidden fixed top-16 right-6 w-72 bg-white shadow-2xl rounded-xl border border-gray-200 p-4 z-50">
-  <div class="flex justify-between items-start">
-    <div>
-      <p class="font-semibold text-purple-700" id="popupName"></p>
-      <p class="text-sm text-gray-500" id="popupPrice"></p>
-    </div>
-    <button id="popupClose" class="text-gray-500 hover:text-red-500 text-xl leading-none">&times;</button>
-  </div>
-
-  <div class="flex justify-between items-center mt-3">
-    <div class="flex items-center gap-2">
-      <button id="popupMinus" class="text-purple-600 font-bold text-lg">−</button>
-      <span id="popupQty" class="text-lg font-semibold">1</span>
-      <button id="popupPlus" class="text-purple-600 font-bold text-lg">+</button>
-    </div>
-    <div class="text-right">
-      <span class="text-sm font-semibold">Total:</span>
-      <p id="popupTotal" class="text-purple-700 font-bold text-lg">Rp 0</p>
-    </div>
-  </div>
-
-  <div class="flex justify-end gap-2 mt-4">
-    <button id="popupCancel" class="border border-gray-300 px-3 py-1 rounded-lg text-sm">Batal</button>
-    <button id="popupAdd" class="bg-purple-600 text-white px-3 py-1 rounded-lg text-sm hover:bg-purple-700">Tambah ke Keranjang</button>
-  </div>
-</div>
 
 <!-- ================= MINI CART (keranjang muncul dari kanan) ================= -->
-<div id="cartSidebar" class="fixed top-0 right-0 w-80 h-full bg-white shadow-2xl transform translate-x-full transition-transform duration-300 z-50 overflow-y-auto">
-  <div class="p-4 border-b flex justify-between items-center">
-    <h2 class="text-xl font-bold text-purple-700">Keranjang</h2>
-    <button id="closeCart" class="text-gray-500 hover:text-red-500 text-xl">&times;</button>
-  </div>
-  <div id="cartItems" class="p-4 space-y-4"></div>
-  <div class="p-4 border-t">
-    <div class="flex justify-between font-semibold text-lg mb-4">
-      <span>Total:</span>
-      <span id="cartTotal">Rp 0</span>
-    </div>
-    <button class="w-full bg-purple-600 text-white py-3 rounded-lg hover:bg-purple-700 transition">Checkout</button>
-  </div>
-</div>
+
 
 <script>
 // ==================== LOGIKA KERANJANG ====================
