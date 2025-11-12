@@ -397,6 +397,9 @@
  
   <script src="asset/js/HalamanUser.js"></script>
 
+
+
+
   <script>
   const container = document.getElementById('menuContainer');
   const scrollLeftBtn = document.getElementById('scrollLeft');
@@ -683,6 +686,169 @@ function changeQty(index, amount) {
   if (cart[index].qty <= 0) cart.splice(index, 1);
   updateCart();
 }
+</script>
+
+<script>
+// ==========================
+// SISTEM KERANJANG PENUH
+// ==========================
+
+// Saat klik tombol tambah keranjang
+function addToCart(name, price) {
+  // Ambil isi lama
+  let cart = JSON.parse(localStorage.getItem("cart") || "[]");
+
+  // Tambahkan item baru
+  cart.push({ name: name, price: price });
+
+  // Simpan ke localStorage
+  localStorage.setItem("cart", JSON.stringify(cart));
+  localStorage.setItem("cartCount", cart.length);
+
+  // Perbarui tampilan
+  updateCartDisplay();
+}
+
+// Render ulang isi keranjang
+function renderCart() {
+  const cartItemsContainer = document.getElementById("cartItems");
+  const totalPriceElement = document.getElementById("cartTotal");
+  let cart = JSON.parse(localStorage.getItem("cart") || "[]");
+
+  if (!cartItemsContainer || !totalPriceElement) return;
+
+  cartItemsContainer.innerHTML = "";
+  let total = 0;
+
+  if (cart.length === 0) {
+    totalPriceElement.textContent = "Rp 0";
+    return;
+  }
+
+  cart.forEach(item => {
+    const div = document.createElement("div");
+    div.className = "flex justify-between items-center border-b py-2";
+    div.innerHTML = `
+      <div>
+        <p class="font-semibold">${item.name}</p>
+        <p class="text-sm text-gray-500">Rp ${item.price.toLocaleString()}</p>
+      </div>
+    `;
+    cartItemsContainer.appendChild(div);
+    total += item.price;
+  });
+
+  totalPriceElement.textContent = "Rp " + total.toLocaleString();
+}
+
+// Perbarui angka di ikon keranjang
+function updateCartDisplay() {
+  const cartCountElement = document.getElementById("cartCount");
+  let cart = JSON.parse(localStorage.getItem("cart") || "[]");
+  if (cartCountElement) cartCountElement.textContent = cart.length;
+}
+
+// Bersihkan keranjang sepenuhnya
+function clearCart() {
+  localStorage.removeItem("cart");
+  localStorage.setItem("cartCount", 0);
+  updateCartDisplay();
+  renderCart();
+}
+
+// Saat halaman dimuat ulang
+document.addEventListener("DOMContentLoaded", () => {
+  // Jangan hapus localStorage!
+  // Render ulang data yang sudah ada
+  updateCartDisplay();
+  renderCart();
+});
+</script>
+
+<script>
+  // === FUNGSI TAMBAH ITEM KE KERANJANG ===
+  function addToCart(name, price) {
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+    // Cek apakah item sudah ada di cart
+    const existing = cart.find(item => item.name === name);
+    if (existing) {
+      existing.quantity++;
+    } else {
+      cart.push({ name, price, quantity: 1 });
+    }
+
+    localStorage.setItem('cart', JSON.stringify(cart));
+    updateCartSidebar();
+    updateCartCount();
+  }
+
+  // === FUNGSI UPDATE TAMPILAN KERANJANG SAMPING ===
+  function updateCartSidebar() {
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+    const cartItems = document.getElementById("cartItems");
+    const totalEl = document.getElementById("cartTotal");
+
+    cartItems.innerHTML = ""; // kosongkan dulu
+    let total = 0;
+
+    cart.forEach((item, index) => {
+      total += item.price * item.quantity;
+
+      const div = document.createElement("div");
+      div.classList.add("flex", "justify-between", "items-center", "border-b", "pb-2");
+
+      div.innerHTML = `
+        <div>
+          <p class="font-semibold">${item.name}</p>
+          <p class="text-gray-500 text-sm">Rp ${item.price.toLocaleString()}</p>
+        </div>
+        <div class="flex items-center space-x-2">
+          <button onclick="decreaseQuantity(${index})" class="bg-purple-100 px-2 rounded hover:bg-purple-200">−</button>
+          <span>${item.quantity}</span>
+          <button onclick="increaseQuantity(${index})" class="bg-purple-100 px-2 rounded hover:bg-purple-200">+</button>
+        </div>
+      `;
+      cartItems.appendChild(div);
+    });
+
+    totalEl.textContent = `Rp ${total.toLocaleString()}`;
+  }
+
+  // === FUNGSI TAMBAH & KURANG JUMLAH ===
+  function increaseQuantity(index) {
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+    cart[index].quantity++;
+    localStorage.setItem('cart', JSON.stringify(cart));
+    updateCartSidebar();
+    updateCartCount();
+  }
+
+  function decreaseQuantity(index) {
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+    if (cart[index].quantity > 1) {
+      cart[index].quantity--;
+    } else {
+      cart.splice(index, 1); // hapus kalau jumlah tinggal 1
+    }
+    localStorage.setItem('cart', JSON.stringify(cart));
+    updateCartSidebar();
+    updateCartCount();
+  }
+
+  // === FUNGSI JUMLAH ITEM DI IKON KERANJANG ===
+  function updateCartCount() {
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+    const count = cart.reduce((sum, item) => sum + item.quantity, 0);
+    const badge = document.getElementById("cartCount");
+    if (badge) badge.textContent = count;
+  }
+
+  // === INISIALISASI SAAT HALAMAN DIMUAT ===
+  document.addEventListener("DOMContentLoaded", () => {
+    updateCartSidebar();
+    updateCartCount();
+  });
 </script>
 
 </body>
