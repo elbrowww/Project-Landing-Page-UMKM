@@ -145,7 +145,7 @@
     data-name="<?php echo $data['nama_menu']; ?>"
     data-price="<?php echo $data['harga_menu']; ?>"
     data-image="asset/uploads/<?php echo $data['gambar']; ?>">
-    Pesan Sekarang
+    Tambah Keranjang
   </button>
 </div>
 

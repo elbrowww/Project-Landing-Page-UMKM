@@ -58,11 +58,6 @@
   </div>
 
   <div class="form-group">
-    <label for="email"><i class="fas fa-envelope"></i> Email</label>
-    <input type="email" id="email" placeholder="contoh@email.com" required>
-  </div>
-
-  <div class="form-group">
     <label for="alamat"><i class="fas fa-map-marker-alt"></i> Alamat Lengkap</label>
     <textarea id="alamat" rows="3" placeholder="Masukkan alamat lengkap Anda" required></textarea>
   </div>
