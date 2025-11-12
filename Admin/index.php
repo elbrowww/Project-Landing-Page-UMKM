@@ -103,7 +103,7 @@ if (isset($_POST['simpan'])) {
           <ul class="dropdown-menu dropdown-menu-end">
             <li><a class="dropdown-item" href="#"><i class="fas fa-user"></i> Profil</a></li>
             <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item text-danger" href="logout.php"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+            <li><a class="dropdown-item text-danger" href="../config/logout.php"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
           </ul>
         </li>
       </ul>
