@@ -28,13 +28,7 @@
     </nav>
   </header>
 
-  <section class="hero" id="home">
-    <div class="hero-text">
-      <h1>Pesan <span>Makanan Favoritmu</span></h1>
-      <p>Pilih menu terbaik kami dan nikmati makanan sehat setiap hari!</p>
-    </div>
-  </section>
-
+  
  
 
     
