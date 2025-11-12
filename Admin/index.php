@@ -158,9 +158,7 @@ if (isset($_POST['simpan'])) {
       </div>
     </div>
 
-    <hr>
-    <h4 class="mt-4">📊 Rekapan Penjualan</h4>
-    <canvas id="chartPenjualan" height="100"></canvas>
+    
   </div>
 
 </div>
