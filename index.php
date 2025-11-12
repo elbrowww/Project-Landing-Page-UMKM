@@ -478,7 +478,7 @@ function updateCartCount() {
       <span>Total:</span>
       <span id="cartTotal">Rp 0</span>
     </div>
-    <button class="w-full bg-purple-600 text-white py-3 rounded-lg hover:bg-purple-700 transition">Checkout</button>
+    <button class="w-full bg-purple-600 text-white py-3 rounded-lg hover:bg-purple-700 transition">Pesan Sekarang</button>
   </div>
 </div>
 
