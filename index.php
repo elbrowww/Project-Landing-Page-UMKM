@@ -478,7 +478,22 @@ function updateCartCount() {
       <span>Total:</span>
       <span id="cartTotal">Rp 0</span>
     </div>
-    <button class="w-full bg-purple-600 text-white py-3 rounded-lg hover:bg-purple-700 transition">Pesan Sekarang</button>
+    <button id="pesanSekarangBtn" 
+  class="w-full bg-purple-600 text-white py-3 rounded-lg hover:bg-purple-700 transition">
+  Pesan Sekarang
+</button>
+
+    <script>
+ document.getElementById("pesanSekarangBtn").addEventListener("click", function() {
+  window.location.href = "../Project-Landing-Page-UMKM/checkout/checkout.php";
+});
+
+
+  // (Opsional) tombol untuk menutup keranjang
+  document.getElementById("closeCart").addEventListener("click", function() {
+    document.getElementById("cartSidebar").classList.add("translate-x-full");
+  });
+</script>
   </div>
 </div>
 
