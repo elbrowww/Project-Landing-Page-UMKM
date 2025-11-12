@@ -660,7 +660,7 @@ if (closeCart) {
   });
 }
 
-// Tombol "Pesan Sekarang"
+// Tombol "Tambah Keranjang"
 document.querySelectorAll('.menu-item button').forEach(btn => {
   btn.addEventListener('click', e => {
     e.preventDefault();
