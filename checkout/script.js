@@ -1,7 +1,5 @@
 let cart = [];
 
-
-
 // 🔽 Tambahkan mulai dari sini
 function showRekeningInfo() {
   const rekeningSelect = document.getElementById('rekening');
@@ -28,10 +26,9 @@ function showRekeningInfo() {
   function checkout() {
   const nama = document.getElementById("nama").value;
   const telp = document.getElementById("telp").value;
-  const email = document.getElementById("email").value;
   const alamat = document.getElementById("alamat").value;
 
-  if (!nama || !telp || !email || !alamat) {
+  if (!nama || !telp || !alamat) {
     alert("Harap lengkapi semua data pemesan sebelum checkout!");
     return;
   }
@@ -39,23 +36,6 @@ function showRekeningInfo() {
   // Lanjutkan proses checkout
   alert(`Terima kasih ${nama}! Pesananmu sedang diproses.`);
 }
-
-  // Geser ke kiri
-  leftBtn.addEventListener('click', () => {
-    menuContainer.scrollBy({
-      left: -300, // jumlah pixel geser ke kiri
-      behavior: 'smooth'
-    });
-  });
-
-  // Geser ke kanan
-  rightBtn.addEventListener('click', () => {
-    menuContainer.scrollBy({
-      left: 300, // jumlah pixel geser ke kanan
-      behavior: 'smooth'
-    });
-  });
-
   
   const metode = document.getElementById("metodePembayaran");
   const rekeningTransfer = document.getElementById("rekeningTransfer");
@@ -72,18 +52,17 @@ function showRekeningInfo() {
   // Ambil data dari form
   const nama = document.getElementById('nama').value.trim();
   const telp = document.getElementById('telp').value.trim();
-  const email = document.getElementById('email').value.trim();
   const alamat = document.getElementById('alamat').value.trim();
   const rekening = document.getElementById('rekening').value;
 
   // Validasi input
-  if (!nama || !telp || !email || !alamat || !rekening) {
+  if (!nama || !telp || !alamat || !rekening) {
     alert("⚠️ Harap lengkapi semua data pemesan sebelum checkout!");
     return;
   }
 
   // Pop-up sukses
-  alert("✅ Pesanan sedang diproses!\nTerima kasih telah memesan di Dapur Bu Mon 🍲");
+  alert("✅ Pesanan sedang diproses!\nTerima kasih telah memesan di Dapur Bu Mon ");
 
   // Hapus keranjang setelah checkout
   localStorage.removeItem("cart");
