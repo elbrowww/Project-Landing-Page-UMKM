@@ -35,45 +35,9 @@
     </div>
   </section>
 
-  <section class="menu" id="menu">
-    <h2>Daftar Menu</h2>
-    <div class="menu-container-wrapper">
-    <!-- 🔽 Tombol kiri -->
-    <button class="scroll-btn left">‹</button>
-      <?php
-include '../config/koneksi.php';
-$query = mysqli_query($koneksi, "SELECT * FROM menu");
-?>
+ 
 
-<div class="menu-container">
-  <?php while ($data = mysqli_fetch_assoc($query)) : ?>
-    <div class="card fade-in">
-      <img src="../asset/uploads/<?php echo $data['gambar']; ?>" alt="<?php echo $data['nama_menu']; ?>">
-      <h3><?php echo $data['nama_menu']; ?></h3>
-      <p class="description"><?php echo $data['deskripsi']; ?></p>
-      <p class="price">Rp <?php echo number_format($data['harga_menu'], 0, ',', '.'); ?></p>
-      <div class="action-buttons">
-        <button class="view-btn"
-          onclick="showMenuDetail('<?php echo addslashes($data['nama_menu']); ?>',
-                                  <?php echo $data['harga_menu']; ?>,
-                                  '../asset/uploads/<?php echo $data['gambar']; ?>',
-                                  '<?php echo addslashes($data['deskripsi']); ?>',
-                                  ['Bahan belum ditentukan'])">
-          Lihat
-        </button>
-
-        <button class="add-btn"
-          onclick="addToCart('<?php echo addslashes($data['nama_menu']); ?>', <?php echo $data['harga_menu']; ?>)">
-          Tambah
-        </button>
-      </div>
-    </div>
-  <?php endwhile; ?>
-</div>
-
-      <!-- tombol kanan -->
-    <button class="scroll-btn right">›</button>
-  </section>
+    
 
   <!-- Modal untuk detail menu -->
   <div class="modal" id="menuModal">
