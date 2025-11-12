@@ -766,86 +766,94 @@ document.addEventListener("DOMContentLoaded", () => {
 </script>
 
 <script>
-  // === FUNGSI TAMBAH ITEM KE KERANJANG ===
+  // === TAMBAH ITEM KE KERANJANG ===
   function addToCart(name, price) {
     let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
-    // Cek apakah item sudah ada di cart
     const existing = cart.find(item => item.name === name);
     if (existing) {
-      existing.quantity++;
+      existing.quantity += 1;
     } else {
       cart.push({ name, price, quantity: 1 });
     }
 
     localStorage.setItem('cart', JSON.stringify(cart));
     updateCartSidebar();
-    updateCartCount();
+    updateCartCount(); // penting biar ikon update
   }
 
-  // === FUNGSI UPDATE TAMPILAN KERANJANG SAMPING ===
+  // === UPDATE JUMLAH ITEM DI IKON KERANJANG ===
+  function updateCartCount() {
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+    const totalCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+    const cartCount = document.getElementById('cartCount');
+    if (cartCount) cartCount.textContent = totalCount;
+  }
+
+  // === TAMPILKAN ITEM DI SIDEBAR ===
   function updateCartSidebar() {
     const cart = JSON.parse(localStorage.getItem('cart')) || [];
-    const cartItems = document.getElementById("cartItems");
-    const totalEl = document.getElementById("cartTotal");
+    const cartItems = document.getElementById('cartItems');
+    const totalEl = document.getElementById('cartTotal');
 
-    cartItems.innerHTML = ""; // kosongkan dulu
+    cartItems.innerHTML = '';
     let total = 0;
+
+    if (cart.length === 0) {
+      cartItems.innerHTML = `<p class="text-gray-500 text-center">Keranjang masih kosong</p>`;
+    }
 
     cart.forEach((item, index) => {
       total += item.price * item.quantity;
 
-      const div = document.createElement("div");
-      div.classList.add("flex", "justify-between", "items-center", "border-b", "pb-2");
+      const div = document.createElement('div');
+      div.classList.add('flex', 'justify-between', 'items-center', 'border-b', 'py-2');
 
       div.innerHTML = `
         <div>
-          <p class="font-semibold">${item.name}</p>
-          <p class="text-gray-500 text-sm">Rp ${item.price.toLocaleString()}</p>
+          <p class="font-semibold text-purple-700">${item.name}</p>
+          <p class="text-sm text-gray-500">Rp ${item.price.toLocaleString()}</p>
         </div>
         <div class="flex items-center space-x-2">
-          <button onclick="decreaseQuantity(${index})" class="bg-purple-100 px-2 rounded hover:bg-purple-200">−</button>
-          <span>${item.quantity}</span>
-          <button onclick="increaseQuantity(${index})" class="bg-purple-100 px-2 rounded hover:bg-purple-200">+</button>
+          <button class="bg-purple-100 px-2 rounded hover:bg-purple-200" data-action="decrease" data-index="${index}">−</button>
+          <span class="font-medium">${item.quantity}</span>
+          <button class="bg-purple-100 px-2 rounded hover:bg-purple-200" data-action="increase" data-index="${index}">+</button>
         </div>
       `;
+
       cartItems.appendChild(div);
     });
 
     totalEl.textContent = `Rp ${total.toLocaleString()}`;
   }
 
-  // === FUNGSI TAMBAH & KURANG JUMLAH ===
-  function increaseQuantity(index) {
-    let cart = JSON.parse(localStorage.getItem('cart')) || [];
-    cart[index].quantity++;
-    localStorage.setItem('cart', JSON.stringify(cart));
-    updateCartSidebar();
-    updateCartCount();
-  }
+  // === EVENT HANDLER UNTUK TOMBOL + / − ===
+  document.addEventListener('click', (e) => {
+    const btn = e.target;
+    const action = btn.getAttribute('data-action');
+    const index = btn.getAttribute('data-index');
 
-  function decreaseQuantity(index) {
-    let cart = JSON.parse(localStorage.getItem('cart')) || [];
-    if (cart[index].quantity > 1) {
-      cart[index].quantity--;
-    } else {
-      cart.splice(index, 1); // hapus kalau jumlah tinggal 1
+    if (action && index !== null) {
+      let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+      if (action === 'increase') {
+        cart[index].quantity += 1;
+      } else if (action === 'decrease') {
+        if (cart[index].quantity > 1) {
+          cart[index].quantity -= 1;
+        } else {
+          cart.splice(index, 1);
+        }
+      }
+
+      localStorage.setItem('cart', JSON.stringify(cart));
+      updateCartSidebar();
+      updateCartCount();
     }
-    localStorage.setItem('cart', JSON.stringify(cart));
-    updateCartSidebar();
-    updateCartCount();
-  }
+  });
 
-  // === FUNGSI JUMLAH ITEM DI IKON KERANJANG ===
-  function updateCartCount() {
-    const cart = JSON.parse(localStorage.getItem('cart')) || [];
-    const count = cart.reduce((sum, item) => sum + item.quantity, 0);
-    const badge = document.getElementById("cartCount");
-    if (badge) badge.textContent = count;
-  }
-
-  // === INISIALISASI SAAT HALAMAN DIMUAT ===
-  document.addEventListener("DOMContentLoaded", () => {
+  // === SAAT HALAMAN DIBUKA ===
+  document.addEventListener('DOMContentLoaded', () => {
     updateCartSidebar();
     updateCartCount();
   });
