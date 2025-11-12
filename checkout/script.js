@@ -154,3 +154,15 @@ function showRekeningInfo() {
       behavior: 'smooth'
     });
   });
+
+  
+  const metode = document.getElementById("metodePembayaran");
+  const rekeningTransfer = document.getElementById("rekeningTransfer");
+
+  metode.addEventListener("change", function() {
+    if (this.value === "transfer") {
+      rekeningTransfer.style.display = "block";
+    } else {
+      rekeningTransfer.style.display = "none";
+    }
+  });
