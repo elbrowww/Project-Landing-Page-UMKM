@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -139,6 +138,7 @@
       Rp <?php echo number_format($data['harga_menu'], 0, ',', '.'); ?>
     </p>
     <div class="text-center">
+      <from method='POST'action='config/detail_penjualan.php'></from>
   <button 
     class="add-to-cart bg-purple-600 text-white px-6 py-3 rounded-xl hover:bg-purple-700 transition"
     data-name="<?php echo $data['nama_menu']; ?>"
@@ -411,6 +411,144 @@
   scrollRightBtn.addEventListener('click', () => {
     container.scrollBy({ left: 300, behavior: 'smooth' });
   });
-  </script>
 
   
+// =========================
+// FUNGSI KERANJANG BELANJA
+// =========================
+
+// Ambil elemen
+const cartIcon = document.querySelector('.fa-cart-shopping');
+const cartCount = document.getElementById('cart-count');
+let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+// =========================
+// POPUP / SIDEBAR KERANJANG
+// =========================
+const cartSidebar = document.createElement('div');
+cartSidebar.id = "cartSidebar";
+cartSidebar.className = "fixed top-0 right-0 w-80 h-full bg-white shadow-2xl transform translate-x-full transition-transform duration-300 z-50 overflow-y-auto";
+
+cartSidebar.innerHTML = `
+  <div class="p-4 border-b flex justify-between items-center bg-purple-600 text-white">
+    <h2 class="text-xl font-bold">Keranjang</h2>
+    <button id="closeCart" class="text-white text-2xl">&times;</button>
+  </div>
+  <div id="cart-items" class="p-4 space-y-4"></div>
+  <div class="p-4 border-t">
+    <p class="font-semibold">Total: <span id="cart-total">Rp 0</span></p>
+    <button id="checkout-btn" class="w-full bg-purple-600 text-white mt-4 py-2 rounded-lg font-semibold hover:bg-purple-700 disabled:bg-gray-400">Pesan Sekarang</button>
+  </div>
+`;
+document.body.appendChild(cartSidebar);
+
+// Tombol buka/tutup keranjang
+cartIcon.addEventListener('click', () => {
+  cartSidebar.classList.remove('translate-x-full');
+});
+document.getElementById('closeCart').addEventListener('click', () => {
+  cartSidebar.classList.add('translate-x-full');
+});
+
+// =========================
+// TAMBAH MENU KE KERANJANG
+// =========================
+document.querySelectorAll('.add-to-cart').forEach(button => {
+  button.addEventListener('click', () => {
+    const name = button.dataset.name;
+    const price = parseInt(button.dataset.price);
+    const image = button.dataset.image;
+
+    const existingItem = cart.find(item => item.name === name);
+    if (existingItem) {
+      existingItem.quantity++;
+    } else {
+      cart.push({ name, price, image, quantity: 1 });
+    }
+
+    saveCart();
+    renderCart();
+  });
+});
+
+// =========================
+// SIMPAN DAN TAMPILKAN DATA
+// =========================
+function saveCart() {
+  localStorage.setItem('cart', JSON.stringify(cart));
+}
+
+function renderCart() {
+  const container = document.getElementById('cart-items');
+  const totalElement = document.getElementById('cart-total');
+  const checkoutBtn = document.getElementById('checkout-btn');
+
+  container.innerHTML = '';
+  let total = 0;
+  let totalItems = 0;
+
+  cart.forEach((item, index) => {
+    const subtotal = item.price * item.quantity;
+    total += subtotal;
+    totalItems += item.quantity;
+
+    const itemDiv = document.createElement('div');
+    itemDiv.className = 'flex items-center justify-between border-b pb-2';
+    itemDiv.innerHTML = `
+      <div class="flex items-center gap-3">
+        <img src="${item.image}" alt="${item.name}" class="w-12 h-12 rounded-lg object-cover">
+        <div>
+          <p class="font-semibold">${item.name}</p>
+          <p class="text-sm text-gray-500">Rp ${item.price.toLocaleString('id-ID')}</p>
+        </div>
+      </div>
+      <div class="flex items-center gap-2">
+        <button class="decrease bg-gray-200 px-2 rounded" data-index="${index}">-</button>
+        <span class="font-semibold">${item.quantity}</span>
+        <button class="increase bg-gray-200 px-2 rounded" data-index="${index}">+</button>
+      </div>
+    `;
+    container.appendChild(itemDiv);
+  });
+
+  totalElement.textContent = `Rp ${total.toLocaleString('id-ID')}`;
+  cartCount.textContent = totalItems;
+  checkoutBtn.disabled = cart.length === 0;
+}
+
+// =========================
+// TOMBOL TAMBAH / KURANG
+// =========================
+cartSidebar.addEventListener('click', (e) => {
+  if (e.target.classList.contains('increase')) {
+    const index = e.target.dataset.index;
+    cart[index].quantity++;
+    saveCart();
+    renderCart();
+  }
+
+  if (e.target.classList.contains('decrease')) {
+    const index = e.target.dataset.index;
+    if (cart[index].quantity > 1) {
+      cart[index].quantity--;
+    } else {
+      cart.splice(index, 1);
+    }
+    saveCart();
+    renderCart();
+  }
+});
+
+// =========================
+// TOMBOL PESAN SEKARANG
+// =========================
+document.addEventListener('click', (e) => {
+  if (e.target.id === 'checkout-btn' && cart.length > 0) {
+    const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+    window.location.href = `../Project-Landing-Page-UMKM/checkout/checkout.php?total=${total}`;
+  }
+});
+
+// Render awal (biar data tetap muncul setelah refresh)
+renderCart();
+</script>
