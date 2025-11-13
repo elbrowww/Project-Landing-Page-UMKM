@@ -10,55 +10,7 @@ ini_set('display_errors', 1);
 include '../config/koneksi.php';
 include '../config/CRUD.php';
 
-// ambil data menu
-$query = "SELECT * FROM menu ORDER BY id_menu DESC";
-$result = $koneksi->query($query);
 
-// ambil data untuk edit
-$edit = null;
-if (isset($_GET['edit'])) {
-  $id = $_GET['edit'];
-  $edit = $koneksi->query("SELECT * FROM menu WHERE id_menu='$id'")->fetch_assoc();
-}
-
-// hapus data
-if (isset($_GET['hapus'])) {
-  $id = $_GET['hapus'];
-  $koneksi->query("DELETE FROM menu WHERE id_menu='$id'");
-  header("Location: index.php");
-  exit();
-}
-
-// simpan data baru atau update
-if (isset($_POST['simpan'])) {
-  $nama = $_POST['nama_menu'];
-  $stok = $_POST['stok_menu'];
-  $harga = $_POST['harga_menu'];
-  $deskripsi = $_POST['deskripsi'];
-  $gambar = $_FILES['gambar']['name'];
-
-  if ($gambar) {
-    $target = "../asset/uploads/" . basename($gambar);
-    move_uploaded_file($_FILES['gambar']['tmp_name'], $target);
-  }
-
-  if (!empty($_POST['id_menu'])) {
-    // update
-    $id = $_POST['id_menu'];
-    $sql = "UPDATE menu SET nama_menu='$nama', stok_menu='$stok', harga_menu='$harga', deskripsi='$deskripsi'";
-    if ($gambar) $sql .= ", gambar='$gambar'";
-    $sql .= " WHERE id_menu='$id'";
-  } else {
-    // tambah baru
-    $sql = "INSERT INTO menu (nama_menu, stok_menu, harga_menu, deskripsi, gambar) 
-            VALUES ('$nama', '$stok', '$harga', '$deskripsi', '$gambar')";
-  }
-
-  if ($koneksi->query($sql)) {
-    header("Location: index.php");
-    exit();
-  }
-}
 ?>
 
 <!DOCTYPE html>
@@ -214,7 +166,6 @@ if (isset($_POST['simpan'])) {
 
 <!-- Bootstrap & JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<script src="script.js"></script>
 
 <?php if ($edit): ?>
 <script>
@@ -228,6 +179,39 @@ editMenu(
 );
 </script>
 <?php endif; ?>
+<script>
+function editMenu(id, nama, stok, harga, deskripsi, gambar) {
+  // Ubah judul modal
+  document.getElementById('modalTitle').innerHTML = '<i class="fas fa-edit"></i> Edit Menu';
+  
+  // Isi form dengan data
+  document.getElementById('id_menu').value = id;
+  document.getElementById('nama_menu').value = nama;
+  document.getElementById('stok_menu').value = stok;
+  document.getElementById('harga_menu').value = harga;
+  document.getElementById('deskripsi').value = deskripsi;
+  
+  // Tampilkan preview gambar jika ada
+  if (gambar) {
+    document.getElementById('currentImage').style.display = 'block';
+    document.getElementById('previewImage').src = '../asset/uploads/' + gambar;
+  } else {
+    document.getElementById('currentImage').style.display = 'none';
+  }
+  
+  // Buka modal
+  var modal = new bootstrap.Modal(document.getElementById('tambahMenuModal'));
+  modal.show();
+}
+
+// Reset form saat modal ditutup
+document.getElementById('tambahMenuModal').addEventListener('hidden.bs.modal', function () {
+  document.getElementById('menuForm').reset();
+  document.getElementById('id_menu').value = '';
+  document.getElementById('currentImage').style.display = 'none';
+  document.getElementById('modalTitle').innerHTML = '<i class="fas fa-plus-circle"></i> Tambah Menu Baru';
+});
+</script>
 
 </body>
 </html>
