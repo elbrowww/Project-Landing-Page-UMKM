@@ -57,9 +57,10 @@
       </div>
 
       <div class="form-group">
-        <label for="rekening"><i class="fas fa-university"></i> Pilih Rekening Pembayaran</label>
+        <label for="rekening"><i class="fas fa-university"></i> Pilih Metode Pembayaran</label>
         <select id="rekening" onchange="tampilkanRekening()" required>
-          <option value="">-- Pilih Rekening --</option>
+          <option value="">-- Pilih Metode Pembayaran --</option>
+          <option value="Cash"> Tunai Cash</option>
           <option value="BRI">Bank BRI</option>
           <option value="BCA">Bank BCA</option>
           <option value="Mandiri">Bank Mandiri</option>
