@@ -11,7 +11,7 @@
   <link rel="stylesheet" href="../checkout/checkout.css">
   <script src="https://kit.fontawesome.com/a2e0e6d6df.js" crossorigin="anonymous"></script>
 
-  <?php include '../Project-Landing-Page-UMKM/config/koneksi.php'; ?>
+
 </head>
 
 
@@ -134,33 +134,39 @@
       info.innerHTML = `<p>${text}</p>`;
     }
 
-    function checkout() {
-      const nama = document.getElementById("nama").value.trim();
-      const telp = document.getElementById("telp").value.trim();
-      const alamat = document.getElementById("alamat").value.trim();
-      const rekening = document.getElementById("rekening").value.trim();
+function checkout() {
+  const nama = document.getElementById("nama").value.trim();
+  const telp = document.getElementById("telp").value.trim();
+  const alamat = document.getElementById("alamat").value.trim();
+  const rekening = document.getElementById("rekening").value.trim();
 
-      if (!nama || !telp || !alamat || !rekening) {
-        alert("Harap isi semua data pemesan!");
-        return;
-      }
+  if (!nama || !telp || !alamat || !rekening) {
+    alert("Harap isi semua data pemesan!");
+    return;
+  }
 
-      if (cart.length === 0) {
-        alert("Keranjang masih kosong!");
-        return;
-      }
+  if (cart.length === 0) {
+    alert("Keranjang masih kosong!");
+    return;
+  }
 
-      const pesanan = {
-        nama,
-        telp,
-        alamat,
-        rekening,
-        cart,
-        total: cart.reduce((sum, item) => sum + item.price * item.quantity, 0),
-      };
+  // Validasi nomor telepon
+  if (!/^08[0-9]{9,12}$/.test(telp)) {
+    alert("Format nomor telepon tidak valid! Harus diawali 08 dan 10-13 digit.");
+    return;
+  }
 
-      // Kirim data ke PHP menggunakan fetch()
-  fetch("../config/checkout-proses.php", {
+  const pesanan = {
+    nama,
+    telp,
+    alamat,
+    rekening,
+    cart,
+    total: cart.reduce((sum, item) => sum + item.price * item.quantity, 0),
+  };
+
+  // Kirim data ke PHP menggunakan fetch()
+  fetch("../Project-Landing-Page-UMKM/config/checkout-proses.php", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -170,25 +176,26 @@
     .then((res) => res.json())
     .then((data) => {
       if (data.status === "success") {
-        alert("✅ Pesanan berhasil disimpan dan sedang diproses!\nTerima kasih telah memesan di Dapur Bu Mon ❤️");
-      }
-      });
-
-   
-  // Hapus keranjang setelah checkout
-  localStorage.removeItem("cart");
-   cart = [];
+        alert(`✅ Pesanan berhasil disimpan!\nID Pelanggan: ${data.id_pelanggan}\nTotal: Rp ${data.total.toLocaleString("id-ID")}\n\nTerima kasih telah memesan di Dapur Bu Mon ❤️`);
+        
+        // Hapus keranjang setelah checkout berhasil
+        localStorage.removeItem("cart");
+        cart = [];
         renderCart();
 
-  // Tunggu 2 detik, lalu kembali ke landing page
-  setTimeout(() => {
-    window.location.href = "../index.php"; // Ganti dengan halaman utama kamu
-  }, 2000);
-
-      localStorage.removeItem("cart");
-      cart = [];
-      renderCart();
-    }
+        // Tunggu 2 detik, lalu kembali ke landing page
+        setTimeout(() => {
+          window.location.href = "../index.php";
+        }, 2000);
+      } else {
+        alert("❌ Gagal menyimpan pesanan: " + data.message);
+      }
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+      alert("❌ Terjadi kesalahan saat mengirim pesanan.");
+    });
+}
 
     document.addEventListener("DOMContentLoaded", renderCart);
   </script>
