@@ -158,11 +158,26 @@
         total: cart.reduce((sum, item) => sum + item.price * item.quantity, 0),
       };
 
-       // Pop-up sukses
-  alert("✅ Pesanan sedang diproses!\nTerima kasih telah memesan di Dapur Bu Mon ");
+      // Kirim data ke PHP menggunakan fetch()
+  fetch("../config/checkout-proses.php", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(pesanan),
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      if (data.status === "success") {
+        alert("✅ Pesanan berhasil disimpan dan sedang diproses!\nTerima kasih telah memesan di Dapur Bu Mon ❤️");
+      }
+      });
 
+   
   // Hapus keranjang setelah checkout
   localStorage.removeItem("cart");
+   cart = [];
+        renderCart();
 
   // Tunggu 2 detik, lalu kembali ke landing page
   setTimeout(() => {
