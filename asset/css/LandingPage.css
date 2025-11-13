@@ -112,3 +112,66 @@
         .menu-btn-black {
             color: #1f2937;
         }
+        
+  /* Responsive Sidebar Cart */
+  #cartSidebar {
+    width: 22rem; /* default desktop */
+  }
+
+  @media (max-width: 768px) {
+    #cartSidebar {
+      width: 100%; /* full width di HP */
+      max-width: none;
+    }
+
+    #cartSidebar .p-4 {
+      padding: 1rem;
+    }
+
+    #cartSidebar h2 {
+      font-size: 1.25rem;
+    }
+  }
+
+  /* Smooth overlay background saat cart terbuka */
+  #cartOverlay {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.4);
+    z-index: 40;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+  }
+
+  #cartOverlay.active {
+    opacity: 1;
+    pointer-events: auto;
+  }
+#cartIcon {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  z-index: 9999;
+  background-color: #7c3aed; /* ungu */
+  color: white;
+  padding: 14px;
+  border-radius: 50%;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+#cartIcon:hover {
+  transform: scale(1.1);
+}
+
+/* Agar tetap terlihat di HP kecil */
+@media (max-width: 480px) {
+  #cartIcon {
+    bottom: 1rem;
+    right: 1rem;
+    padding: 12px;
+  }
+}
+
