@@ -25,12 +25,12 @@ include '../config/koneksi.php';
 <?php
 if (isset($_POST['login'])) {
     $id_user = $_POST['user'];
-    $password_user = ($_POST['password']); 
+    $password = ($_POST['password']); 
 
     // Query sesuai dengan di database
     $query = $koneksi->query("SELECT * FROM user 
                            WHERE id_user='$id_user' 
-                           AND password_user='$password_user'");
+                           AND password='$password'");
 
     if ($query->num_rows > 0) {
         $_SESSION['login'] = true;
