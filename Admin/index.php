@@ -142,7 +142,7 @@ if (isset($_GET['hapus'])) {
                 </td>
                 <td>
                   <button class="btn btn-action btn-edit" 
-                          onclick="editMenu(<?= $row['id_menu'] ?>, '<?= addslashes($row['nama_menu']) ?>', <?= $row['stok_menu'] ?>, <?= $row['harga_menu'] ?>, '<?= addslashes($row['deskripsi']) ?>', '<?= $row['gambar'] ?>')">
+                          onclick="editMenu('<?= $row['id_menu'] ?>', '<?= addslashes($row['nama_menu']) ?>', <?= $row['stok_menu'] ?>, <?= $row['harga_menu'] ?>, '<?= addslashes($row['deskripsi']) ?>', '<?= $row['gambar'] ?>')">
                     <i class="fas fa-edit"></i>
                   </button>
                   <a href="?hapus=<?= $row['id_menu'] ?>" onclick="return confirm('Hapus menu <?= htmlspecialchars($row['nama_menu']) ?>?')" class="btn btn-action btn-delete">

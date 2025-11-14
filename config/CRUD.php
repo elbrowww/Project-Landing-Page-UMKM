@@ -1,5 +1,4 @@
 <?php
-
 include '../config/koneksi.php';
 
 // ==== PROSES TAMBAH / EDIT ====
@@ -11,34 +10,40 @@ if (isset($_POST['simpan'])) {
     $deskripsi  = $_POST['deskripsi'];
     $gambar     = "";
 
-   // Upload gambar jika ada
-if (!empty($_FILES['gambar']['name'])) {
-    $targetDir = __DIR__ . "/../asset/uploads/";  
-    if (!file_exists($targetDir)) mkdir($targetDir, 0777, true);
+    // Upload gambar jika ada
+    if (!empty($_FILES['gambar']['name'])) {
+        $targetDir = __DIR__ . "/../asset/uploads/";
+        if (!file_exists($targetDir)) mkdir($targetDir, 0777, true);
 
-    $filename = basename($_FILES["gambar"]["name"]);
-    $targetFile = $targetDir . $filename;
+        $filename = basename($_FILES["gambar"]["name"]);
+        $targetFile = $targetDir . $filename;
 
-    if (move_uploaded_file($_FILES["gambar"]["tmp_name"], $targetFile)) {
-        $gambar = $filename; // 
-    } else {
-        echo "<p style='color:red;'>❌ Gagal upload gambar ke $targetFile</p>";
+        if (move_uploaded_file($_FILES["gambar"]["tmp_name"], $targetFile)) {
+            $gambar = $filename;
+        }
     }
-}
-
 
     if ($id == "") {
-        // CREATE
-        $stmt = $koneksi->prepare("INSERT INTO menu (nama_menu, stok_menu, harga_menu, deskripsi, gambar) VALUES (?, ?, ?, ?, ?)");
+        // ==== CREATE ====
+        $stmt = $koneksi->prepare("INSERT INTO menu (nama_menu, stok_menu, harga_menu, deskripsi, gambar) 
+                                   VALUES (?, ?, ?, ?, ?)");
         $stmt->bind_param("sidss", $nama, $stok, $harga, $deskripsi, $gambar);
+
     } else {
-        // UPDATE
+        // ==== UPDATE ====
         if ($gambar != "") {
-            $stmt = $koneksi->prepare("UPDATE menu SET nama_menu=?, stok_menu=?, harga_menu=?, deskripsi=?, gambar=? WHERE id_menu=?");
-            $stmt->bind_param("sidssi", $nama, $stok, $harga, $deskripsi, $gambar, $id);
+            // Update + gambar
+            $stmt = $koneksi->prepare("UPDATE menu 
+                                       SET nama_menu=?, stok_menu=?, harga_menu=?, deskripsi=?, gambar=?
+                                       WHERE id_menu=?");
+            $stmt->bind_param("sidsss", $nama, $stok, $harga, $deskripsi, $gambar, $id);
+
         } else {
-            $stmt = $koneksi->prepare("UPDATE menu SET nama_menu=?, stok_menu=?, harga_menu=?, deskripsi=? WHERE id_menu=?");
-            $stmt->bind_param("sidsi", $nama, $stok, $harga, $deskripsi, $id);
+            // Update tanpa gambar
+            $stmt = $koneksi->prepare("UPDATE menu 
+                                       SET nama_menu=?, stok_menu=?, harga_menu=?, deskripsi=?
+                                       WHERE id_menu=?");
+            $stmt->bind_param("sidss", $nama, $stok, $harga, $deskripsi, $id);
         }
     }
 
@@ -47,14 +52,17 @@ if (!empty($_FILES['gambar']['name'])) {
     exit;
 }
 
+
 // ==== PROSES HAPUS ====
 if (isset($_GET['hapus'])) {
     $id = $_GET['hapus'];
-    $koneksi->query("DELETE FROM menu WHERE id_menu=$id");
+    $koneksi->query("DELETE FROM menu WHERE id_menu='$id'");
     header("Location: index.php");
     exit;
 }
 
+
+// ==== AMBIL DATA UNTUK FORM EDIT ====
 $edit = [
     'id_menu' => '',
     'nama_menu' => '',
@@ -66,9 +74,10 @@ $edit = [
 
 if (isset($_GET['edit'])) {
     $id = $_GET['edit'];
-    $result = $koneksi->query("SELECT * FROM menu WHERE id_menu=$id");
-    $edit = $result->fetch_assoc();  
+    $result = $koneksi->query("SELECT * FROM menu WHERE id_menu='$id'");
+    $edit = $result->fetch_assoc();
 }
+
 
 // ==== TAMPILKAN SEMUA DATA ====
 $result = $koneksi->query("SELECT * FROM menu ORDER BY id_menu DESC");
