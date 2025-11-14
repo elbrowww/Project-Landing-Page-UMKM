@@ -9,6 +9,40 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1);
 include '../config/koneksi.php';
 include '../config/CRUD.php';
+
+// Handler untuk hapus menu
+if (isset($_GET['hapus'])) {
+  $id_menu = $_GET['hapus'];
+  
+  // Ambil data gambar dulu untuk dihapus dari folder
+  $query_gambar = "SELECT gambar FROM menu WHERE id_menu = ?";
+  $stmt = $conn->prepare($query_gambar);
+  $stmt->bind_param("i", $id_menu);
+  $stmt->execute();
+  $result_gambar = $stmt->get_result();
+  
+  if ($result_gambar->num_rows > 0) {
+    $row = $result_gambar->fetch_assoc();
+    $gambar = $row['gambar'];
+    
+    // Hapus file gambar jika ada
+    if ($gambar && file_exists("../asset/uploads/" . $gambar)) {
+      unlink("../asset/uploads/" . $gambar);
+    }
+  }
+  
+  // Hapus data dari database
+  $query_hapus = "DELETE FROM menu WHERE id_menu = ?";
+  $stmt_hapus = $conn->prepare($query_hapus);
+  $stmt_hapus->bind_param("i", $id_menu);
+  
+  if ($stmt_hapus->execute()) {
+    echo "<script>alert('Menu berhasil dihapus!'); window.location.href='index.php';</script>";
+  } else {
+    echo "<script>alert('Gagal menghapus menu!'); window.location.href='index.php';</script>";
+  }
+  exit();
+}
 ?>
 
 <!DOCTYPE html>
@@ -18,7 +52,6 @@ include '../config/CRUD.php';
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Dashboard Admin | Bu Mon</title>
 <link rel="icon" href="../asset/img/logo.png" type="image/x-icon">
-<link href="../asset/css/admin.css"
 
 <!-- Bootstrap & Font Awesome -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -50,11 +83,6 @@ include '../config/CRUD.php';
         <li class="nav-item">
           <a class="nav-link" href="javascript:void(0)" onclick="showPage('penjualan')" id="nav-penjualan">
             <i class="fas fa-shopping-cart"></i> Pesanan Masuk
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="javascript:void(0)" onclick="showPage('testimoni')" id="nav-testimoni">
-            <i class="fas fa-comments"></i> Testimoni
           </a>
         </li>
       </ul>
@@ -285,214 +313,6 @@ include '../config/CRUD.php';
               </tr>
             </tbody>
           </table>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- HALAMAN TESTIMONI -->
-<div id="page-testimoni" class="page-content" style="display:none;">
-  <div class="container">
-    <!-- Statistik Cards -->
-    <div class="row mb-4">
-      <div class="col-md-4 mb-3">
-        <div class="stats-card">
-          <div class="stats-icon bg-primary">
-            <i class="fas fa-comments"></i>
-          </div>
-          <div class="stats-info">
-            <h3>42</h3>
-            <p>Total Testimoni</p>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-4 mb-3">
-        <div class="stats-card">
-          <div class="stats-icon bg-warning">
-            <i class="fas fa-star"></i>
-          </div>
-          <div class="stats-info">
-            <h3>4.8</h3>
-            <p>Rata-rata Rating</p>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-4 mb-3">
-        <div class="stats-card">
-          <div class="stats-icon bg-success">
-            <i class="fas fa-eye"></i>
-          </div>
-          <div class="stats-info">
-            <h3>35</h3>
-            <p>Testimoni Ditampilkan</p>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="page-header">
-      <h3><i class="fas fa-comments"></i> Daftar Testimoni Pelanggan</h3>
-    </div>
-
-    <div class="row">
-      <!-- Testimoni 1 -->
-      <div class="col-md-6 mb-4">
-        <div class="testimoni-card">
-          <div class="testimoni-header">
-            <div class="user-info">
-              <div class="user-avatar">B</div>
-              <div>
-                <h5>Budi Santoso</h5>
-                <p class="text-muted mb-0">
-                  <i class="fas fa-calendar"></i> 13 Nov 2025
-                </p>
-              </div>
-            </div>
-            <div class="rating">
-              <i class="fas fa-star active"></i>
-              <i class="fas fa-star active"></i>
-              <i class="fas fa-star active"></i>
-              <i class="fas fa-star active"></i>
-              <i class="fas fa-star active"></i>
-            </div>
-          </div>
-          
-          <div class="testimoni-body">
-            <div class="menu-badge">
-              <i class="fas fa-utensils"></i> Nasi Goreng Spesial
-            </div>
-            <p class="testimoni-text">Makanannya enak banget! Nasi gorengnya berasa banget bumbunya dan porsinya pas. Pengiriman juga cepat dan masih hangat. Pasti order lagi!</p>
-          </div>
-          
-          <div class="testimoni-footer">
-            <button class="btn btn-action btn-toggle">
-              <i class="fas fa-eye"></i> Ditampilkan
-            </button>
-            <a href="#" onclick="return confirm('Hapus testimoni dari Budi Santoso?')" class="btn btn-action btn-delete">
-              <i class="fas fa-trash-alt"></i>
-            </a>
-          </div>
-        </div>
-      </div>
-
-      <!-- Testimoni 2 -->
-      <div class="col-md-6 mb-4">
-        <div class="testimoni-card">
-          <div class="testimoni-header">
-            <div class="user-info">
-              <div class="user-avatar">S</div>
-              <div>
-                <h5>Siti Aminah</h5>
-                <p class="text-muted mb-0">
-                  <i class="fas fa-calendar"></i> 12 Nov 2025
-                </p>
-              </div>
-            </div>
-            <div class="rating">
-              <i class="fas fa-star active"></i>
-              <i class="fas fa-star active"></i>
-              <i class="fas fa-star active"></i>
-              <i class="fas fa-star active"></i>
-              <i class="fas fa-star"></i>
-            </div>
-          </div>
-          
-          <div class="testimoni-body">
-            <div class="menu-badge">
-              <i class="fas fa-utensils"></i> Ayam Goreng Crispy
-            </div>
-            <p class="testimoni-text">Ayamnya crispy dan bumbunya meresap sempurna. Recommended banget buat yang suka ayam goreng!</p>
-          </div>
-          
-          <div class="testimoni-footer">
-            <button class="btn btn-action btn-toggle">
-              <i class="fas fa-eye"></i> Ditampilkan
-            </button>
-            <a href="#" onclick="return confirm('Hapus testimoni dari Siti Aminah?')" class="btn btn-action btn-delete">
-              <i class="fas fa-trash-alt"></i>
-            </a>
-          </div>
-        </div>
-      </div>
-
-      <!-- Testimoni 3 -->
-      <div class="col-md-6 mb-4">
-        <div class="testimoni-card">
-          <div class="testimoni-header">
-            <div class="user-info">
-              <div class="user-avatar">A</div>
-              <div>
-                <h5>Andi Wijaya</h5>
-                <p class="text-muted mb-0">
-                  <i class="fas fa-calendar"></i> 11 Nov 2025
-                </p>
-              </div>
-            </div>
-            <div class="rating">
-              <i class="fas fa-star active"></i>
-              <i class="fas fa-star active"></i>
-              <i class="fas fa-star active"></i>
-              <i class="fas fa-star active"></i>
-              <i class="fas fa-star active"></i>
-            </div>
-          </div>
-          
-          <div class="testimoni-body">
-            <div class="menu-badge">
-              <i class="fas fa-utensils"></i> Sate Ayam
-            </div>
-            <p class="testimoni-text">Satenya juara! Daging empuk, bumbu kacangnya mantap. Harga juga terjangkau. Pelayanan ramah dan cepat.</p>
-          </div>
-          
-          <div class="testimoni-footer">
-            <button class="btn btn-action btn-toggle">
-              <i class="fas fa-eye-slash"></i> Disembunyikan
-            </button>
-            <a href="#" onclick="return confirm('Hapus testimoni dari Andi Wijaya?')" class="btn btn-action btn-delete">
-              <i class="fas fa-trash-alt"></i>
-            </a>
-          </div>
-        </div>
-      </div>
-
-      <!-- Testimoni 4 -->
-      <div class="col-md-6 mb-4">
-        <div class="testimoni-card">
-          <div class="testimoni-header">
-            <div class="user-info">
-              <div class="user-avatar">D</div>
-              <div>
-                <h5>Dewi Lestari</h5>
-                <p class="text-muted mb-0">
-                  <i class="fas fa-calendar"></i> 10 Nov 2025
-                </p>
-              </div>
-            </div>
-            <div class="rating">
-              <i class="fas fa-star active"></i>
-              <i class="fas fa-star active"></i>
-              <i class="fas fa-star active"></i>
-              <i class="fas fa-star active"></i>
-              <i class="fas fa-star active"></i>
-            </div>
-          </div>
-          
-          <div class="testimoni-body">
-            <div class="menu-badge">
-              <i class="fas fa-utensils"></i> Mie Goreng Seafood
-            </div>
-            <p class="testimoni-text">Mie gorengnya enak dan seafoodnya fresh! Porsi banyak, harga murah. Langganan terus deh di Bu Mon.</p>
-          </div>
-          
-          <div class="testimoni-footer">
-            <button class="btn btn-action btn-toggle">
-              <i class="fas fa-eye"></i> Ditampilkan
-            </button>
-            <a href="#" onclick="return confirm('Hapus testimoni dari Dewi Lestari?')" class="btn btn-action btn-delete">
-              <i class="fas fa-trash-alt"></i>
-            </a>
-          </div>
         </div>
       </div>
     </div>
