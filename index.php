@@ -420,7 +420,7 @@
 // Ambil elemen
 const cartIcon = document.querySelector('.fa-cart-shopping');
 const cartCount = document.getElementById('cart-count');
-let cart = JSON.parse(localStorage.getItem('cart')) || [];
+let cart =  [];
 
 // =========================
 // POPUP / SIDEBAR KERANJANG
@@ -475,7 +475,7 @@ document.querySelectorAll('.add-to-cart').forEach(button => {
 // SIMPAN DAN TAMPILKAN DATA
 // =========================
 function saveCart() {
-  localStorage.setItem('cart', JSON.stringify(cart));
+  
 }
 
 function renderCart() {
@@ -545,7 +545,7 @@ cartSidebar.addEventListener('click', (e) => {
 document.addEventListener('click', (e) => {
   if (e.target.id === 'checkout-btn' && cart.length > 0) {
     const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
-    localStorage.setItem("cart", JSON.stringify(cart));
+    
     window.location.href = `../Project-Landing-Page-UMKM/checkout/checkout.php?total=${total}`;
   }
 });
