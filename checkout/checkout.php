@@ -81,7 +81,7 @@
 
   <!-- Script untuk membaca data keranjang -->
   <script>
-    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    let cart = [];
     const cartItemsContainer = document.getElementById("cartItems");
     const cartTotalElement = document.getElementById("cartTotal");
 
@@ -167,15 +167,22 @@ function checkout() {
 
   // Kirim data ke PHP menggunakan fetch()
   fetch("../Project-Landing-Page-UMKM/config/checkout-proses.php", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(pesanan),
-  })
-    .then((res) => res.json())
-    .then((data) => {
-      if (data.status === "success") {
+  method: "POST",
+  body: formData // kalau kamu pakai FormData
+})
+.then(res => res.text())  // ← BUKAN JSON
+.then(response => {
+  alert(response);
+
+  localStorage.removeItem("cart");
+  cart = [];
+  renderCart();
+
+  setTimeout(() => {
+    window.location.href = "../index.php";
+  }, 2000);
+})
+
         alert(`✅ Pesanan berhasil disimpan!\nID Pelanggan: ${data.id_pelanggan}\nTotal: Rp ${data.total.toLocaleString("id-ID")}\n\nTerima kasih telah memesan di Dapur Bu Mon ❤️`);
         
         // Hapus keranjang setelah checkout berhasil
