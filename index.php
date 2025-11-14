@@ -261,81 +261,112 @@
 
 
   <!-- KONTAK -->
-   <section id="kontak" class="py-20 bg-white">
-        <div class="container mx-auto px-6">
-            <h2 class="text-4xl font-bold text-center mb-16 gradient-text fade-in">Hubungi Kami</h2>
-            <div class="grid md:grid-cols-2 gap-12">
-                <div class="fade-in">
-                    <h3 class="text-2xl font-bold mb-6">Informasi Kontak</h3>
-                    <div class="space-y-4">
-                        <div class="flex items-center gap-4">
-                            <div class="gradient-bg text-white w-12 h-12 rounded-full flex items-center justify-center">
-                                📱</div>
-                            <div>
-                                <p class="font-semibold">Telepon/WhatsApp</p>
-                                <p class="text-gray-600">+62 812-3456-7890</p>
-                            </div>
+   <!-- KONTAK -->
+<section id="kontak" class="py-20 bg-white">
+    <div class="container mx-auto px-6">
+        <h2 class="text-4xl font-bold text-center mb-16 gradient-text fade-in">Hubungi Kami</h2>
+        <div class="grid md:grid-cols-2 gap-12">
+            <div class="fade-in">
+                <h3 class="text-2xl font-bold mb-6">Informasi Kontak</h3>
+                <div class="space-y-4">
+                    <div class="flex items-center gap-4">
+                        <div class="gradient-bg text-white w-12 h-12 rounded-full flex items-center justify-center">
+                            📱</div>
+                        <div>
+                            <p class="font-semibold">Telepon/WhatsApp</p>
+                            <a href="https://wa.me/6285236596617" target="_blank" class="text-purple-600 hover:text-purple-800 font-medium">+62 852-3659-6617</a>
                         </div>
-                        <div class="flex items-center gap-4">
-                            <div class="gradient-bg text-white w-12 h-12 rounded-full flex items-center justify-center">
-                                📧</div>
-                            <div>
-                                <p class="font-semibold">Email</p>
-                                <p class="text-gray-600">dwalan@gmail.com</p>
-                            </div>
+                    </div>
+                    <div class="flex items-center gap-4">
+                        <div class="gradient-bg text-white w-12 h-12 rounded-full flex items-center justify-center">
+                            📧</div>
+                        <div>
+                            <p class="font-semibold">Email</p>
+                            <p class="text-gray-600">dwalan@gmail.com</p>
                         </div>
-                        <div class="flex items-center gap-4">
-                            <div class="gradient-bg text-white w-12 h-12 rounded-full flex items-center justify-center">
-                                📍</div>
-                            <div>
-                                <p class="font-semibold">Alamat</p>
-                                <p class="text-gray-600">Merjoyo,Kec.purwosari,Kab.kediri,JAWA TIMUR</p>
-                            </div>
+                    </div>
+                    <div class="flex items-center gap-4">
+                        <div class="gradient-bg text-white w-12 h-12 rounded-full flex items-center justify-center">
+                            📍</div>
+                        <div>
+                            <p class="font-semibold">Alamat</p>
+                            <p class="text-gray-600">Merjoyo,Kec.purwosari,Kab.kediri,JAWA TIMUR</p>
                         </div>
-                        <div class="flex items-center gap-4">
-                            <div class="gradient-bg text-white w-12 h-12 rounded-full flex items-center justify-center">
-                                🕐</div>
-                            <div>
-                                <p class="font-semibold">Jam Operasional</p>
-                                <p class="text-gray-600">Senin - Minggu: 08.00 - 20.00 WIB</p>
-                            </div>
+                    </div>
+                    <div class="flex items-center gap-4">
+                        <div class="gradient-bg text-white w-12 h-12 rounded-full flex items-center justify-center">
+                            🕐</div>
+                        <div>
+                            <p class="font-semibold">Jam Operasional</p>
+                            <p class="text-gray-600">Senin - Minggu: 08.00 - 20.00 WIB</p>
                         </div>
                     </div>
                 </div>
-                <div class="fade-in">
-                    <form method="POST" action="config/FormPesan.php" class="space-y-4">
-                        <div>
-                            <label class="block text-sm font-semibold mb-2">Nama Lengkap</label>
-                            <input type="text" name="nama_pelanggan"
-                                class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-purple-500 focus:outline-none transition"
-                                placeholder="Masukkan nama Anda">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-semibold mb-2">Email</label>
-                            <input type="email" name="email_pelanggan"
-                                class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-purple-500 focus:outline-none transition"
-                                placeholder="email@contoh.com">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-semibold mb-2">No. Telepon</label>
-                            <input type="tel" name="notelp_pelanggan"
-                                class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-purple-500 focus:outline-none transition"
-                                placeholder="+62 812-xxxx-xxxx">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-semibold mb-2">Pesan</label>
-                            <textarea name="isi_pesan" rows="4" 
-                                class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-purple-500 focus:outline-none transition"
-                                placeholder="Ceritakan kebutuhan acara Anda..."></textarea>
-                        </div>
-                        <button type="submit" name="simpan"
-                            class="w-full gradient-bg text-white py-4 rounded-lg font-semibold hover:opacity-90 transition">Kirim
-                            Pesan</button>
-                    </form>
-                </div>
+            </div>
+            <div class="fade-in">
+                <form id="contactForm" class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-semibold mb-2">Nama Lengkap</label>
+                        <input type="text" id="nama" name="nama_pelanggan" required
+                            class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-purple-500 focus:outline-none transition"
+                            placeholder="Masukkan nama Anda">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold mb-2">Email</label>
+                        <input type="email" id="email" name="email_pelanggan" required
+                            class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-purple-500 focus:outline-none transition"
+                            placeholder="email@contoh.com">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold mb-2">No. Telepon</label>
+                        <input type="tel" id="notelp" name="notelp_pelanggan" required
+                            class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-purple-500 focus:outline-none transition"
+                            placeholder="+62 812-xxxx-xxxx">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold mb-2">Pesan</label>
+                        <textarea id="pesan" name="isi_pesan" rows="4" required
+                            class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-purple-500 focus:outline-none transition"
+                            placeholder="Ceritakan kebutuhan acara Anda..."></textarea>
+                    </div>
+                    <button type="submit"
+                        class="w-full gradient-bg text-white py-4 rounded-lg font-semibold hover:opacity-90 transition">Kirim
+                        Pesan</button>
+                </form>
             </div>
         </div>
-    </section>
+    </div>
+</section>
+
+<script>
+// Script untuk mengirim form ke WhatsApp
+document.getElementById('contactForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    // Ambil nilai dari form
+    const nama = document.getElementById('nama').value;
+    const email = document.getElementById('email').value;
+    const notelp = document.getElementById('notelp').value;
+    const pesan = document.getElementById('pesan').value;
+    
+    // Format pesan WhatsApp
+    const message = `*Halo, Saya ingin bertanya:*%0A%0A` +
+                   `*Nama:* ${nama}%0A` +
+                   `*Email:* ${email}%0A` +
+                   `*No. Telepon:* ${notelp}%0A%0A` +
+                   `*Pesan:*%0A${pesan}`;
+    
+    // Nomor WhatsApp tujuan
+    const phoneNumber = '6285236596617';
+    
+    // Buka WhatsApp
+    const waUrl = `https://wa.me/${phoneNumber}?text=${message}`;
+    window.open(waUrl, '_blank');
+    
+    // Reset form setelah submit
+    this.reset();
+});
+</script>
     <!--lokasi kami-->
     <section id="lokasi" class="py-20 bg-gray-50">
       <div class="container mx-auto px-6">
