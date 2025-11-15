@@ -10,39 +10,53 @@ ini_set('display_errors', 1);
 include '../config/koneksi.php';
 include '../config/CRUD.php';
 
-// Handler untuk hapus menu
-if (isset($_GET['hapus'])) {
-  $id_menu = $_GET['hapus'];
+// Handler untuk hapus pesanan
+if (isset($_GET['hapus_pesanan'])) {
+  $id_detail = $_GET['hapus_pesanan'];
   
-  // Ambil data gambar dulu untuk dihapus dari folder
-  $query_gambar = "SELECT gambar FROM menu WHERE id_menu = ?";
-  $stmt = $conn->prepare($query_gambar);
-  $stmt->bind_param("i", $id_menu);
-  $stmt->execute();
-  $result_gambar = $stmt->get_result();
+  $query_hapus_pesanan = "DELETE FROM detail_penjualan WHERE id_detail = ?";
+  $stmt_hapus_pesanan = $koneksi->prepare($query_hapus_pesanan);
+  $stmt_hapus_pesanan->bind_param("s", $id_detail);
   
-  if ($result_gambar->num_rows > 0) {
-    $row = $result_gambar->fetch_assoc();
-    $gambar = $row['gambar'];
-    
-    // Hapus file gambar jika ada
-    if ($gambar && file_exists("../asset/uploads/" . $gambar)) {
-      unlink("../asset/uploads/" . $gambar);
-    }
-  }
-  
-  // Hapus data dari database
-  $query_hapus = "DELETE FROM menu WHERE id_menu = ?";
-  $stmt_hapus = $conn->prepare($query_hapus);
-  $stmt_hapus->bind_param("i", $id_menu);
-  
-  if ($stmt_hapus->execute()) {
-    echo "<script>alert('Menu berhasil dihapus!'); window.location.href='index.php';</script>";
+  if ($stmt_hapus_pesanan->execute()) {
+    echo "<script>alert('Pesanan berhasil dihapus!'); window.location.href='index.php';</script>";
   } else {
-    echo "<script>alert('Gagal menghapus menu!'); window.location.href='index.php';</script>";
+    echo "<script>alert('Gagal menghapus pesanan!'); window.location.href='index.php';</script>";
   }
   exit();
 }
+
+// Handler untuk update pesanan
+if (isset($_POST['update_pesanan'])) {
+  $id_detail = $_POST['id_detail'];
+  $id_menu = $_POST['id_menu'];
+  $jumlah = $_POST['jumlah'];
+  $harga_satuan = $_POST['harga_satuan'];
+  $subtotal = $jumlah * $harga_satuan;
+  
+  $query_update = "UPDATE detail_penjualan SET id_menu=?, jumlah=?, harga_satuan=?, subtotal=? WHERE id_detail=?";
+  $stmt_update = $koneksi->prepare($query_update);
+  $stmt_update->bind_param("siiis", $id_menu, $jumlah, $harga_satuan, $subtotal, $id_detail);
+  
+  if ($stmt_update->execute()) {
+    echo "<script>alert('Pesanan berhasil diupdate!'); window.location.href='index.php';</script>";
+  } else {
+    echo "<script>alert('Gagal mengupdate pesanan!'); window.location.href='index.php';</script>";
+  }
+  exit();
+}
+
+// Query untuk mengambil data pesanan dari detail_penjualan
+$query_pesanan = "SELECT * FROM detail_penjualan ORDER BY tgl_pesan DESC";
+$result_pesanan = $koneksi->query($query_pesanan);
+
+// Hitung statistik pesanan
+$query_stats = "SELECT 
+  COUNT(*) as total_pesanan,
+  SUM(subtotal) as total_penjualan
+FROM detail_penjualan";
+$result_stats = $koneksi->query($query_stats);
+$stats = $result_stats->fetch_assoc();
 ?>
 
 <!DOCTYPE html>
@@ -166,46 +180,24 @@ if (isset($_GET['hapus'])) {
   <div class="container">
     <!-- Statistik Cards -->
     <div class="row mb-4">
-      <div class="col-md-3 mb-3">
+      <div class="col-md-6 mb-3">
         <div class="stats-card">
           <div class="stats-icon bg-primary">
             <i class="fas fa-shopping-cart"></i>
           </div>
           <div class="stats-info">
-            <h3>25</h3>
+            <h3><?= $stats['total_pesanan'] ?? 0 ?></h3>
             <p>Total Pesanan</p>
           </div>
         </div>
       </div>
-      <div class="col-md-3 mb-3">
-        <div class="stats-card">
-          <div class="stats-icon bg-warning">
-            <i class="fas fa-clock"></i>
-          </div>
-          <div class="stats-info">
-            <h3>8</h3>
-            <p>Pesanan Pending</p>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-3 mb-3">
-        <div class="stats-card">
-          <div class="stats-icon bg-success">
-            <i class="fas fa-check-circle"></i>
-          </div>
-          <div class="stats-info">
-            <h3>15</h3>
-            <p>Pesanan Selesai</p>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-3 mb-3">
+      <div class="col-md-6 mb-3">
         <div class="stats-card">
           <div class="stats-icon bg-info">
             <i class="fas fa-money-bill-wave"></i>
           </div>
           <div class="stats-info">
-            <h3>Rp 2.500.000</h3>
+            <h3>Rp <?= number_format($stats['total_penjualan'] ?? 0, 0, ',', '.') ?></h3>
             <p>Total Penjualan</p>
           </div>
         </div>
@@ -224,93 +216,48 @@ if (isset($_GET['hapus'])) {
               <tr>
                 <th>No</th>
                 <th>Tanggal</th>
-                <th>Nama Pelanggan</th>
-                <th>Menu</th>
+                <th>ID Detail</th>
+                <th>ID Menu</th>
                 <th>Jumlah</th>
-                <th>Total Harga</th>
-                <th>Alamat</th>
-                <th>No. HP</th>
-                <th>Status</th>
+                <th>Harga Satuan</th>
+                <th>Subtotal</th>
                 <th>Aksi</th>
               </tr>
             </thead>
             <tbody>
+              <?php 
+              $no = 1;
+              if ($result_pesanan && $result_pesanan->num_rows > 0):
+                while ($row_pesanan = $result_pesanan->fetch_assoc()):
+              ?>
               <tr>
-                <td>1</td>
-                <td>13/11/2025 14:30</td>
-                <td><strong>Budi Santoso</strong></td>
-                <td>Nasi Goreng Spesial</td>
-                <td><span class="badge-qty">2</span></td>
-                <td><span class="badge-price">Rp 50.000</span></td>
-                <td>Jl. Merdeka No. 123</td>
-                <td>081234567890</td>
-                <td><span class="badge-status status-pending">Pending</span></td>
+                <td><?= $no++ ?></td>
+                <td><?= date('d/m/Y H:i', strtotime($row_pesanan['tgl_pesan'])) ?></td>
+                <td><strong><?= htmlspecialchars($row_pesanan['id_detail']) ?></strong></td>
+                <td><?= htmlspecialchars($row_pesanan['id_menu']) ?></td>
+                <td><span class="badge-qty"><?= htmlspecialchars($row_pesanan['jumlah']) ?></span></td>
+                <td><span class="badge-price">Rp <?= number_format($row_pesanan['harga_satuan'], 0, ',', '.') ?></span></td>
+                <td><span class="badge-price">Rp <?= number_format($row_pesanan['subtotal'], 0, ',', '.') ?></span></td>
                 <td>
-                  <button class="btn btn-action btn-edit" onclick="updateStatus(1, 'pending')">
+                  <button class="btn btn-action btn-edit" 
+                          onclick="editPesanan('<?= $row_pesanan['id_detail'] ?>', '<?= $row_pesanan['id_menu'] ?>', <?= $row_pesanan['jumlah'] ?>, <?= $row_pesanan['harga_satuan'] ?>)">
                     <i class="fas fa-edit"></i>
                   </button>
-                  <a href="#" onclick="return confirm('Hapus pesanan ini?')" class="btn btn-action btn-delete">
+                  <a href="?hapus_pesanan=<?= $row_pesanan['id_detail'] ?>" 
+                     onclick="return confirm('Hapus pesanan dengan ID <?= htmlspecialchars($row_pesanan['id_detail']) ?>?')" 
+                     class="btn btn-action btn-delete">
                     <i class="fas fa-trash-alt"></i>
                   </a>
                 </td>
               </tr>
-              <tr>
-                <td>2</td>
-                <td>13/11/2025 13:15</td>
-                <td><strong>Siti Aminah</strong></td>
-                <td>Ayam Goreng Crispy</td>
-                <td><span class="badge-qty">3</span></td>
-                <td><span class="badge-price">Rp 75.000</span></td>
-                <td>Jl. Sudirman No. 45</td>
-                <td>082345678901</td>
-                <td><span class="badge-status status-proses">Diproses</span></td>
-                <td>
-                  <button class="btn btn-action btn-edit" onclick="updateStatus(2, 'proses')">
-                    <i class="fas fa-edit"></i>
-                  </button>
-                  <a href="#" onclick="return confirm('Hapus pesanan ini?')" class="btn btn-action btn-delete">
-                    <i class="fas fa-trash-alt"></i>
-                  </a>
-                </td>
-              </tr>
-              <tr>
-                <td>3</td>
-                <td>13/11/2025 12:00</td>
-                <td><strong>Andi Wijaya</strong></td>
-                <td>Sate Ayam</td>
-                <td><span class="badge-qty">5</span></td>
-                <td><span class="badge-price">Rp 100.000</span></td>
-                <td>Jl. Gatot Subroto No. 88</td>
-                <td>083456789012</td>
-                <td><span class="badge-status status-selesai">Selesai</span></td>
-                <td>
-                  <button class="btn btn-action btn-edit" onclick="updateStatus(3, 'selesai')">
-                    <i class="fas fa-edit"></i>
-                  </button>
-                  <a href="#" onclick="return confirm('Hapus pesanan ini?')" class="btn btn-action btn-delete">
-                    <i class="fas fa-trash-alt"></i>
-                  </a>
-                </td>
-              </tr>
-              <tr>
-                <td>4</td>
-                <td>12/11/2025 18:45</td>
-                <td><strong>Dewi Lestari</strong></td>
-                <td>Mie Goreng Seafood</td>
-                <td><span class="badge-qty">1</span></td>
-                <td><span class="badge-price">Rp 35.000</span></td>
-                <td>Jl. Ahmad Yani No. 67</td>
-                <td>084567890123</td>
-                <td><span class="badge-status status-batal">Dibatalkan</span></td>
-                <td>
-                  <button class="btn btn-action btn-edit" onclick="updateStatus(4, 'batal')">
-                    <i class="fas fa-edit"></i>
-                  </button>
-                  <a href="#" onclick="return confirm('Hapus pesanan ini?')" class="btn btn-action btn-delete">
-                    <i class="fas fa-trash-alt"></i>
-                  </a>
-                </td>
-              </tr>
+              <?php endwhile; else: ?>
+                <tr>
+                  <td colspan="8" class="no-data">
+                    <i class="fas fa-inbox"></i>
+                    <p>Belum ada pesanan masuk</p>
+                  </td>
+                </tr>
+              <?php endif; ?>
             </tbody>
           </table>
         </div>
@@ -363,28 +310,31 @@ if (isset($_GET['hapus'])) {
   </div>
 </div>
 
-<!-- Modal Update Status -->
-<div class="modal fade" id="statusModal" tabindex="-1">
+<!-- Modal Edit Pesanan -->
+<div class="modal fade" id="editPesananModal" tabindex="-1">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5><i class="fas fa-edit"></i> Update Status Pesanan</h5>
+        <h5><i class="fas fa-edit"></i> Edit Pesanan</h5>
         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
       </div>
       <div class="modal-body p-4">
-        <form method="POST" id="statusForm">
-          <input type="hidden" name="id_pesanan" id="id_pesanan">
+        <form method="POST" id="pesananForm">
+          <input type="hidden" name="id_detail" id="edit_id_detail">
           <div class="mb-3">
-            <label class="form-label">Status Pesanan</label>
-            <select class="form-select" name="status" id="status" required>
-              <option value="pending">Pending</option>
-              <option value="proses">Diproses</option>
-              <option value="selesai">Selesai</option>
-              <option value="batal">Dibatalkan</option>
-            </select>
+            <label class="form-label">ID Menu</label>
+            <input type="text" class="form-control" name="id_menu" id="edit_id_menu" required>
           </div>
-          <button type="submit" name="update_status" class="btn btn-submit">
-            <i class="fas fa-save"></i> Update Status
+          <div class="mb-3">
+            <label class="form-label">Jumlah</label>
+            <input type="number" class="form-control" name="jumlah" id="edit_jumlah" required min="1">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Harga Satuan</label>
+            <input type="number" class="form-control" name="harga_satuan" id="edit_harga_satuan" required min="0">
+          </div>
+          <button type="submit" name="update_pesanan" class="btn btn-submit">
+            <i class="fas fa-save"></i> Update Pesanan
           </button>
         </form>
       </div>
@@ -448,12 +398,14 @@ function editMenu(id, nama, stok, harga, deskripsi, gambar) {
   modal.show();
 }
 
-// Fungsi update status
-function updateStatus(id, currentStatus) {
-  document.getElementById('id_pesanan').value = id;
-  document.getElementById('status').value = currentStatus;
+// Fungsi edit pesanan
+function editPesanan(id_detail, id_menu, jumlah, harga_satuan) {
+  document.getElementById('edit_id_detail').value = id_detail;
+  document.getElementById('edit_id_menu').value = id_menu;
+  document.getElementById('edit_jumlah').value = jumlah;
+  document.getElementById('edit_harga_satuan').value = harga_satuan;
   
-  var modal = new bootstrap.Modal(document.getElementById('statusModal'));
+  var modal = new bootstrap.Modal(document.getElementById('editPesananModal'));
   modal.show();
 }
 
