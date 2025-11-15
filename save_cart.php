@@ -61,12 +61,6 @@ foreach ($cart as $item) {
     exit;
   }
 
-  // **Opsional: Update stok manual (jika tidak pakai trigger)**
-  // Gunakan prepared statement untuk keamanan
-  $stmtUpdate = $conn->prepare("UPDATE menu SET stok_menu = stok_menu - ? WHERE id_menu = ?");  // Ganti 'stok' jika kolom berbeda
-  $stmtUpdate->bind_param('is', $jumlah, $id_menu);
-  $stmtUpdate->execute();
-  $stmtUpdate->close();
 }
 
 $stmtIns->close();

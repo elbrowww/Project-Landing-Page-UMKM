@@ -487,16 +487,38 @@ document.getElementById('closeCart').addEventListener('click', () => {
 // =========================
 
 // Ambil menu dari database
+// Ambil menu dari database
 document.querySelectorAll('.add-to-cart').forEach(button => {
-  button.addEventListener('click', () => {
+  button.addEventListener('click', async () => {
 
     const id_menu = button.dataset.id;
     const nama_menu = button.dataset.name;
     const harga_satuan = parseInt(button.dataset.price);
     const image = button.dataset.image;
 
+    // 1️⃣ CEK STOK KE DATABASE
+    const response = await fetch(`check_stock.php?id_menu=${id_menu}`);
+    const stockData = await response.json();
+
+    if (!stockData.success) {
+      alert("Gagal mengambil stok menu.");
+      return;
+    }
+
+    const stokTersedia = stockData.stok;
+
+    // 2️⃣ CARI ITEM DI CART
     const existingItem = cart.find(item => item.id_menu === id_menu);
 
+    const jumlahSetelahTambah = existingItem ? existingItem.jumlah + 1 : 1;
+
+    // 3️⃣ JIKA STOK TIDAK CUKUP → TOLAK DAN ALERT
+    if (jumlahSetelahTambah > stokTersedia) {
+      alert(`Stok tidak mencukupi!\nStok tersedia: ${stokTersedia}`);
+      return;
+    }
+
+    // 4️⃣ LANJUT TAMBAH CART
     if (existingItem) {
       existingItem.jumlah++;
     } else {
@@ -506,54 +528,65 @@ document.querySelectorAll('.add-to-cart').forEach(button => {
     saveCart();
     renderCart();
 
-
-
-          document.querySelectorAll('.increase').forEach(btn => {
-  btn.addEventListener('click', () => {
-    const index = btn.dataset.index;
-    cart[index].jumlah++;
-    saveCart();
-    renderCart();
   });
 });
 
-document.querySelectorAll('.decrease').forEach(btn => {
-  btn.addEventListener('click', () => {
-    const index = btn.dataset.index;
+// Increase decrease setelah render
+function setupQtyButtons() {
+  document.querySelectorAll('.increase').forEach(btn => {
+    btn.addEventListener('click', async () => {
+      const index = btn.dataset.index;
+      const item = cart[index];
 
-    if (cart[index].jumlah > 1) {
-      cart[index].jumlah--;
-    } else {
-      cart.splice(index, 1); // hapus item dari keranjang
-    }
+      // cek stok
+      const response = await fetch(`check_stock.php?id_menu=${item.id_menu}`);
+      const stockData = await response.json();
+      const stokTersedia = stockData.stok;
 
-    saveCart();
-    renderCart();
+      if (item.jumlah + 1 > stokTersedia) {
+        alert(`Stok tidak cukup! Stok hanya ${stokTersedia}`);
+        return;
+      }
+
+      item.jumlah++;
+      saveCart();
+      renderCart();
+    });
   });
-});
 
-        });
-      });
-   
+  document.querySelectorAll('.decrease').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const index = btn.dataset.index;
 
-// Simpan ke database
+      if (cart[index].jumlah > 1) {
+        cart[index].jumlah--;
+      } else {
+        cart.splice(index, 1);
+      }
+
+      saveCart();
+      renderCart();
+    });
+  });
+}
+
+// Simpan database
 function saveCart() {
   fetch('save_cart.php', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ cart: cart, id_penjualan_temp: "TEMP001" }) // ganti dengan ID dari session/login
+    body: JSON.stringify({ cart: cart, id_penjualan_temp: "TEMP001" })
   })
   .then(res => res.json())
-  .then(data => console.log(data))
-  .catch(err => console.error(err));
+  .then(data => console.log(data));
 
   cart = cart.map(item => ({
-  ...item,
-  id_menu: String(item.id_menu)
-}));
-
+    ...item,
+    id_menu: String(item.id_menu)
+  }));
 }
 
+// Render ulang
 function renderCart() {
   const container = document.getElementById('cart-items');
   const totalElement = document.getElementById('cart-total');
@@ -590,7 +623,13 @@ function renderCart() {
   totalElement.textContent = `Rp ${total.toLocaleString('id-ID')}`;
   cartCount.textContent = totalItems;
   checkoutBtn.disabled = cart.length === 0;
+
+  setupQtyButtons();
 }
+
+// Render awal
+renderCart();
+
 
 // Checkout
 document.addEventListener('click', (e) => {
