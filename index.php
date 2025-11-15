@@ -122,7 +122,7 @@
 
       <div id="menuContainer" class="flex overflow-x-auto gap-6 scroll-smooth px-10 pb-4 no-scrollbar">
         <?php
-        $query = mysqli_query($koneksi, "SELECT nama_menu, deskripsi, harga_menu, gambar FROM menu");
+        $query = mysqli_query($koneksi, "SELECT id_menu, nama_menu, deskripsi, harga_menu, gambar FROM menu");
         while ($data = mysqli_fetch_array($query)) {
         ?>
           <div class="menu-item fade-in bg-white rounded-2xl shadow-lg hover:shadow-2xl hover:scale-[1.03] transition-all duration-300 overflow-hidden min-w-[280px] max-w-[320px] flex-shrink-0 cursor-pointer">
@@ -138,9 +138,10 @@
       Rp <?php echo number_format($data['harga_menu'], 0, ',', '.'); ?>
     </p>
     <div class="text-center">
-      <from method='POST'action='config/detail_penjualan.php'></from>
+      <from method='POST'action='save_cart.php'></from>
   <button 
     class="add-to-cart bg-purple-600 text-white px-6 py-3 rounded-xl hover:bg-purple-700 transition"
+    data-id="<?php echo $data['id_menu']; ?>"
     data-name="<?php echo $data['nama_menu']; ?>"
     data-price="<?php echo $data['harga_menu']; ?>"
     data-image="asset/uploads/<?php echo $data['gambar']; ?>">
@@ -484,17 +485,46 @@ document.getElementById('closeCart').addEventListener('click', () => {
 // =========================
 // TAMBAH MENU KE KERANJANG
 // =========================
+
+// Ambil menu dari database
 document.querySelectorAll('.add-to-cart').forEach(button => {
   button.addEventListener('click', () => {
-    const name = button.dataset.name;
-    const price = parseInt(button.dataset.price);
+
+    const id_menu = button.dataset.id;
+    const nama_menu = button.dataset.name;
+    const harga_satuan = parseInt(button.dataset.price);
     const image = button.dataset.image;
 
-    const existingItem = cart.find(item => item.name === name);
+    const existingItem = cart.find(item => item.id_menu === id_menu);
+
     if (existingItem) {
-      existingItem.quantity++;
+      existingItem.jumlah++;
     } else {
-      cart.push({ name, price, image, quantity: 1 });
+      cart.push({ id_menu, nama_menu, harga_satuan, image, jumlah: 1 });
+    }
+
+    saveCart();
+    renderCart();
+
+
+
+          document.querySelectorAll('.increase').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const index = btn.dataset.index;
+    cart[index].jumlah++;
+    saveCart();
+    renderCart();
+  });
+});
+
+document.querySelectorAll('.decrease').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const index = btn.dataset.index;
+
+    if (cart[index].jumlah > 1) {
+      cart[index].jumlah--;
+    } else {
+      cart.splice(index, 1); // hapus item dari keranjang
     }
 
     saveCart();
@@ -502,11 +532,26 @@ document.querySelectorAll('.add-to-cart').forEach(button => {
   });
 });
 
-// =========================
-// SIMPAN DAN TAMPILKAN DATA
-// =========================
+        });
+      });
+   
+
+// Simpan ke database
 function saveCart() {
-  
+  fetch('save_cart.php', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ cart: cart, id_penjualan_temp: "TEMP001" }) // ganti dengan ID dari session/login
+  })
+  .then(res => res.json())
+  .then(data => console.log(data))
+  .catch(err => console.error(err));
+
+  cart = cart.map(item => ({
+  ...item,
+  id_menu: String(item.id_menu)
+}));
+
 }
 
 function renderCart() {
@@ -519,23 +564,23 @@ function renderCart() {
   let totalItems = 0;
 
   cart.forEach((item, index) => {
-    const subtotal = item.price * item.quantity;
+    const subtotal = item.harga_satuan * item.jumlah;
     total += subtotal;
-    totalItems += item.quantity;
+    totalItems += item.jumlah;
 
     const itemDiv = document.createElement('div');
     itemDiv.className = 'flex items-center justify-between border-b pb-2';
     itemDiv.innerHTML = `
       <div class="flex items-center gap-3">
-        <img src="${item.image}" alt="${item.name}" class="w-12 h-12 rounded-lg object-cover">
+        <img src="${item.image}" alt="${item.nama_menu}" class="w-12 h-12 rounded-lg object-cover">
         <div>
-          <p class="font-semibold">${item.name}</p>
-          <p class="text-sm text-gray-500">Rp ${item.price.toLocaleString('id-ID')}</p>
+          <p class="font-semibold">${item.nama_menu}</p>
+          <p class="text-sm text-gray-500">Rp ${item.harga_satuan.toLocaleString('id-ID')}</p>
         </div>
       </div>
       <div class="flex items-center gap-2">
         <button class="decrease bg-gray-200 px-2 rounded" data-index="${index}">-</button>
-        <span class="font-semibold">${item.quantity}</span>
+        <span class="font-semibold">${item.jumlah}</span>
         <button class="increase bg-gray-200 px-2 rounded" data-index="${index}">+</button>
       </div>
     `;
@@ -547,37 +592,22 @@ function renderCart() {
   checkoutBtn.disabled = cart.length === 0;
 }
 
-// =========================
-// TOMBOL TAMBAH / KURANG
-// =========================
-cartSidebar.addEventListener('click', (e) => {
-  if (e.target.classList.contains('increase')) {
-    const index = e.target.dataset.index;
-    cart[index].quantity++;
-    saveCart();
-    renderCart();
-  }
-
-  if (e.target.classList.contains('decrease')) {
-    const index = e.target.dataset.index;
-    if (cart[index].quantity > 1) {
-      cart[index].quantity--;
-    } else {
-      cart.splice(index, 1);
-    }
-    saveCart();
-    renderCart();
-  }
-});
-
-// =========================
-// TOMBOL PESAN SEKARANG
-// =========================
+// Checkout
 document.addEventListener('click', (e) => {
   if (e.target.id === 'checkout-btn' && cart.length > 0) {
-    const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
-    
-    window.location.href = `../Project-Landing-Page-UMKM/checkout/checkout.php?total=${total}`;
+    const total = cart.reduce((sum, item) => sum + item.harga_satuan * item.jumlah, 0);
+
+    fetch('checkout.php', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ id_penjualan_temp: "TEMP001", total: total })
+    })
+    .then(res => res.json())
+    .then(data => {
+      if (data.success) {
+        window.location.href = `checkout.php?id_penjualan=${data.id_penjualan}`;
+      }
+    });
   }
 });
 

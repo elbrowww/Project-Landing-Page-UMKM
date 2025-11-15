@@ -1,42 +1,50 @@
- // Sticky Navigation
-        const nav = document.querySelector('.sticky-nav');
-        const logo = document.getElementById('logo');
-        const navLinks = document.querySelector('.nav-links-white');
-        const menuBtn = document.getElementById('menuBtn');
+document.addEventListener('DOMContentLoaded', () => {
+  const nav = document.querySelector('.sticky-nav');
+  const logo = document.getElementById('logo');
+  const navLinks = document.querySelector('.nav-links-white');
+  const menuBtn = document.getElementById('menuBtn');
+  const mobileMenu = document.getElementById('mobileMenu');
 
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 100) {
-                nav.classList.add('scrolled');
-                // Ganti warna logo menjadi biru
-                logo.classList.remove('logo-white');
-                logo.classList.add('logo-blue');
-                // Ganti warna menu navigasi menjadi hitam
-                navLinks.classList.remove('nav-links-white');
-                navLinks.classList.add('nav-links-black');
-                // Ganti warna ikon menu hamburger
-                menuBtn.classList.remove('menu-btn-white');
-                menuBtn.classList.add('menu-btn-black');
-            } else {
-                nav.classList.remove('scrolled');
-                // Kembalikan warna logo menjadi putih
-                logo.classList.remove('logo-blue');
-                logo.classList.add('logo-white');
-                // Kembalikan warna menu navigasi menjadi putih
-                navLinks.classList.remove('nav-links-black');
-                navLinks.classList.add('nav-links-white');
-                // Kembalikan warna ikon menu hamburger
-                menuBtn.classList.remove('menu-btn-black');
-                menuBtn.classList.add('menu-btn-white');
-            }
-        });
 
-        // Mobile Menu Toggle
-        const mobileMenu = document.getElementById('mobileMenu');
-        menuBtn.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
-        });
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 100) {
+      if (nav) nav.classList.add('scrolled');
+      if (logo) {
+        logo.classList.remove('logo-white');
+        logo.classList.add('logo-blue');
+      }
+      if (navLinks) {
+        navLinks.classList.remove('nav-links-white');
+        navLinks.classList.add('nav-links-black');
+      }
+      if (menuBtn) {
+        menuBtn.classList.remove('menu-btn-white');
+        menuBtn.classList.add('menu-btn-black');
+      }
+    } else {
+      if (nav) nav.classList.remove('scrolled');
+      if (logo) {
+        logo.classList.remove('logo-blue');
+        logo.classList.add('logo-white');
+      }
+      if (navLinks) {
+        navLinks.classList.remove('nav-links-black');
+        navLinks.classList.add('nav-links-white');
+      }
+      if (menuBtn) {
+        menuBtn.classList.remove('menu-btn-black');
+        menuBtn.classList.add('menu-btn-white');
+      }
+    }
+  });
 
-        // Fade In Animation on Scroll
+  if (menuBtn && mobileMenu) {
+    menuBtn.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+    });
+  }
+
+// Fade In Animation on Scroll
         const fadeElements = document.querySelectorAll('.fade-in');
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
@@ -68,4 +76,9 @@
             alert('Terima kasih! Pesan Anda telah dikirim. Kami akan segera menghubungi Anda.');
             e.target.reset();
         });
+        
+});
+
+
+
         
