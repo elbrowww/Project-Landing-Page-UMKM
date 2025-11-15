@@ -430,7 +430,6 @@ document.getElementById('contactForm').addEventListener('submit', function(e) {
 
 
 
-
   <script>
   const container = document.getElementById('menuContainer');
   const scrollLeftBtn = document.getElementById('scrollLeft');
@@ -454,9 +453,8 @@ const cartIcon = document.querySelector('.fa-cart-shopping');
 const cartCount = document.getElementById('cart-count');
 let cart =  [];
 
-// =========================
+
 // POPUP / SIDEBAR KERANJANG
-// =========================
 const cartSidebar = document.createElement('div');
 cartSidebar.id = "cartSidebar";
 cartSidebar.className = "fixed top-0 right-0 w-80 h-full bg-white shadow-2xl transform translate-x-full transition-transform duration-300 z-50 overflow-y-auto";
@@ -470,6 +468,7 @@ cartSidebar.innerHTML = `
   <div class="p-4 border-t">
     <p class="font-semibold">Total: <span id="cart-total">Rp 0</span></p>
     <button id="checkout-btn" class="w-full bg-purple-600 text-white mt-4 py-2 rounded-lg font-semibold hover:bg-purple-700 disabled:bg-gray-400">Pesan Sekarang</button>
+    <button id="kosongKeranjang-btn" class="w-full bg-red-600 text-white mt-4 py-2 rounded-lg font-semibold hover:bg-red-700 ">Kosongkan Keranjang</button>
   </div>
 `;
 document.body.appendChild(cartSidebar);
@@ -482,11 +481,8 @@ document.getElementById('closeCart').addEventListener('click', () => {
   cartSidebar.classList.add('translate-x-full');
 });
 
-// =========================
 // TAMBAH MENU KE KERANJANG
-// =========================
 
-// Ambil menu dari database
 // Ambil menu dari database
 document.querySelectorAll('.add-to-cart').forEach(button => {
   button.addEventListener('click', async () => {
@@ -496,7 +492,7 @@ document.querySelectorAll('.add-to-cart').forEach(button => {
     const harga_satuan = parseInt(button.dataset.price);
     const image = button.dataset.image;
 
-    // 1️⃣ CEK STOK KE DATABASE
+    // CEK STOK KE DATABASE
     const response = await fetch(`check_stock.php?id_menu=${id_menu}`);
     const stockData = await response.json();
 
@@ -507,18 +503,18 @@ document.querySelectorAll('.add-to-cart').forEach(button => {
 
     const stokTersedia = stockData.stok;
 
-    // 2️⃣ CARI ITEM DI CART
+    //CARI ITEM DI CART
     const existingItem = cart.find(item => item.id_menu === id_menu);
 
     const jumlahSetelahTambah = existingItem ? existingItem.jumlah + 1 : 1;
 
-    // 3️⃣ JIKA STOK TIDAK CUKUP → TOLAK DAN ALERT
+    //JIKA STOK TIDAK CUKUP → TOLAK DAN ALERT
     if (jumlahSetelahTambah > stokTersedia) {
       alert(`Stok tidak mencukupi!\nStok tersedia: ${stokTersedia}`);
       return;
     }
 
-    // 4️⃣ LANJUT TAMBAH CART
+    //LANJUT TAMBAH CART
     if (existingItem) {
       existingItem.jumlah++;
     } else {
@@ -587,6 +583,12 @@ function saveCart() {
   }));
 }
 
+document.addEventListener("DOMContentLoaded", () => {
+  cart = JSON.parse(localStorage.getItem("cart")) || [];
+  renderCart();
+});
+
+
 // Render ulang
 function renderCart() {
   const container = document.getElementById('cart-items');
@@ -606,7 +608,7 @@ function renderCart() {
     itemDiv.className = 'flex items-center justify-between border-b pb-2';
     itemDiv.innerHTML = `
       <div class="flex items-center gap-3">
-        <img src="../Project-Landing-Page-UMKM/asset/uploads${item.image}" alt="${item.nama_menu}" class="w-12 h-12 rounded-lg object-cover">
+        <img src="${item.image}" alt="${item.nama_menu}" class="w-12 h-12 rounded-lg object-cover">
         <div>
           <p class="font-semibold">${item.nama_menu}</p>
           <p class="text-sm text-gray-500">Rp ${item.harga_satuan.toLocaleString('id-ID')}</p>
@@ -652,6 +654,16 @@ document.addEventListener('click', (e) => {
   }
 });
 
-// Render awal (biar data tetap muncul setelah refresh)
-renderCart();
+// Kosongkan Keranjang
+document.addEventListener('click', (e) => {
+  if (e.target.id === 'kosongKeranjang-btn') {
+  cart = []; // kosongkan array
+  localStorage.removeItem('cart'); // hapus dari localStorage
+
+  renderCart(); 
+}
+});
+
+renderCart(); 
+
 </script>
