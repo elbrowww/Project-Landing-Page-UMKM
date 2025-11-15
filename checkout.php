@@ -3,7 +3,7 @@ header('Content-Type: application/json');
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-include 'koneksi.php';
+include 'config/koneksi.php';
 
 $data = json_decode(file_get_contents("php://input"), true);
 

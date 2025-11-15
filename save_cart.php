@@ -29,23 +29,45 @@ $stmtDel->bind_param('s', $id_penjualan_temp);
 $stmtDel->execute();
 $stmtDel->close();
 
-$stmtIns = $conn->prepare("INSERT INTO detail_penjualan (id_detail, id_penjualan, nama_menu, jumlah, harga_satuan, subtotal) VALUES (?, ?, ?, ?, ?, ?)");
+$stmtIns = $conn->prepare("INSERT INTO detail_penjualan (id_detail, id_penjualan, id_menu, nama_menu, jumlah, harga_satuan, subtotal) VALUES (?, ?, ?, ?, ?, ?, ?)");
 
 foreach ($cart as $item) {
-  $id_menu = $item['id_menu'];
   $nama_menu = $item['nama_menu'];
   $harga_satuan = (int) $item['harga_satuan'];
   $jumlah = (int) $item['jumlah'];
   $subtotal = $harga_satuan * $jumlah;
   $id_detail = 'DTL' . rand(1000, 9999);
 
-  $stmtIns->bind_param('sssiii', $id_detail, $id_penjualan_temp, $nama_menu, $jumlah, $harga_satuan, $subtotal);
-  $stmtIns->execute();
+  // **DI SINI (sebelum insert)**: Ambil id_menu dari tabel menu berdasarkan nama_menu
+  $stmtMenu = $conn->prepare("SELECT id_menu FROM menu WHERE nama_menu = ?");
+  $stmtMenu->bind_param('s', $nama_menu);
+  $stmtMenu->execute();
+  $resultMenu = $stmtMenu->get_result();
+  $id_menu = null;
+  if ($row = $resultMenu->fetch_assoc()) {
+    $id_menu = $row['id_menu'];
+  }
+  $stmtMenu->close();
 
-  // Update stok menu (kurangi sesuai jumlah)
-  $conn->query("UPDATE menu SET stok_menu = stok_menu - $jumlah WHERE id_menu = '$id_menu'");
+  // Jika id_menu tidak ditemukan, skip atau error
+  if (!$id_menu) {
+    echo json_encode(['success' => false, 'message' => 'Menu tidak ditemukan: ' . $nama_menu]);
+    exit;
+  }
+
+  $stmtIns->bind_param('ssssiii', $id_detail, $id_penjualan_temp, $id_menu, $nama_menu, $jumlah, $harga_satuan, $subtotal);
+  if (!$stmtIns->execute()) {
+    echo json_encode(['success' => false, 'message' => 'Gagal insert: ' . $stmtIns->error]);
+    exit;
+  }
+
+  // **Opsional: Update stok manual (jika tidak pakai trigger)**
+  // Gunakan prepared statement untuk keamanan
+  $stmtUpdate = $conn->prepare("UPDATE menu SET stok_menu = stok_menu - ? WHERE id_menu = ?");  // Ganti 'stok' jika kolom berbeda
+  $stmtUpdate->bind_param('is', $jumlah, $id_menu);
+  $stmtUpdate->execute();
+  $stmtUpdate->close();
 }
-
 
 $stmtIns->close();
 echo json_encode(['success' => true]);
