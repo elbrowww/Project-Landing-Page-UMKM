@@ -81,7 +81,8 @@
 
   <!-- Script untuk membaca data keranjang -->
   <script>
-    let cart = [];
+   
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
     const cartItemsContainer = document.getElementById("cartItems");
     const cartTotalElement = document.getElementById("cartTotal");
 
@@ -96,19 +97,19 @@
       }
 
       cart.forEach((item) => {
-        const subtotal = item.price * item.quantity;
-        total += subtotal;
+        const subtotal = item.harga_satuan * item.jumlah;
+     
 
         const div = document.createElement("div");
         div.className = "cart-item";
         div.innerHTML = `
           <div class="item-info" style="display:flex;align-items:center;gap:10px;">
-            <img src="${item.image}" alt="${item.name}" 
+            <img src="${item.image}" alt="${item.nama_menu}" 
                  style="width:60px;height:60px;object-fit:cover;border-radius:10px;">
             <div>
-              <strong>${item.name}</strong><br>
-              <small>Harga: Rp ${item.price.toLocaleString("id-ID")}</small><br>
-              <small>Jumlah: ${item.quantity}</small><br>
+              <strong>${item.nama_menu}</strong><br>
+              <small>Harga: Rp ${item.harga_satuan.toLocaleString("id-ID")}</small><br>
+              <small>Jumlah: ${item.jumlah}</small><br>
               <small>Subtotal: <b>Rp ${subtotal.toLocaleString("id-ID")}</b></small>
             </div>
           </div>
@@ -116,7 +117,9 @@
         cartItemsContainer.appendChild(div);
       });
 
-      cartTotalElement.textContent = `Total: Rp ${total.toLocaleString("id-ID")}`;
+       totalElement.textContent = `Rp ${total.toLocaleString('id-ID')}`;
+       cartCount.textContent = totalItems;
+  checkoutBtn.disabled = cart.length === 0;
     }
 
     function tampilkanRekening() {
@@ -145,18 +148,17 @@ function checkout() {
     return;
   }
 
+  if (!/^08[0-9]{9,12}$/.test(telp)) {
+    alert("Format nomor telepon tidak valid!");
+    return;
+  }
+
   if (cart.length === 0) {
     alert("Keranjang masih kosong!");
     return;
   }
 
-  // Validasi nomor telepon
-  if (!/^08[0-9]{9,12}$/.test(telp)) {
-    alert("Format nomor telepon tidak valid! Harus diawali 08 dan 10-13 digit.");
-    return;
-  }
-
-  const pesanan = {
+  const dataKirim = {
     nama,
     telp,
     alamat,
@@ -165,44 +167,34 @@ function checkout() {
     total: cart.reduce((sum, item) => sum + item.price * item.quantity, 0),
   };
 
-  // Kirim data ke PHP menggunakan fetch()
   fetch("../Project-Landing-Page-UMKM/config/checkout-proses.php", {
-  method: "POST",
-  body: formData // kalau kamu pakai FormData
-})
-.then(res => res.text())  // ← BUKAN JSON
-.then(response => {
-  alert(response);
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(dataKirim)
+  })
+  .then(res => res.json())
+  .then(data => {
+    if (data.success) {
+      alert(`✅ Pesanan berhasil!\nID Pesanan: ${data.id_pesanan}`);
 
-  localStorage.removeItem("cart");
-  cart = [];
-  renderCart();
+      localStorage.removeItem("cart");
+      cart = [];
+      renderCart();
 
-  setTimeout(() => {
-    window.location.href = "../index.php";
-  }, 2000);
-})
+      setTimeout(() => {
+        window.location.href = "../index.php";
+      }, 2000);
 
-        alert(`✅ Pesanan berhasil disimpan!\nID Pelanggan: ${data.id_pelanggan}\nTotal: Rp ${data.total.toLocaleString("id-ID")}\n\nTerima kasih telah memesan di Dapur Bu Mon ❤️`);
-        
-        // Hapus keranjang setelah checkout berhasil
-        localStorage.removeItem("cart");
-        cart = [];
-        renderCart();
-
-        // Tunggu 2 detik, lalu kembali ke landing page
-        setTimeout(() => {
-          window.location.href = "../index.php";
-        }, 2000);
-      } else {
-        alert("❌ Gagal menyimpan pesanan: " + data.message);
-      }
-    })
-    .catch((error) => {
-      console.error("Error:", error);
-      alert("❌ Terjadi kesalahan saat mengirim pesanan.");
-    });
+    } else {
+      alert("❌ Gagal: " + data.message);
+    }
+  })
+  .catch(err => {
+    alert("❌ Terjadi kesalahan server");
+    console.error(err);
+  });
 }
+
 
     document.addEventListener("DOMContentLoaded", renderCart);
   </script>

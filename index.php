@@ -572,6 +572,7 @@ function setupQtyButtons() {
 
 // Simpan database
 function saveCart() {
+  localStorage.setItem("cart", JSON.stringify(cart));
   fetch('save_cart.php', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -605,7 +606,7 @@ function renderCart() {
     itemDiv.className = 'flex items-center justify-between border-b pb-2';
     itemDiv.innerHTML = `
       <div class="flex items-center gap-3">
-        <img src="${item.image}" alt="${item.nama_menu}" class="w-12 h-12 rounded-lg object-cover">
+        <img src="../Project-Landing-Page-UMKM/asset/uploads${item.image}" alt="${item.nama_menu}" class="w-12 h-12 rounded-lg object-cover">
         <div>
           <p class="font-semibold">${item.nama_menu}</p>
           <p class="text-sm text-gray-500">Rp ${item.harga_satuan.toLocaleString('id-ID')}</p>
@@ -635,6 +636,7 @@ renderCart();
 document.addEventListener('click', (e) => {
   if (e.target.id === 'checkout-btn' && cart.length > 0) {
     const total = cart.reduce((sum, item) => sum + item.harga_satuan * item.jumlah, 0);
+    window.location.href = "checkout/checkout.php";
 
     fetch('checkout.php', {
       method: 'POST',
