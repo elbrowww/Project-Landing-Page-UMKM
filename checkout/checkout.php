@@ -86,41 +86,41 @@
     const cartItemsContainer = document.getElementById("cartItems");
     const cartTotalElement = document.getElementById("cartTotal");
 
-    function renderCart() {
-      cartItemsContainer.innerHTML = "";
-      let total = 0;
+function renderCart() {
+  cartItemsContainer.innerHTML = "";
+  let total = 0;
 
-      if (cart.length === 0) {
-        cartItemsContainer.innerHTML = "<p>Keranjang masih kosong.</p>";
-        cartTotalElement.textContent = "Total: Rp 0";
-        return;
-      }
+  if (cart.length === 0) {
+    cartItemsContainer.innerHTML = "<p>Keranjang masih kosong.</p>";
+    cartTotalElement.textContent = "Total: Rp 0";
+    return;
+  }
 
-      cart.forEach((item) => {
-        const subtotal = item.harga_satuan * item.jumlah;
-     
+  cart.forEach((item) => {
+    const subtotal = item.harga_satuan * item.jumlah;
 
-        const div = document.createElement("div");
-        div.className = "cart-item";
-        div.innerHTML = `
-          <div class="item-info" style="display:flex;align-items:center;gap:10px;">
-            <img src="${item.image}" alt="${item.nama_menu}" 
-                 style="width:60px;height:60px;object-fit:cover;border-radius:10px;">
-            <div>
-              <strong>${item.nama_menu}</strong><br>
-              <small>Harga: Rp ${item.harga_satuan.toLocaleString("id-ID")}</small><br>
-              <small>Jumlah: ${item.jumlah}</small><br>
-              <small>Subtotal: <b>Rp ${subtotal.toLocaleString("id-ID")}</b></small>
-            </div>
-          </div>
-        `;
-        cartItemsContainer.appendChild(div);
-      });
+    const div = document.createElement("div");
+    div.className = "cart-item";
+    div.innerHTML = `
+      <div class="item-info" style="display:flex;align-items:center;gap:10px;">
+        <img src="${item.image}" alt="${item.nama_menu}" 
+             style="width:60px;height:60px;object-fit:cover;border-radius:10px;">
+        <div>
+          <strong>${item.nama_menu}</strong><br>
+          <small>Harga: Rp ${item.harga_satuan.toLocaleString("id-ID")}</small><br>
+          <small>Jumlah: ${item.jumlah}</small><br>
+          <small>Subtotal: <b>Rp ${subtotal.toLocaleString("id-ID")}</b></small>
+        </div>
+      </div>
+    `;
+    cartItemsContainer.appendChild(div);
 
-       totalElement.textContent = `Rp ${total.toLocaleString('id-ID')}`;
-       cartCount.textContent = totalItems;
-  checkoutBtn.disabled = cart.length === 0;
-    }
+    total += subtotal;
+  });
+
+  cartTotalElement.textContent = "Total: Rp " + total.toLocaleString("id-ID");
+}
+    
 
     function tampilkanRekening() {
       const rekening = document.getElementById("rekening").value;
@@ -164,10 +164,10 @@ function checkout() {
     alamat,
     rekening,
     cart,
-    total: cart.reduce((sum, item) => sum + item.price * item.quantity, 0),
+    total: cart.reduce((sum, item) => sum + item.harga_satuan * item.jumlah, 0),
   };
 
-  fetch("../Project-Landing-Page-UMKM/config/checkout-proses.php", {
+  fetch("Project-Landing-Page-UMKM/checkout.php", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(dataKirim)
