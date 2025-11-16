@@ -99,6 +99,12 @@ $stats = $result_stats->fetch_assoc();
             <i class="fas fa-shopping-cart"></i> Pesanan Masuk
           </a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link" href="riwayat.php" id="nav-penjualan">
+            <i class="fas fa-shopping-cart"></i> Riwayat Pesanan
+          </a>
+        </li>
+      </ul>
       <ul class="navbar-nav">
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
