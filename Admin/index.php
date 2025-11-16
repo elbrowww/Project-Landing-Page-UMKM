@@ -236,7 +236,7 @@ $stats = $result_stats->fetch_assoc();
                 <th>No</th>
                 <th>Tanggal</th>
                 <th>ID Detail</th>
-                <th>ID Menu</th>
+                <th>Nama Menu</th>
                 <th>ID Pesanan</th>
                 <th>Jumlah</th>
                 <th>Harga Satuan</th>
@@ -254,7 +254,7 @@ $stats = $result_stats->fetch_assoc();
                 <td><?= $no++ ?></td>
                 <td><?= date('d/m/Y H:i', strtotime($row_pesanan['tgl_pesan'])) ?></td>
                 <td><strong><?= htmlspecialchars($row_pesanan['id_detail']) ?></strong></td>
-                <td><?= htmlspecialchars($row_pesanan['id_menu']) ?></td>
+                <td><?= htmlspecialchars($row_pesanan['nama_menu']) ?></td>
                 <td><strong><?= htmlspecialchars($row_pesanan['id_pesanan']) ?></td>
                 <td><span class="badge-qty"><?= htmlspecialchars($row_pesanan['jumlah']) ?></span></td>
                 <td><span class="badge-price">Rp <?= number_format($row_pesanan['harga_satuan'], 0, ',', '.') ?></span></td>
