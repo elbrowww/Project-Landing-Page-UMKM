@@ -161,12 +161,20 @@
     </div>
   </div>
 </section>
-<!-- POPUP STOK UNGU DI ATAS -->
+<!-- POPUP MENU TIDAK TERSEDIA -->
 <div id="modalStok" class="fixed top-4 left-1/2 transform -translate-x-1/2 hidden z-50">
   <div class="bg-purple-600 text-white w-80 p-4 rounded-xl shadow-xl text-center animate-fade">
     <p id="modalStokText" class="text-sm font-medium">Menu tidak tersedia.</p>
   </div>
 </div>
+
+<!-- POPUP MENU BERHASIL -->
+<div id="modalSuccess" class="fixed top-4 left-1/2 transform -translate-x-1/2 hidden z-50">
+  <div class="bg-purple-600 text-white w-80 p-4 rounded-xl shadow-xl text-center animate-fade">
+    <p id="modalSuccessText" class="text-sm font-medium">Berhasil ditambahkan ke keranjang.</p>
+  </div>
+</div>
+
 
   <!-- LAYANAN -->
    <section id="layanan" class="py-20 bg-white">
@@ -529,7 +537,8 @@ document.querySelectorAll('.add-to-cart').forEach(button => {
 
     saveCart();
     renderCart();
-
+// Tampilkan pop-up sukses
+showModalSuccess(`${nama_menu} berhasil ditambahkan ke keranjang.`);
   });
 });
 
@@ -681,6 +690,16 @@ function showModalStok(pesan) {
   setTimeout(() => {
     modal.classList.add('hidden');
   }, 2500);
+}
+function showModalSuccess(pesan) {
+  const m = document.getElementById('modalSuccess');
+  document.getElementById('modalSuccessText').innerText = pesan;
+
+  m.classList.remove('hidden');
+
+  setTimeout(() => {
+    m.classList.add('hidden');
+  }, 2000);
 }
 
 </script>
