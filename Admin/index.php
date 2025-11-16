@@ -99,6 +99,11 @@ $stats = $result_stats->fetch_assoc();
             <i class="fas fa-shopping-cart"></i> Pesanan Masuk
           </a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link" href="javascript:void(0)" onclick="showPage('penjualan')" id="nav-penjualan">
+            <i class="fas fa-shopping-cart"></i> Riwayat Pesanan
+          </a>
+        </li>
       </ul>
       <ul class="navbar-nav">
         <li class="nav-item dropdown">
@@ -218,6 +223,7 @@ $stats = $result_stats->fetch_assoc();
                 <th>Tanggal</th>
                 <th>ID Detail</th>
                 <th>ID Menu</th>
+                <th>ID Pelanggan</th>
                 <th>Jumlah</th>
                 <th>Harga Satuan</th>
                 <th>Subtotal</th>
@@ -235,6 +241,7 @@ $stats = $result_stats->fetch_assoc();
                 <td><?= date('d/m/Y H:i', strtotime($row_pesanan['tgl_pesan'])) ?></td>
                 <td><strong><?= htmlspecialchars($row_pesanan['id_detail']) ?></strong></td>
                 <td><?= htmlspecialchars($row_pesanan['id_menu']) ?></td>
+                <td><strong><?= htmlspecialchars($row_pesanan['id_penjualan']) ?></td>
                 <td><span class="badge-qty"><?= htmlspecialchars($row_pesanan['jumlah']) ?></span></td>
                 <td><span class="badge-price">Rp <?= number_format($row_pesanan['harga_satuan'], 0, ',', '.') ?></span></td>
                 <td><span class="badge-price">Rp <?= number_format($row_pesanan['subtotal'], 0, ',', '.') ?></span></td>
