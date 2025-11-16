@@ -114,7 +114,18 @@ $stats = $result_stats->fetch_assoc();
     </div>
   </div>
 </nav>
+<!-- POPUP DELETE -->
+<div id="popupConfirm" class="popup-overlay">
+  <div class="popup-box">
+    <h4>Konfirmasi Hapus</h4>
+    <p id="popupText"></p>
 
+    <div class="popup-btns">
+      <button class="btn btn-secondary" onclick="closePopup()">Batal</button>
+      <a id="deleteLink" class="btn btn-danger">Hapus</a>
+    </div>
+  </div>
+</div>
 <!-- HALAMAN DASHBOARD MENU -->
 <div id="page-dashboard" class="page-content">
   <div class="container">
@@ -158,9 +169,12 @@ $stats = $result_stats->fetch_assoc();
                           onclick="editMenu('<?= $row['id_menu'] ?>', '<?= addslashes($row['nama_menu']) ?>', <?= $row['stok_menu'] ?>, <?= $row['harga_menu'] ?>, '<?= addslashes($row['deskripsi']) ?>', '<?= $row['gambar'] ?>')">
                     <i class="fas fa-edit"></i>
                   </button>
-                  <a href="?hapus=<?= $row['id_menu'] ?>" onclick="return confirm('Hapus menu <?= htmlspecialchars($row['nama_menu']) ?>?')" class="btn btn-action btn-delete">
-                    <i class="fas fa-trash-alt"></i>
-                  </a>
+                  <a href="javascript:void(0)" 
+   onclick="showDeletePopup('<?= $row['id_menu'] ?>', '<?= addslashes($row['nama_menu']) ?>')" 
+   class="btn btn-action btn-delete">
+  <i class="fas fa-trash-alt"></i>
+</a>
+
                 </td>
               </tr>
               <?php endwhile; else: ?>
@@ -417,6 +431,19 @@ document.getElementById('tambahMenuModal').addEventListener('hidden.bs.modal', f
   document.getElementById('currentImage').style.display = 'none';
   document.getElementById('modalTitle').innerHTML = '<i class="fas fa-plus-circle"></i> Tambah Menu Baru';
 });
+
+function showDeletePopup(id, nama) {
+  document.getElementById('popupText').innerHTML =
+    "Yakin ingin menghapus menu <b>" + nama + "</b>?";
+
+  document.getElementById('deleteLink').href = "?hapus=" + id;
+
+  document.getElementById('popupConfirm').style.display = "flex";
+}
+
+function closePopup() {
+  document.getElementById('popupConfirm').style.display = "none";
+}
 </script>
 
 </body>
