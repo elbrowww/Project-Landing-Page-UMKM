@@ -161,17 +161,10 @@
     </div>
   </div>
 </section>
-
-<!-- MODAL STOK HABIS -->
-<div id="modalStok" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
-  <div class="bg-white w-80 p-6 rounded-xl shadow-xl text-center animate-fade">
-    <div class="text-red-600 text-4xl mb-3">⚠️</div>
-    <h2 class="text-xl font-bold mb-2">Pemberitahuan</h2>
-    <p class="text-gray-700 mb-4" id="modalStokText">Menu tidak tersedia.</p>
-
-    <button id="closeModalStok" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
-      OK
-    </button>
+<!-- POPUP STOK UNGU DI ATAS -->
+<div id="modalStok" class="fixed top-4 left-1/2 transform -translate-x-1/2 hidden z-50">
+  <div class="bg-purple-600 text-white w-80 p-4 rounded-xl shadow-xl text-center animate-fade">
+    <p id="modalStokText" class="text-sm font-medium">Menu tidak tersedia.</p>
   </div>
 </div>
 
@@ -679,14 +672,15 @@ document.addEventListener('click', (e) => {
 
 renderCart(); 
 function showModalStok(pesan) {
+  const modal = document.getElementById('modalStok');
   document.getElementById('modalStokText').innerText = pesan;
-  document.getElementById('modalStok').classList.remove('hidden');
-  document.getElementById('modalStok').classList.add('flex');
-}
 
-document.getElementById('closeModalStok').addEventListener('click', function () {
-  document.getElementById('modalStok').classList.add('hidden');
-  document.getElementById('modalStok').classList.remove('flex');
-});
+  modal.classList.remove('hidden');
+
+  // Auto close setelah 2.5 detik
+  setTimeout(() => {
+    modal.classList.add('hidden');
+  }, 2500);
+}
 
 </script>
