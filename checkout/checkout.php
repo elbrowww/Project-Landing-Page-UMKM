@@ -1,3 +1,81 @@
+<?php
+include('../config/koneksi.php');
+
+// ✔ Generator ID urut
+function generateID($koneksi, $table, $column, $prefix) {
+    $query = "SELECT $column FROM $table ORDER BY $column DESC LIMIT 1";
+    $result = mysqli_query($koneksi, $query);
+
+    if ($row = mysqli_fetch_assoc($result)) {
+        $lastID = $row[$column];
+        $number = (int)substr($lastID, strlen($prefix));
+        $number++;
+        return $prefix . str_pad($number, 3, '0', STR_PAD_LEFT);
+    } else {
+        return $prefix . "001";
+    }
+}
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+    $nama = $_POST['nama'];
+    $telp = $_POST['telp'];
+    $alamat = $_POST['alamat'];
+    $rekening = $_POST['rekening'];
+    $total = (int)$_POST['total'];
+
+    $id_menu_arr = $_POST['id_menu'] ?? [];
+    $nama_menu_arr = $_POST['nama_menu'];
+    $jumlah_arr = $_POST['jumlah'];
+    $harga_arr = $_POST['harga_satuan'];
+
+    // ✔ Buat ID pesanan otomatis
+    $id_pesanan = generateID($koneksi, "pesanan", "id_pesanan", "PSN");
+
+    mysqli_begin_transaction($koneksi);
+
+    try {
+        // Insert pesanan
+        $sql_pesanan = "INSERT INTO pesanan VALUES ('$id_pesanan', '$nama', '$telp', '$alamat', '$rekening', $total, NOW())";
+        if (!mysqli_query($koneksi, $sql_pesanan)) {
+            throw new Exception(mysqli_error($koneksi));
+        }
+
+        // Detail
+        foreach ($nama_menu_arr as $i => $nama_menu) {
+
+            // ✔ ID Detail otomatis
+            $id_detail = generateID($koneksi, "detail_penjualan", "id_detail", "DTL");
+
+            $id_menu = $id_menu_arr[$i] ?? null;
+            $jumlah = (int)$jumlah_arr[$i];
+            $harga = (int)$harga_arr[$i];
+            $subtotal = $jumlah * $harga;
+
+            $sql_detail = "INSERT INTO detail_penjualan 
+                VALUES ('$id_detail', '$id_pesanan', '$id_menu', '$nama_menu', $jumlah, $harga, $subtotal, NOW())";
+
+            if (!mysqli_query($koneksi, $sql_detail)) {
+                throw new Exception(mysqli_error($koneksi));
+            }
+        }
+
+        mysqli_commit($koneksi);
+
+        echo "<script>
+                alert('Pesanan berhasil! Terima kasih sudah memesan di Dapur Bu Mon ❤️');
+                localStorage.removeItem('cart');
+                window.location.href = '../index.php';
+              </script>";
+
+    } catch (Exception $e) {
+
+        mysqli_rollback($koneksi);
+        echo "<script>alert('Error: ".$e->getMessage()."');</script>";
+    }
+}
+
+?>
 <!doctype html>
 <html lang="id">
 <head>
@@ -10,11 +88,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="../checkout/checkout.css">
   <script src="https://kit.fontawesome.com/a2e0e6d6df.js" crossorigin="anonymous"></script>
-
-
 </head>
-
-
 
 <body>
   <header>
@@ -27,100 +101,144 @@
   <section class="cart" id="cart">
     <h2>Keranjang Belanja</h2>
 
-    <!-- Rincian keranjang -->
     <div class="cart-items" id="cartItems">
       <p>Memuat keranjang...</p>
     </div>
 
-    <!-- Total -->
     <div class="cart-total" id="cartTotal">
       Total: Rp 0
     </div>
 
-    <!-- 🔹 Form Data Pemesan -->
-    <div class="customer-form">
-      <h3>Data Pemesan</h3>
+    <!-- Form Data Pemesan -->
+    <form id="formCheckout" method="POST" onsubmit="return validateCheckout()">
+      <div class="customer-form">
+        <h3>Data Pemesan</h3>
 
-      <div class="form-group">
-        <label for="nama"><i class="fas fa-user"></i> Nama Lengkap</label>
-        <input type="text" id="nama" placeholder="Masukkan nama lengkap Anda" required>
+        <div class="form-group">
+          <label for="nama"><i class="fas fa-user"></i> Nama Lengkap</label>
+          <input type="text" name="nama" id="nama" placeholder="Masukkan nama lengkap Anda" required>
+        </div>
+
+        <div class="form-group">
+          <label for="telp"><i class="fas fa-phone"></i> Nomor Telepon</label>
+          <input type="tel" name="telp" id="telp" placeholder="08xxxxxxxxxx" required>
+        </div>
+
+        <div class="form-group">
+          <label for="alamat"><i class="fas fa-map-marker-alt"></i> Alamat Lengkap</label>
+          <textarea name="alamat" id="alamat" rows="3" placeholder="Masukkan alamat lengkap Anda" required></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="rekening"><i class="fas fa-university"></i> Pilih Metode Pembayaran</label>
+          <select name="rekening" id="rekening" onchange="tampilkanRekening()" required>
+            <option value="">-- Pilih Metode Pembayaran --</option>
+            <option value="Cash">💵 Tunai Cash</option>
+            <option value="BRI">🏦 Bank BRI</option>
+            <option value="BCA">🏦 Bank BCA</option>
+            <option value="Mandiri">🏦 Bank Mandiri</option>
+            <option value="BNI">🏦 Bank BNI</option>
+          </select>
+          <div id="rekeningInfo"></div>
+        </div>
+
+        <!-- Hidden fields untuk cart -->
+        <div id="hiddenCartData"></div>
+        <input type="hidden" name="total" id="hiddenTotal" value="0">
+
+        <button type="submit" class="checkout-btn">
+          <i class="fas fa-shopping-cart"></i> Checkout
+        </button>
       </div>
-
-      <div class="form-group">
-        <label for="telp"><i class="fas fa-phone"></i> Nomor Telepon</label>
-        <input type="tel" id="telp" placeholder="08xxxxxxxxxx" required>
-      </div>
-
-      <div class="form-group">
-        <label for="alamat"><i class="fas fa-map-marker-alt"></i> Alamat Lengkap</label>
-        <textarea id="alamat" rows="3" placeholder="Masukkan alamat lengkap Anda" required></textarea>
-      </div>
-
-      <div class="form-group">
-        <label for="rekening"><i class="fas fa-university"></i> Pilih Metode Pembayaran</label>
-        <select id="rekening" onchange="tampilkanRekening()" required>
-          <option value="">-- Pilih Metode Pembayaran --</option>
-          <option value="Cash"> Tunai Cash</option>
-          <option value="BRI">Bank BRI</option>
-          <option value="BCA">Bank BCA</option>
-          <option value="Mandiri">Bank Mandiri</option>
-          <option value="BNI">Bank BNI</option>
-        </select>
-        <div id="rekeningInfo"></div>
-      </div>
-
-      <button class="checkout-btn" onclick="checkout()">
-        <i class="fas fa-shopping-cart"></i> Checkout
-      </button>
-    </div>
+    </form>
   </section>
 
   <footer>
     <p>© 2025 Dapur bu Mon. All Rights Reserved.</p>
   </footer>
 
-  <!-- Script untuk membaca data keranjang -->
   <script>
-   
     let cart = JSON.parse(localStorage.getItem("cart")) || [];
     const cartItemsContainer = document.getElementById("cartItems");
     const cartTotalElement = document.getElementById("cartTotal");
 
-function renderCart() {
-  cartItemsContainer.innerHTML = "";
-  let total = 0;
+    function renderCart() {
+      cartItemsContainer.innerHTML = "";
+      let total = 0;
 
-  if (cart.length === 0) {
-    cartItemsContainer.innerHTML = "<p>Keranjang masih kosong.</p>";
-    cartTotalElement.textContent = "Total: Rp 0";
-    return;
-  }
+      if (cart.length === 0) {
+        cartItemsContainer.innerHTML = "<p>Keranjang masih kosong.</p>";
+        cartTotalElement.textContent = "Total: Rp 0";
+        return;
+      }
 
-  cart.forEach((item) => {
-    const subtotal = item.harga_satuan * item.jumlah;
+      cart.forEach((item) => {
+        const subtotal = item.harga_satuan * item.jumlah;
 
-    const div = document.createElement("div");
-    div.className = "cart-item";
-    div.innerHTML = `
-      <div class="item-info" style="display:flex;align-items:center;gap:10px;">
-        <img src="${item.image}" alt="${item.nama_menu}" 
-             style="width:60px;height:60px;object-fit:cover;border-radius:10px;">
-        <div>
-          <strong>${item.nama_menu}</strong><br>
-          <small>Harga: Rp ${item.harga_satuan.toLocaleString("id-ID")}</small><br>
-          <small>Jumlah: ${item.jumlah}</small><br>
-          <small>Subtotal: <b>Rp ${subtotal.toLocaleString("id-ID")}</b></small>
-        </div>
-      </div>
-    `;
-    cartItemsContainer.appendChild(div);
+        const div = document.createElement("div");
+        div.className = "cart-item";
+        div.innerHTML = `
+          <div class="item-info" style="display:flex;align-items:center;gap:10px;">
+            <img src="${item.image}" alt="${item.nama_menu}" 
+                 style="width:60px;height:60px;object-fit:cover;border-radius:10px;">
+            <div>
+              <strong>${item.nama_menu}</strong><br>
+              <small>Harga: Rp ${item.harga_satuan.toLocaleString("id-ID")}</small><br>
+              <small>Jumlah: ${item.jumlah}</small><br>
+              <small>Subtotal: <b>Rp ${subtotal.toLocaleString("id-ID")}</b></small>
+            </div>
+          </div>
+        `;
+        cartItemsContainer.appendChild(div);
 
-    total += subtotal;
-  });
+        total += subtotal;
+      });
 
-  cartTotalElement.textContent = "Total: Rp " + total.toLocaleString("id-ID");
-}
-    
+      cartTotalElement.textContent = "Total: Rp " + total.toLocaleString("id-ID");
+      
+      // Update hidden fields
+      updateHiddenFields(total);
+    }
+
+    function updateHiddenFields(total) {
+      const hiddenContainer = document.getElementById("hiddenCartData");
+      hiddenContainer.innerHTML = "";
+      
+      cart.forEach((item, index) => {
+        // ID Menu (jika ada)
+        if (item.id_menu) {
+          const inputIdMenu = document.createElement("input");
+          inputIdMenu.type = "hidden";
+          inputIdMenu.name = "id_menu[]";
+          inputIdMenu.value = item.id_menu;
+          hiddenContainer.appendChild(inputIdMenu);
+        }
+        
+        // Nama Menu
+        const inputNama = document.createElement("input");
+        inputNama.type = "hidden";
+        inputNama.name = "nama_menu[]";
+        inputNama.value = item.nama_menu;
+        hiddenContainer.appendChild(inputNama);
+        
+        // Jumlah
+        const inputJumlah = document.createElement("input");
+        inputJumlah.type = "hidden";
+        inputJumlah.name = "jumlah[]";
+        inputJumlah.value = item.jumlah;
+        hiddenContainer.appendChild(inputJumlah);
+        
+        // Harga Satuan
+        const inputHarga = document.createElement("input");
+        inputHarga.type = "hidden";
+        inputHarga.name = "harga_satuan[]";
+        inputHarga.value = item.harga_satuan;
+        hiddenContainer.appendChild(inputHarga);
+      });
+      
+      // Update total
+      document.getElementById("hiddenTotal").value = total;
+    }
 
     function tampilkanRekening() {
       const rekening = document.getElementById("rekening").value;
@@ -128,73 +246,42 @@ function renderCart() {
       let text = "";
 
       switch (rekening) {
-        case "BRI": text = "Nomor Rekening BRI: 1234-5678-999 a.n. Dapur Bu Mon"; break;
-        case "BCA": text = "Nomor Rekening BCA: 5678-1234-555 a.n. Dapur Bu Mon"; break;
-        case "Mandiri": text = "Nomor Rekening Mandiri: 1122-3344-5566 a.n. Dapur Bu Mon"; break;
-        case "BNI": text = "Nomor Rekening BNI: 9988-7766-5544 a.n. Dapur Bu Mon"; break;
-        default: text = "";
+        case "BRI": 
+          text = "📱 Nomor Rekening BRI: 1234-5678-999 a.n. Dapur Bu Mon"; 
+          break;
+        case "BCA": 
+          text = "📱 Nomor Rekening BCA: 5678-1234-555 a.n. Dapur Bu Mon"; 
+          break;
+        case "Mandiri": 
+          text = "📱 Nomor Rekening Mandiri: 1122-3344-5566 a.n. Dapur Bu Mon"; 
+          break;
+        case "BNI": 
+          text = "📱 Nomor Rekening BNI: 9988-7766-5544 a.n. Dapur Bu Mon"; 
+          break;
+        case "Cash":
+          text = "💰 Pembayaran tunai saat pesanan diantar";
+          break;
+        default: 
+          text = "";
       }
-      info.innerHTML = `<p>${text}</p>`;
+      info.innerHTML = `<p style="margin-top:10px;padding:10px;background:#f0f0f0;border-radius:5px;">${text}</p>`;
     }
 
-function checkout() {
-  const nama = document.getElementById("nama").value.trim();
-  const telp = document.getElementById("telp").value.trim();
-  const alamat = document.getElementById("alamat").value.trim();
-  const rekening = document.getElementById("rekening").value.trim();
+    function validateCheckout() {
+      const telp = document.getElementById("telp").value.trim();
+      
+      if (!/^08[0-9]{9,12}$/.test(telp)) {
+        alert("Format nomor telepon tidak valid! Harus dimulai dengan 08 dan 11-14 digit");
+        return false;
+      }
 
-  if (!nama || !telp || !alamat || !rekening) {
-    alert("Harap isi semua data pemesan!");
-    return;
-  }
+      if (cart.length === 0) {
+        alert("Keranjang masih kosong!");
+        return false;
+      }
 
-  if (!/^08[0-9]{9,12}$/.test(telp)) {
-    alert("Format nomor telepon tidak valid!");
-    return;
-  }
-
-  if (cart.length === 0) {
-    alert("Keranjang masih kosong!");
-    return;
-  }
-
-  const dataKirim = {
-    nama,
-    telp,
-    alamat,
-    rekening,
-    cart,
-    total: cart.reduce((sum, item) => sum + item.harga_satuan * item.jumlah, 0),
-  };
-
-  fetch("Project-Landing-Page-UMKM/checkout.php", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(dataKirim)
-  })
-  .then(res => res.json())
-  .then(data => {
-    if (data.success) {
-      alert(`✅ Pesanan berhasil!\nID Pesanan: ${data.id_pesanan}`);
-
-      localStorage.removeItem("cart");
-      cart = [];
-      renderCart();
-
-      setTimeout(() => {
-        window.location.href = "../index.php";
-      }, 2000);
-
-    } else {
-      alert("❌ Gagal: " + data.message);
+      return true;
     }
-  })
-  .catch(err => {
-    alert("❌ Terjadi kesalahan server");
-    console.error(err);
-  });
-}
-
 
     document.addEventListener("DOMContentLoaded", renderCart);
   </script>
