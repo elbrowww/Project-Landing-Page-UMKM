@@ -162,6 +162,19 @@
   </div>
 </section>
 
+<!-- MODAL STOK HABIS -->
+<div id="modalStok" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+  <div class="bg-white w-80 p-6 rounded-xl shadow-xl text-center animate-fade">
+    <div class="text-red-600 text-4xl mb-3">⚠️</div>
+    <h2 class="text-xl font-bold mb-2">Pemberitahuan</h2>
+    <p class="text-gray-700 mb-4" id="modalStokText">Menu tidak tersedia.</p>
+
+    <button id="closeModalStok" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+      OK
+    </button>
+  </div>
+</div>
+
   <!-- LAYANAN -->
    <section id="layanan" class="py-20 bg-white">
         <div class="container mx-auto px-6">
@@ -260,21 +273,8 @@
         </div>
     </section>
 
-<!-- POPUP STOK HABIS -->
-<div id="stokHabisPopup" 
-     class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center z-50">
-  <div class="bg-white p-6 rounded-2xl shadow-xl text-center w-80">
-      <h2 class="text-xl font-bold text-red-600 mb-3">Stok Habis</h2>
-      <p class="text-gray-700 mb-5">Maaf, menu ini sedang tidak tersedia.</p>
 
-      <button onclick="tutupPopup()" 
-              class="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 w-full">
-          Tutup
-      </button>
-  </div>
-</div>
-
-
+  <!-- KONTAK -->
    <!-- KONTAK -->
 <section id="kontak" class="py-20 bg-white">
     <div class="container mx-auto px-6">
@@ -510,7 +510,7 @@ document.querySelectorAll('.add-to-cart').forEach(button => {
     const stockData = await response.json();
 
     if (!stockData.success) {
-      alert("Gagal mengambil stok menu.");
+      showModalStok("Gagal mengambil stok menu.");
       return;
     }
 
@@ -523,7 +523,7 @@ document.querySelectorAll('.add-to-cart').forEach(button => {
 
     //JIKA STOK TIDAK CUKUP → TOLAK DAN ALERT
     if (jumlahSetelahTambah > stokTersedia) {
-      alert(`Stok tidak mencukupi!\nStok tersedia: ${stokTersedia}`);
+      showModalStok(`Stok tidak mencukupi!\nStok tersedia: ${stokTersedia}`);
       return;
     }
 
@@ -678,5 +678,15 @@ document.addEventListener('click', (e) => {
 });
 
 renderCart(); 
+function showModalStok(pesan) {
+  document.getElementById('modalStokText').innerText = pesan;
+  document.getElementById('modalStok').classList.remove('hidden');
+  document.getElementById('modalStok').classList.add('flex');
+}
+
+document.getElementById('closeModalStok').addEventListener('click', function () {
+  document.getElementById('modalStok').classList.add('hidden');
+  document.getElementById('modalStok').classList.remove('flex');
+});
 
 </script>
