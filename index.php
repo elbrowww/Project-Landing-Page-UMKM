@@ -260,8 +260,21 @@
         </div>
     </section>
 
+<!-- POPUP STOK HABIS -->
+<div id="stokHabisPopup" 
+     class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center z-50">
+  <div class="bg-white p-6 rounded-2xl shadow-xl text-center w-80">
+      <h2 class="text-xl font-bold text-red-600 mb-3">Stok Habis</h2>
+      <p class="text-gray-700 mb-5">Maaf, menu ini sedang tidak tersedia.</p>
 
-  <!-- KONTAK -->
+      <button onclick="tutupPopup()" 
+              class="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 w-full">
+          Tutup
+      </button>
+  </div>
+</div>
+
+
    <!-- KONTAK -->
 <section id="kontak" class="py-20 bg-white">
     <div class="container mx-auto px-6">
