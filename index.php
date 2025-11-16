@@ -48,7 +48,9 @@
       </svg>
     </button>
   </div>
-      
+  
+    
+    
     <div id="mobileMenu" class="hidden md:hidden bg-purple/90 backdrop-blur-sm px-4 py-4">
       <a class="block py-2 text-gray-700" href="#home">Beranda</a>
       <a class="block py-2 text-gray-700" href="#menu">Menu</a>
