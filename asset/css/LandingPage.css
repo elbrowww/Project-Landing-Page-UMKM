@@ -113,6 +113,9 @@
             color: #1f2937;
         }
         
+
+
+        
   /* Responsive Sidebar Cart */
   #cartSidebar {
     width: 22rem; /* default desktop */
@@ -183,4 +186,104 @@
   to { opacity: 1; transform: translateY(0px); }
 }
 
+/* Animasi untuk mobile cart popup */
+#cartPopupContent {
+  transform: translateY(100%);
+  transition: transform 0.3s ease-out;
+}
 
+#cartPopupContent:not(.translate-y-full) {
+  transform: translateY(0);
+}
+
+/* Custom scrollbar untuk cart items */
+#mobile-cart-items::-webkit-scrollbar {
+  width: 4px;
+}
+
+#mobile-cart-items::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+#mobile-cart-items::-webkit-scrollbar-thumb {
+  background: #c4b5fd;
+  border-radius: 10px;
+}
+
+#mobile-cart-items::-webkit-scrollbar-thumb:hover {
+  background: #a78bfa;
+}
+
+/* Animasi fade */
+.animate-fade {
+  animation: fadeIn 0.25s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0px); }
+}
+
+/* Sticky nav behavior */
+.sticky-nav {
+  transition: all 0.3s ease;
+  background: transparent;
+}
+
+.sticky-nav.scrolled {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+
+
+
+/* Animasi untuk mobile cart popup */
+#cartPopupContent {
+  transition: transform 0.3s ease-out;
+}
+
+#cartPopupContent:not(.translate-y-full) {
+  transform: translateY(0);
+}
+
+/* Custom scrollbar */
+#mobile-cart-items::-webkit-scrollbar {
+  width: 4px;
+}
+
+#mobile-cart-items::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+#mobile-cart-items::-webkit-scrollbar-thumb {
+  background: #c4b5fd;
+  border-radius: 10px;
+}
+
+#mobile-cart-items::-webkit-scrollbar-thumb:hover {
+  background: #a78bfa;
+}
+
+/* Animasi fade */
+.animate-fade {
+  animation: fadeIn 0.25s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0px); }
+}
+
+/* Hide scrollbar for menu container */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}

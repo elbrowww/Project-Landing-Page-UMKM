@@ -41,12 +41,23 @@
     </div>
 
     <!-- Tombol Menu Mobile -->
-    <button id="menuBtn" class="md:hidden text-purple" aria-label="Buka menu">
-      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-              d="M4 6h16M4 12h16M4 18h16" />
-      </svg>
-    </button>
+    <div class="flex items-center md:hidden space-x-4">
+      <!-- Icon Keranjang untuk Mobile -->
+      <a class="relative flex items-center justify-center hover:scale-105 transition">
+        <div class="bg-purple-100 p-2 rounded-full shadow-sm hover:bg-purple-200 transition">
+          <i class="fa-solid fa-cart-shopping text-purple text-xl"></i>
+        </div>
+        <span id="cart-count-mobile"
+              class="absolute -top-1 -right-1 bg-red-500 text-white text-[10px] font-bold px-1.5 rounded-full shadow">0</span>
+      </a>
+      
+      <button id="menuBtn" class="text-purple" aria-label="Buka menu">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </button>
+    </div>
   </div>
   
     
@@ -136,13 +147,20 @@
     <div class="text-center">
       <from method='POST'action='save_cart.php'></from>
   <button 
-    class="add-to-cart bg-purple-600 text-white px-6 py-3 rounded-xl hover:bg-purple-700 transition"
-    data-id="<?php echo $data['id_menu']; ?>"
-    data-name="<?php echo $data['nama_menu']; ?>"
-    data-price="<?php echo $data['harga_menu']; ?>"
-    data-image="asset/uploads/<?php echo $data['gambar']; ?>">
-    Tambah Keranjang
-  </button>
+  class="add-to-cart bg-purple-600 text-white px-6 py-3 rounded-xl hover:bg-purple-700 transition disabled:bg-gray-400 disabled:cursor-not-allowed"
+  data-id="<?php echo $data['id_menu']; ?>"
+  data-name="<?php echo $data['nama_menu']; ?>"
+  data-price="<?php echo $data['harga_menu']; ?>"
+  data-image="asset/uploads/<?php echo $data['gambar']; ?>"
+  data-stok="<?php echo $data['stok']; ?>"
+  <?php echo $data['stok'] == 0 ? 'disabled' : ''; ?>>
+  <?php echo $data['stok'] == 0 ? 'Stok Habis' : 'Tambah Keranjang'; ?>
+</button>
+<?php if($data['stok'] > 0): ?>
+  <p class="text-xs text-gray-500 mt-2">Stok tersedia: <?php echo $data['stok']; ?></p>
+<?php else: ?>
+  <p class="text-xs text-red-500 mt-2">Stok habis</p>
+<?php endif; ?>
 </div>
 
   </div>
@@ -461,6 +479,7 @@ document.getElementById('contactForm').addEventListener('submit', function(e) {
 // Ambil elemen
 const cartIcon = document.querySelector('.fa-cart-shopping');
 const cartCount = document.getElementById('cart-count');
+const cartCountMobile = document.getElementById('cart-count-mobile');
 let cart =  [];
 
 
@@ -483,10 +502,18 @@ cartSidebar.innerHTML = `
 `;
 document.body.appendChild(cartSidebar);
 
-// Tombol buka/tutup keranjang
+// Tombol buka/tutup keranjang - untuk desktop
 cartIcon.addEventListener('click', () => {
   cartSidebar.classList.remove('translate-x-full');
 });
+
+// Tombol buka/tutup keranjang - untuk mobile
+document.querySelectorAll('.fa-cart-shopping').forEach(icon => {
+  icon.addEventListener('click', () => {
+    cartSidebar.classList.remove('translate-x-full');
+  });
+});
+
 document.getElementById('closeCart').addEventListener('click', () => {
   cartSidebar.classList.add('translate-x-full');
 });
@@ -518,11 +545,11 @@ document.querySelectorAll('.add-to-cart').forEach(button => {
 
     const jumlahSetelahTambah = existingItem ? existingItem.jumlah + 1 : 1;
 
-    //JIKA STOK TIDAK CUKUP → TOLAK DAN ALERT
-    if (jumlahSetelahTambah > stokTersedia) {
-      showModalStok(`Stok tidak mencukupi!\nStok tersedia: ${stokTersedia}`);
-      return;
-    }
+    // Cek stok sebelum menambah ke keranjang
+if (jumlahSetelahTambah > stokTersedia) {
+  showModalStok(`Stok tidak mencukupi! Stok tersedia: ${stokTersedia}`);
+  return;
+}
 
     //LANJUT TAMBAH CART
     if (existingItem) {
@@ -636,6 +663,7 @@ function renderCart() {
 
   totalElement.textContent = `Rp ${total.toLocaleString('id-ID')}`;
   cartCount.textContent = totalItems;
+  cartCountMobile.textContent = totalItems;
   checkoutBtn.disabled = cart.length === 0;
 
   setupQtyButtons();
@@ -694,7 +722,7 @@ function showModalSuccess(pesan) {
   m.classList.remove('hidden');
 
   setTimeout(() => {
-    m.classList.add('hidden');
+    m.classList.add('hidden');  
   }, 2000);
 }
 
