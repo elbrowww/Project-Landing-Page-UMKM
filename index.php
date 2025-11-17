@@ -255,7 +255,12 @@ $result_testimoni = $koneksi->query($query_testimoni);
         <h2 class="text-4xl font-bold text-center mb-4 text-white fade-in">Apa Kata Mereka?</h2>
         <p class="text-center text-purple-100 mb-16 fade-in">Testimoni pelanggan yang puas dengan layanan kami</p>
 
-        <div class="grid md:grid-cols-3 gap-8">
+    <div class="relative">
+      <button id="scrollLeft" class="absolute left-0 top-1/2 -translate-y-1/2 bg-purple-600 text-white p-3 rounded-full shadow-md hover:bg-purple-700 z-10">
+        ◀
+      </button>
+        <div class="grid md:grid">
+          <div id="menuContainer" class="flex overflow-x-auto gap-6 scroll-smooth px-20 pb-20 no-scrollbar">
 
             <?php if ($result_testimoni->num_rows > 0): ?>
 
@@ -297,8 +302,13 @@ $result_testimoni = $koneksi->query($query_testimoni);
             <?php else: ?>
                 <p class="text-center text-white col-span-3">Belum ada testimoni.</p>
             <?php endif; ?>
-
+          
+      <button id="scrollRight" class="absolute right-0 top-1/2 -translate-y-1/2 bg-purple-600 text-white p-3 rounded-full shadow-md hover:bg-purple-700 z-10">
+        ▶
+      </button>
+ </div>
         </div>
+      </div>
     </div>
 </section>
 
