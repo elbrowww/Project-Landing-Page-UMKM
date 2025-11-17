@@ -551,3 +551,26 @@ body {
   display: flex;
   justify-content: space-between;
 }
+
+.status-badge {
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+}
+.status-pending { background: #fff3cd; color: #856404; }
+.status-proses { background: #cfe2ff; color: #084298; }
+.status-selesai { background: #d1e7dd; color: #0f5132; }
+.status-batal { background: #f8d7da; color: #842029; }
+.status-approved { background: #d1e7dd; color: #0f5132; }
+.testimoni-card {
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  padding: 15px;
+  margin-bottom: 15px;
+  background: white;
+}
+.rating-stars {
+  color: #ffc107;
+  font-size: 18px;
+}
