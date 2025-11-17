@@ -500,14 +500,19 @@ $result_testimoni = $koneksi->query($query_testimoni);
 <div id="page-testimoni" class="page-content" style="display:none;">
   <div class="container">
     <div class="page-header">
-      <h3><i class="fas fa-star"></i> Kelola Testimoni</h3>
-    </div>
+  <div class="page-header d-flex justify-content-between align-items-center mb-3">
+    <h3><i class="fas fa-star"></i> Kelola Testimoni</h3>
+
+  <button class="btn btn-primary" id="btnTambahTestimoni">
+    <i class="fas fa-plus"></i> Tambah Testimoni
+  </button>
+</div>
+
 
     <div class="row">
       <?php 
       if ($result_testimoni && $result_testimoni->num_rows > 0):
         while ($row_testi = $result_testimoni->fetch_assoc()):
-          $status_class = $row_testi['status'] == 'approved' ? 'status-approved' : 'status-pending';
       ?>
       <div class="col-md-6 mb-3">
         <div class="testimoni-card">
@@ -520,9 +525,7 @@ $result_testimoni = $koneksi->query($query_testimoni);
                 <?php endfor; ?>
               </div>
             </div>
-            <span class="status-badge <?= $status_class ?>">
-              <?= $row_testi['status'] == 'approved' ? 'Disetujui' : 'Pending' ?>
-            </span>
+  
           </div>
           
           <p class="mb-2"><?= htmlspecialchars($row_testi['pesan']) ?></p>
@@ -532,12 +535,6 @@ $result_testimoni = $koneksi->query($query_testimoni);
           </div>
           
           <div class="d-flex gap-2">
-            <?php if ($row_testi['status'] == 'pending'): ?>
-            <a href="?approve_testimoni=<?= $row_testi['id_testimoni'] ?>" 
-               class="btn btn-sm btn-success">
-              <i class="fas fa-check"></i> Setujui
-            </a>
-            <?php endif; ?>
             <a href="?hapus_testimoni=<?= $row_testi['id_testimoni'] ?>" 
                onclick="return confirm('Hapus testimoni dari <?= htmlspecialchars($row_testi['nama']) ?>?')"
                class="btn btn-sm btn-danger">
@@ -557,6 +554,75 @@ $result_testimoni = $koneksi->query($query_testimoni);
     </div>
   </div>
 </div>
+
+<!-- MODAL TAMBAH TESTIMONI -->
+<div id="modalTestimoni" class="modal fade" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <form method="POST" action="../config/simpan-testimoni.php">
+        <div class="modal-header">
+          <h5 class="modal-title"><i class="fas fa-plus-circle"></i> Tambah Testimoni</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+
+        <div class="modal-body">
+          
+          <div class="mb-3">
+            <label class="form-label">Nama</label>
+            <input type="text" name="nama" class="form-control" required>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Email (Opsional)</label>
+            <input type="email" name="email" class="form-control">
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">No. Telepon</label>
+            <input type="text" name="no_telp" class="form-control">
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Jenis Kelamin</label>
+            <select name="gender" class="form-control" required>
+              <option value="" hidden>Pilih Gender</option>
+              <option value="L">Laki-laki</option>
+              <option value="P">Perempuan</option>
+            </select>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Rating</label>
+            <select name="rating" class="form-control" required>
+              <option value="5">⭐⭐⭐⭐⭐</option>
+              <option value="4">⭐⭐⭐⭐</option>
+              <option value="3">⭐⭐⭐</option>
+              <option value="2">⭐⭐</option>
+              <option value="1">⭐</option>
+            </select>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Pesan</label>
+            <textarea name="pesan" class="form-control" rows="3" required></textarea>
+          </div>
+
+          <input type="hidden" name="status" value="approved">
+
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+          <button type="submit" class="btn btn-primary">Simpan</button>
+        </div>
+
+      </form>
+
+    </div>
+  </div>
+</div>
+
 
 <!-- Modal Update Status Pesanan -->
 <div class="modal fade" id="updateStatusModal" tabindex="-1">
@@ -693,6 +759,14 @@ window.addEventListener('DOMContentLoaded', function() {
     showPage(page);
   }
 });
+
+
+document.getElementById("btnTambahTestimoni").addEventListener("click", function(){
+    let modal = new bootstrap.Modal(document.getElementById('modalTestimoni'));
+    modal.show();
+});
+
+
 
 </script>
 
