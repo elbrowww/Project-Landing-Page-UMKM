@@ -23,11 +23,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $alamat = $_POST['alamat'];
     $rekening = $_POST['rekening'];
     $total = (int)$_POST['total'];
+    $status = 'pending';
 
     $id_menu_arr = $_POST['id_menu'] ?? [];
     $nama_menu_arr = $_POST['nama_menu'];
     $jumlah_arr = $_POST['jumlah'];
     $harga_arr = $_POST['harga_satuan'];
+    $gambar_arr = $_POST['gambar'] ?? [];
 
     // ✔ Buat ID pesanan otomatis
     $id_pesanan = generateID($koneksi, "pesanan", "id_pesanan", "PSN");
@@ -36,7 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     try {
         // Insert pesanan
-        $sql_pesanan = "INSERT INTO pesanan VALUES ('$id_pesanan', '$nama', '$telp', '$alamat', '$rekening', $total, NOW())";
+        $sql_pesanan = "INSERT INTO pesanan VALUES ('$id_pesanan', '$nama', '$telp', '$alamat', '$rekening', $total, NOW(), '$status')";
         if (!mysqli_query($koneksi, $sql_pesanan)) {
             throw new Exception(mysqli_error($koneksi));
         }

@@ -678,20 +678,8 @@ document.addEventListener('click', (e) => {
   if (e.target.id === 'checkout-btn' && cart.length > 0) {
     const total = cart.reduce((sum, item) => sum + item.harga_satuan * item.jumlah, 0);
     window.location.href = "checkout/checkout.php";
-
-    fetch('checkout.php', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ id_penjualan_temp: "TEMP001", total: total })
-    })
-    .then(res => res.json())
-    .then(data => {
-      if (data.success) {
-        window.location.href = `checkout.php?id_penjualan=${data.id_penjualan}`;
       }
     });
-  }
-});
 
 // Kosongkan Keranjang
 document.addEventListener('click', (e) => {
