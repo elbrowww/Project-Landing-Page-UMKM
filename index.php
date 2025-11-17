@@ -129,7 +129,7 @@
 
       <div id="menuContainer" class="flex overflow-x-auto gap-6 scroll-smooth px-10 pb-4 no-scrollbar">
         <?php
-        $query = mysqli_query($koneksi, "SELECT id_menu, nama_menu, deskripsi, harga_menu, gambar FROM menu");
+        $query = mysqli_query($koneksi, "SELECT id_menu, nama_menu, stok_menu, deskripsi, harga_menu, gambar FROM menu");
         while ($data = mysqli_fetch_array($query)) {
         ?>
           <div class="menu-item fade-in bg-white rounded-2xl shadow-lg hover:shadow-2xl hover:scale-[1.03] transition-all duration-300 overflow-hidden min-w-[280px] max-w-[320px] flex-shrink-0 cursor-pointer">
@@ -152,12 +152,12 @@
   data-name="<?php echo $data['nama_menu']; ?>"
   data-price="<?php echo $data['harga_menu']; ?>"
   data-image="asset/uploads/<?php echo $data['gambar']; ?>"
-  data-stok="<?php echo $data['stok']; ?>"
-  <?php echo $data['stok'] == 0 ? 'disabled' : ''; ?>>
-  <?php echo $data['stok'] == 0 ? 'Stok Habis' : 'Tambah Keranjang'; ?>
+  data-stok="<?php echo $data['stok_menu']; ?>"
+  <?php echo $data['stok_menu'] == 0 ? 'disabled' : ''; ?>>
+  <?php echo $data['stok_menu'] == 0 ? 'Stok Habis' : 'Tambah Keranjang'; ?>
 </button>
-<?php if($data['stok'] > 0): ?>
-  <p class="text-xs text-gray-500 mt-2">Stok tersedia: <?php echo $data['stok']; ?></p>
+<?php if($data['stok_menu'] > 0): ?>
+  <p class="text-xs text-gray-500 mt-2">Stok tersedia: <?php echo $data['stok_menu']; ?></p>
 <?php else: ?>
   <p class="text-xs text-red-500 mt-2">Stok habis</p>
 <?php endif; ?>
