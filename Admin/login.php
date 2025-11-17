@@ -7,6 +7,7 @@ include '../config/koneksi.php';
 <html lang="id">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Login sebagai Admin</title>
 
 <link rel="icon" href="../asset/img/logo.png" type="image/x-icon">
@@ -16,10 +17,17 @@ include '../config/koneksi.php';
 <body>
 
 <form method="POST">
+    <table>
+    <td>
+    <img src="../asset/img/logo-nobg.png" alt="Logo Admin" class="logo">
+    </td>
+    <td>
     <h3>Login sebagai Admin</h3>
     <input type="text" name="user" placeholder="ID User" required>
     <input pattern=".{8,}" type="password" name="password" placeholder="Password" required>
     <button type="submit" name="login">Login</button>
+    </td>
+    </table>
 </form>
 
 <?php

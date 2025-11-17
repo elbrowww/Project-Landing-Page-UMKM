@@ -242,54 +242,66 @@
         </div>
     </section>
 
-  <!-- TESTIMONI -->
-  <section id="testimoni" class="py-20 gradient-bg">
-        <div class="container mx-auto px-6">
-            <h2 class="text-4xl font-bold text-center mb-4 text-white fade-in">Apa Kata Mereka?</h2>
-            <p class="text-center text-purple-100 mb-16 fade-in">Testimoni pelanggan yang puas dengan layanan kami</p>
-            <div class="grid md:grid-cols-3 gap-8">
-                <div class="fade-in bg-white p-8 rounded-2xl shadow-xl card-hover">
-                    <div class="flex items-center mb-4">
-                        <div class="w-12 h-12 bg-purple-200 rounded-full flex items-center justify-center text-xl mr-4">
-                            👨</div>
-                        <div>
-                            <h4 class="font-bold">Budi Santoso</h4>
-                            <div class="text-yellow-400">⭐⭐⭐⭐⭐</div>
+
+<?php
+// Ambil testimoni dari database
+$query_testimoni = "SELECT * FROM testimoni ORDER BY created_at DESC";
+$result_testimoni = $koneksi->query($query_testimoni);
+?>
+
+<!-- TESTIMONI -->
+<section id="testimoni" class="py-20 gradient-bg">
+    <div class="container mx-auto px-6">
+        <h2 class="text-4xl font-bold text-center mb-4 text-white fade-in">Apa Kata Mereka?</h2>
+        <p class="text-center text-purple-100 mb-16 fade-in">Testimoni pelanggan yang puas dengan layanan kami</p>
+
+        <div class="grid md:grid-cols-3 gap-8">
+
+            <?php if ($result_testimoni->num_rows > 0): ?>
+
+                <?php while ($row = $result_testimoni->fetch_assoc()): ?>
+
+                    <!-- Tentukan ikon berdasarkan gender -->
+                    <?php
+                        $icon = "👤";
+                        $bg = "bg-purple-200";
+
+                        if (!empty($row['gender'])) {
+                            if ($row['gender'] == "L") { $icon = "👨"; $bg = "bg-blue-200"; }
+                            if ($row['gender'] == "P") { $icon = "👩"; $bg = "bg-pink-200"; }
+                        }
+
+                        // rating (default 5 bintang)
+                        $rating = !empty($row['rating']) ? intval($row['rating']) : 5;
+                        $stars = str_repeat("⭐", $rating);
+                    ?>
+
+                    <div class="fade-in bg-white p-8 rounded-2xl shadow-xl card-hover">
+                        <div class="flex items-center mb-4">
+                            <div class="w-12 h-12 <?= $bg ?> rounded-full flex items-center justify-center text-xl mr-4">
+                                <?= $icon ?>
+                            </div>
+                            <div>
+                                <h4 class="font-bold"><?= $row['nama'] ?></h4>
+                                <div class="text-yellow-400"><?= $stars ?></div>
+                            </div>
                         </div>
+
+                        <p class="text-gray-600">
+                            "<?= $row['pesan'] ?>"
+                        </p>
                     </div>
-                    <p class="text-gray-600">"Makanannya enak banget! Semua tamu acara pernikahan saya puas.
-                        Pelayanannya juga ramah dan profesional."</p>
-                </div>
-                <div class="fade-in bg-white p-8 rounded-2xl shadow-xl card-hover">
-                    <div class="flex items-center mb-4">
-                        <div class="w-12 h-12 bg-pink-200 rounded-full flex items-center justify-center text-xl mr-4">👩
-                        </div>
-                        <div>
-                            <h4 class="font-bold">Siti Rahmawati</h4>
-                            <div class="text-yellow-400">⭐⭐⭐⭐⭐</div>
-                        </div>
-                    </div>
-                    <p class="text-gray-600">"Harga terjangkau dengan kualitas premium. Pasti langganan terus untuk
-                        acara-acara kantor kami!"</p>
-                </div>
-                <div class="fade-in bg-white p-8 rounded-2xl shadow-xl card-hover">
-                    <div class="flex items-center mb-4">
-                        <div class="w-12 h-12 bg-blue-200 rounded-full flex items-center justify-center text-xl mr-4">👨
-                        </div>
-                        <div>
-                            <h4 class="font-bold">Ahmad Hidayat</h4>
-                            <div class="text-yellow-400">⭐⭐⭐⭐⭐</div>
-                        </div>
-                    </div>
-                    <p class="text-gray-600">"Respon cepat, pengiriman tepat waktu, dan yang paling penting makanannya
-                        lezat! Highly recommended!"</p>
-                </div>
-            </div>
+
+                <?php endwhile; ?>
+
+            <?php else: ?>
+                <p class="text-center text-white col-span-3">Belum ada testimoni.</p>
+            <?php endif; ?>
+
         </div>
-    </section>
+    </div>
+</section>
 
-
-  <!-- KONTAK -->
    <!-- KONTAK -->
 <section id="kontak" class="py-20 bg-white">
     <div class="container mx-auto px-6">
