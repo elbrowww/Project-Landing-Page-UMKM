@@ -521,7 +521,7 @@ $result_testimoni = $koneksi->query($query_testimoni);
               <h5 class="mb-1"><?= htmlspecialchars($row_testi['nama']) ?></h5>
               <div class="rating-stars">
                 <?php for($i = 1; $i <= 5; $i++): ?>
-                  <i class="fas fa-star<?= $i <= $row_testi['rating'] ? '' : '-o' ?>"></i>
+                  
                 <?php endfor; ?>
               </div>
             </div>
@@ -574,33 +574,8 @@ $result_testimoni = $koneksi->query($query_testimoni);
           </div>
 
           <div class="mb-3">
-            <label class="form-label">Email (Opsional)</label>
-            <input type="email" name="email" class="form-control">
-          </div>
-
-          <div class="mb-3">
             <label class="form-label">No. Telepon</label>
             <input type="text" name="no_telp" class="form-control">
-          </div>
-
-          <div class="mb-3">
-            <label class="form-label">Jenis Kelamin</label>
-            <select name="gender" class="form-control" required>
-              <option value="" hidden>Pilih Gender</option>
-              <option value="L">Laki-laki</option>
-              <option value="P">Perempuan</option>
-            </select>
-          </div>
-
-          <div class="mb-3">
-            <label class="form-label">Rating</label>
-            <select name="rating" class="form-control" required>
-              <option value="5">⭐⭐⭐⭐⭐</option>
-              <option value="4">⭐⭐⭐⭐</option>
-              <option value="3">⭐⭐⭐</option>
-              <option value="2">⭐⭐</option>
-              <option value="1">⭐</option>
-            </select>
           </div>
 
           <div class="mb-3">

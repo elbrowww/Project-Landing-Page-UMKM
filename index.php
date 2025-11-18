@@ -270,15 +270,6 @@ $result_testimoni = $koneksi->query($query_testimoni);
                     <?php
                         $icon = "👤";
                         $bg = "bg-purple-200";
-
-                        if (!empty($row['gender'])) {
-                            if ($row['gender'] == "L") { $icon = "👨"; $bg = "bg-blue-200"; }
-                            if ($row['gender'] == "P") { $icon = "👩"; $bg = "bg-pink-200"; }
-                        }
-
-                        // rating (default 5 bintang)
-                        $rating = !empty($row['rating']) ? intval($row['rating']) : 5;
-                        $stars = str_repeat("⭐", $rating);
                     ?>
 
                     <div class="fade-in bg-white p-8 rounded-2xl shadow-xl card-hover">
