@@ -32,13 +32,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $gambar_arr = $_POST['gambar'] ?? [];
 
     // ✔ Buat ID pesanan otomatis
-    $id_pesanan = generateID($koneksi, "pesanan", "id_pesanan", "PSN");
+    $id_pesanan = generateID($koneksi, "transaksi_penjualan", "id_pesanan", "PSN");
 
     mysqli_begin_transaction($koneksi);
 
     try {
         // Insert pesanan
-        $sql_pesanan = "INSERT INTO pesanan VALUES ('$id_pesanan', '$nama', '$telp', '$alamat', '$rekening', $total, NOW(), '$status')";
+        $sql_pesanan = "INSERT INTO transaksi_penjualan VALUES ('$id_pesanan', '$nama', '$telp', '$alamat', '$rekening', $total, NOW(), '$status')";
         if (!mysqli_query($koneksi, $sql_pesanan)) {
             throw new Exception(mysqli_error($koneksi));
         }

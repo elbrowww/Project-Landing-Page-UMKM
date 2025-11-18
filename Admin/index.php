@@ -51,7 +51,7 @@ if (isset($_POST['update_status_pesanan'])) {
   $id_pesanan = $_POST['id_pesanan'];
   $status = $_POST['status'];
   
-  $query_update_status = "UPDATE pesanan SET status=? WHERE id_pesanan=?";
+  $query_update_status = "UPDATE transaksi_penjualan SET status=? WHERE id_pesanan=?";
   $stmt_update_status = $koneksi->prepare($query_update_status);
   $stmt_update_status->bind_param("ss", $status, $id_pesanan);
   
@@ -108,13 +108,13 @@ $result_stats = $koneksi->query($query_stats);
 $stats = $result_stats->fetch_assoc();
 
 // Query untuk riwayat pesanan (dari tabel pesanan)
-$query_riwayat = "SELECT pesanan.*,
+$query_riwayat = "SELECT transaksi_penjualan.*,
   GROUP_CONCAT(CONCAT(detail_penjualan.nama_menu, ' (', detail_penjualan.jumlah, 'x)') SEPARATOR ', ') as detail_menu,
   SUM(detail_penjualan.subtotal) as total_bayar
-FROM pesanan
-LEFT JOIN detail_penjualan ON pesanan.id_pesanan = detail_penjualan.id_pesanan
-GROUP BY pesanan.id_pesanan
-ORDER BY pesanan.tgl_pesan DESC";
+FROM transaksi_penjualan
+LEFT JOIN detail_penjualan ON transaksi_penjualan.id_pesanan = detail_penjualan.id_pesanan
+GROUP BY transaksi_penjualan.id_pesanan
+ORDER BY transaksi_penjualan.tgl_pesan DESC";
 $result_riwayat = $koneksi->query($query_riwayat);
 
 // Query untuk testimoni
