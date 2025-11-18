@@ -47,7 +47,7 @@ if (isset($_POST['update_pesanan'])) {
 }
 
 // Handler untuk update status pesanan di riwayat
-if (isset($_POST['update_status_transaksi_penjualan'])) {
+if (isset($_POST['update_status_pesanan'])) {
   $id_pesanan = $_POST['id_pesanan'];
   $status = $_POST['status'];
   
@@ -92,14 +92,21 @@ FROM detail_penjualan";
 $result_stats = $koneksi->query($query_stats);
 $stats = $result_stats->fetch_assoc();
 
-// Query untuk riwayat pesanan (dari tabel pesanan)
-$query_riwayat = "SELECT transaksi_penjualan.*,
-  GROUP_CONCAT(CONCAT(detail_penjualan.nama_menu, ' (', detail_penjualan.jumlah, 'x)') SEPARATOR ', ') as detail_menu,
-  SUM(detail_penjualan.subtotal) as total_bayar
-FROM transaksi_penjualan
-LEFT JOIN detail_penjualan ON transaksi_penjualan.id_pesanan = detail_penjualan.id_pesanan
-GROUP BY transaksi_penjualan.id_pesanan
-ORDER BY transaksi_penjualan.tgl_pesan DESC";
+// Query dengan JOIN ke detail_penjualan untuk mendapatkan detail menu
+$query_riwayat = "
+  SELECT 
+    t.*,
+    GROUP_CONCAT(
+      CONCAT(d.nama_menu, ' (', d.jumlah, 'x)')
+      ORDER BY d.id_detail
+      SEPARATOR ', '
+    ) as detail_menu
+  FROM transaksi_penjualan t
+  LEFT JOIN detail_penjualan d ON t.id_pesanan = d.id_pesanan
+  GROUP BY t.id_pesanan
+  ORDER BY t.tgl_pesan DESC
+";
+
 $result_riwayat = $koneksi->query($query_riwayat);
 
 // Query untuk testimoni
@@ -424,60 +431,98 @@ $result_testimoni = $koneksi->query($query_testimoni);
     </div>
 
     <div class="card">
-      <div class="card-body p-0">
-        <div class="table-responsive">
-          <table class="table mb-0">
-            <thead>
-              <tr>
-                <th>No</th>
-                <th>ID Pesanan</th>
-                <th>Tanggal</th>
-                <th>Nama Pelanggan</th>
-                <th>No. HP</th>
-                <th>Alamat</th>
-                <th>Detail Menu</th>
-                <th>Total Bayar</th>
-                <th>Status</th>
-                <th>Aksi</th>
-              </tr>
-            </thead>
-            <tbody>
-              <?php 
-              $no = 1;
-              if ($result_riwayat && $result_riwayat->num_rows > 0):
-                while ($row_riwayat = $result_riwayat->fetch_assoc()):
-                  $status_class = 'status' . strtolower($row_riwayat['status']);
-              ?>
-              <tr>
-                <td><?= $no++ ?></td>
-                <td><strong><?= htmlspecialchars($row_riwayat['id_pesanan']) ?></strong></td>
-                <td><?= date('d/m/Y H:i', strtotime($row_riwayat['tgl_pesan'])) ?></td>
-                <td><?= htmlspecialchars($row_riwayat['nama']) ?></td>
-                <td><?= htmlspecialchars($row_riwayat['telp']) ?></td>
-                <td><?= htmlspecialchars($row_riwayat['alamat']) ?></td>
-                <td><small><?= htmlspecialchars($row_riwayat['detail_menu']) ?></small></td>
-                <td><span class="badge-price">Rp <?= number_format($row_riwayat['total_bayar'], 0, ',', '.') ?></span></td>
-                <td><span class="status-badge <?= $status_class ?>"><?= ucfirst($row_riwayat['status']) ?></span></td>
-                <td>
-                  <button class="btn btn-action btn-edit" 
-                          onclick="updateStatus('<?= $row_riwayat['id_pesanan'] ?>', '<?= $row_riwayat['status'] ?>')">
-                    <i class="fas fa-edit"></i>
-                  </button>
-                </td>
-              </tr>
-              <?php endwhile; else: ?>
-                <tr>
-                  <td colspan="10" class="no-data">
-                    <i class="fas fa-inbox"></i>
-                    <p>Belum ada riwayat pesanan</p>
-                  </td>
-                </tr>
-              <?php endif; ?>
-            </tbody>
-          </table>
-        </div>
+  <div class="card-body p-0">
+    <div class="table-responsive">
+      <table class="table mb-0">
+        <thead>
+          <tr>
+            <th>No</th>
+            <th>ID Pesanan</th>
+            <th>Tanggal</th>
+            <th>Nama Pelanggan</th>
+            <th>No. HP</th>
+            <th>Alamat</th>
+            <th>Detail Menu</th>
+            <th>Total Bayar</th>
+            <th>Status</th>
+            <th>Aksi</th>
+          </tr>
+        </thead>
+        <tbody>
+          <?php 
+          $no = 1;
+          if ($result_riwayat && $result_riwayat->num_rows > 0):
+            while ($row_riwayat = $result_riwayat->fetch_assoc()):
+              $status_class = 'status-' . strtolower($row_riwayat['status']);
+          ?>
+          <tr>
+            <td><?= $no++ ?></td>
+            <td><strong><?= htmlspecialchars($row_riwayat['id_pesanan']) ?></strong></td>
+            <td><?= date('d/m/Y H:i', strtotime($row_riwayat['tgl_pesan'])) ?></td>
+            <td><?= htmlspecialchars($row_riwayat['nama']) ?></td>
+            <td><?= htmlspecialchars($row_riwayat['telp']) ?></td>
+            <td><?= htmlspecialchars($row_riwayat['alamat']) ?></td>
+            <td>
+              <small><?= htmlspecialchars($row_riwayat['detail_menu'] ?? 'Tidak ada menu') ?></small>
+            </td>
+            <td>
+              <span class="badge-price">
+                Rp <?= number_format($row_riwayat['total'], 0, ',', '.') ?>
+              </span>
+            </td>
+            <td>
+              <span class="status-badge <?= $status_class ?>">
+                <?= ucfirst($row_riwayat['status']) ?>
+              </span>
+            </td>
+            <td>
+              <button class="btn btn-action btn-edit" 
+                      onclick="updateStatus('<?= $row_riwayat['id_pesanan'] ?>', '<?= $row_riwayat['status'] ?>')">
+                <i class="fas fa-edit"></i>
+              </button>
+            </td>
+          </tr>
+          <?php 
+            endwhile;
+          else:
+          ?>
+          <tr>
+            <td colspan="10" class="text-center">Tidak ada data riwayat pesanan</td>
+          </tr>
+          <?php endif; ?>
+        </tbody>
+      </table>
+      <!-- Modal Update Status Pesanan -->
+<div class="modal fade" id="updateStatusModal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5><i class="fas fa-edit"></i> Update Status Pesanan</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body p-4">
+        <form method="POST" id="statusForm">
+          <input type="hidden" name="id_pesanan" id="status_id_pesanan">
+          <div class="mb-3">
+            <label class="form-label">Status Pesanan</label>
+            <select class="form-select" name="status" id="status_pesanan" required>
+              <option value="pending">Pending</option>
+              <option value="proses">Proses</option>
+              <option value="selesai">Selesai</option>
+              <option value="batal">Batal</option>
+            </select>
+          </div>
+          <button type="submit" name="update_status_pesanan" class="btn btn-submit">
+            <i class="fas fa-save"></i> Update Status
+          </button>
+        </form>
       </div>
     </div>
+  </div>
+</div>
+    </div>
+  </div>
+</div>
   </div>
 </div>
 
