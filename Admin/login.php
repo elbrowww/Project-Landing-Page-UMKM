@@ -16,19 +16,21 @@ include '../config/koneksi.php';
 </head>
 <body>
 
+<div class="container">
 <form method="POST">
     <table>
-    <td>
-    <img src="../asset/img/logo-nobg.png" alt="Logo Admin" class="logo">
-    </td>
-    <td>
-    <h3>Login sebagai Admin</h3>
-    <input type="text" name="user" placeholder="ID User" required>
-    <input pattern=".{8,}" type="password" name="password" placeholder="Password" required>
-    <button type="submit" name="login">Login</button>
-    </td>
+        <td>
+        <img src="../asset/img/logo-nobg.png" alt="Logo Admin" class="logo">
+        </td>
+        <td>
+        <h3>Login sebagai Admin</h3>
+        <input type="text" name="user" placeholder="ID User" required>
+        <input pattern=".{8,}" type="password" name="password" placeholder="Password" required>
+        <button type="submit" name="login">Login</button>
+        </td>
     </table>
 </form>
+</div>
 
 <?php
 if (isset($_POST['login'])) {

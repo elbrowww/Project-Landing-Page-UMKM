@@ -11,7 +11,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-image: url('../img/bglog.jpeg');
+    background-image: url('../img/bg.jpg');
     background-color: #8a94ff;
     background-blend-mode: multiply;
     background-repeat: no-repeat;
