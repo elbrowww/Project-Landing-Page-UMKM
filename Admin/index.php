@@ -47,7 +47,7 @@ if (isset($_POST['update_pesanan'])) {
 }
 
 // Handler untuk update status pesanan di riwayat
-if (isset($_POST['update_status_pesanan'])) {
+if (isset($_POST['update_status_transaksi_penjualan'])) {
   $id_pesanan = $_POST['id_pesanan'];
   $status = $_POST['status'];
   
@@ -79,21 +79,6 @@ if (isset($_GET['hapus_testimoni'])) {
   exit();
 }
 
-// Handler untuk approve testimoni
-if (isset($_GET['approve_testimoni'])) {
-  $id_testimoni = $_GET['approve_testimoni'];
-  
-  $query_approve = "UPDATE testimoni SET status='approved' WHERE id_testimoni = ?";
-  $stmt_approve = $koneksi->prepare($query_approve);
-  $stmt_approve->bind_param("i", $id_testimoni);
-  
-  if ($stmt_approve->execute()) {
-    echo "<script>alert('Testimoni berhasil disetujui!'); window.location.href='index.php?page=testimoni';</script>";
-  } else {
-    echo "<script>alert('Gagal menyetujui testimoni!'); window.location.href='index.php?page=testimoni';</script>";
-  }
-  exit();
-}
 
 // Query untuk mengambil data pesanan dari detail_penjualan
 $query_pesanan = "SELECT * FROM detail_penjualan ORDER BY tgl_pesan DESC";
@@ -461,7 +446,7 @@ $result_testimoni = $koneksi->query($query_testimoni);
               $no = 1;
               if ($result_riwayat && $result_riwayat->num_rows > 0):
                 while ($row_riwayat = $result_riwayat->fetch_assoc()):
-                  $status_class = 'status-' . strtolower($row_riwayat['status']);
+                  $status_class = 'status' . strtolower($row_riwayat['status']);
               ?>
               <tr>
                 <td><?= $no++ ?></td>
@@ -734,15 +719,6 @@ window.addEventListener('DOMContentLoaded', function() {
     showPage(page);
   }
 });
-
-
-document.getElementById("btnTambahTestimoni").addEventListener("click", function(){
-    let modal = new bootstrap.Modal(document.getElementById('modalTestimoni'));
-    modal.show();
-});
-
-
-
 </script>
 
 </body>
