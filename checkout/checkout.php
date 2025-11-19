@@ -1,5 +1,6 @@
 <?php
-include('../config/koneksi.php');
+
+include '../config/koneksi.php';
 
 // ✔ Generator ID urut
 function generateID($koneksi, $table, $column, $prefix) {
@@ -85,7 +86,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>KERANJANG MAKAN</title>
 
-  <link rel="icon" href="favicon.png" type="image/x-icon" />
+  <link rel="icon" href="../asset/img/logo.png" type="image/x-icon">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="../checkout/checkout.css">
@@ -180,10 +181,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         const div = document.createElement("div");
         div.className = "cart-item";
         div.innerHTML = `
-          <div class="item-info" style="display:flex;align-items:center;gap:10px;">
-            <img src="${item.image}" alt="${item.nama_menu}" 
-                 style="width:60px;height:60px;object-fit:cover;border-radius:10px;">
-            <div>
+          
               <strong>${item.nama_menu}</strong><br>
               <small>Harga: Rp ${item.harga_satuan.toLocaleString("id-ID")}</small><br>
               <small>Jumlah: ${item.jumlah}</small><br>

@@ -12,7 +12,7 @@
 
  <?php 
  include '../Project-Landing-Page-UMKM/config/koneksi.php';
- include '../Project-Landing-Page-UMKM/config/FormPesan.php';
+
  ?>
 
 </head>
