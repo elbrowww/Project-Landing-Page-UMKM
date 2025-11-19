@@ -11,26 +11,7 @@ include '../config/koneksi.php';
 <title>Login sebagai Admin</title>
 
 <link rel="icon" href="../asset/img/logo.png" type="image/x-icon">
-<link rel="stylesheet" href="../asset/css/loginadmin2.css">
-
-</head>
-<body>
-
-<div class="container">
-<form method="POST">
-    <table>
-        <td>
-        <img src="../asset/img/logo-nobg.png" alt="Logo Admin" class="logo">
-        </td>
-        <td>
-        <h3>Login sebagai Admin</h3>
-        <input type="text" name="user" placeholder="ID User" required>
-        <input pattern=".{8,}" type="password" name="password" placeholder="Password" required>
-        <button type="submit" name="login">Login</button>
-        </td>
-    </table>
-</form>
-</div>
+<link rel="stylesheet" href="../asset/css/loginadmin.css">
 
 <?php
 if (isset($_POST['login'])) {
@@ -52,5 +33,39 @@ if (isset($_POST['login'])) {
     }
 }
 ?>
+
+</head>
+<body>
+
+   <div class="login-container">
+        <div class="login-box">
+            <div class="logo">
+                <div class="logo-content">
+                    <img src="../asset/img/logo-nobg.png" alt="Dapur Bu Mon Logo" class="logo-img">
+                    <div class="logo-text">
+                        <h1>Dapur Bu Mon</h1>
+                        <p>Admin Dashboard</p>
+                    </div>
+                </div>
+            </div>
+            
+            <form method="POST">
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="user" placeholder="Masukkan username" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input pattern=".{8,}" type="password" id="password" name="password" placeholder="Masukkan password" required>
+                </div>
+   
+                <button type="submit" class="btn-login" name="login">Masuk</button>
+                
+
+            </form>
+        </div>
+    </div>
+
 </body>
 </html>
