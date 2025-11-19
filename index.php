@@ -249,12 +249,6 @@ $query_testimoni = "SELECT * FROM testimoni ORDER BY created_at DESC";
 $result_testimoni = $koneksi->query($query_testimoni);
 ?>
 
-<?php
-// Ambil testimoni dari database (pastikan ini sudah ada di atas)
-// $query_testimoni = "SELECT * FROM testimoni ORDER BY created_at DESC";
-// $result_testimoni = $koneksi->query($query_testimoni);
-?>
-
 <section id="testimoni" class="py-20 gradient-bg">
     <div class="container mx-auto px-6">
         <h2 class="text-4xl font-bold text-center mb-4 text-white fade-in">Apa Kata Mereka?</h2>
@@ -313,76 +307,6 @@ $result_testimoni = $koneksi->query($query_testimoni);
     </div>
 </section>
 
-<script>
-// ========================================
-// SCRIPT TESTIMONI SLIDER
-// ========================================
-
-let currentTestimoniIndex = 0;
-const testimoniSlider = document.getElementById('testimoniSlider');
-const testimoniItems = testimoniSlider ? testimoniSlider.children : [];
-const totalTestimoni = testimoniItems.length;
-
-// Hitung berapa banyak item yang bisa ditampilkan sekaligus
-const containerWidth = testimoniSlider ? testimoniSlider.parentElement.offsetWidth : 0;
-const itemWidth = 320 + 24; // 320px width + 24px gap
-const visibleItems = Math.floor(containerWidth / itemWidth);
-const maxIndex = Math.max(0, totalTestimoni - visibleItems);
-
-function updateButtonStates() {
-    const btnLeft = document.getElementById('btnTestimoniLeft');
-    const btnRight = document.getElementById('btnTestimoniRight');
-    
-    if (btnLeft) {
-        btnLeft.style.opacity = currentTestimoniIndex === 0 ? '0.5' : '1';
-        btnLeft.style.cursor = currentTestimoniIndex === 0 ? 'not-allowed' : 'pointer';
-    }
-    
-    if (btnRight) {
-        btnRight.style.opacity = currentTestimoniIndex >= maxIndex ? '0.5' : '1';
-        btnRight.style.cursor = currentTestimoniIndex >= maxIndex ? 'not-allowed' : 'pointer';
-    }
-}
-
-function scrollTestimoniLeft() {
-    if (currentTestimoniIndex > 0) {
-        currentTestimoniIndex--;
-        updateTestimoniSlider();
-    }
-}
-
-function scrollTestimoniRight() {
-    if (currentTestimoniIndex < maxIndex) {
-        currentTestimoniIndex++;
-        updateTestimoniSlider();
-    }
-}
-
-function updateTestimoniSlider() {
-    if (testimoniSlider) {
-        const offset = -currentTestimoniIndex * itemWidth;
-        testimoniSlider.style.transform = `translateX(${offset}px)`;
-        updateButtonStates();
-    }
-}
-
-// Auto slide setiap 5 detik (opsional)
-let autoSlideInterval = setInterval(() => {
-    if (totalTestimoni > 0) {
-        if (currentTestimoniIndex >= maxIndex) {
-            currentTestimoniIndex = 0; // Kembali ke awal
-        } else {
-            currentTestimoniIndex++;
-        }
-        updateTestimoniSlider();
-    }
-}, 5000);
-
-// Initialize button states
-updateButtonStates();
-
-console.log('✅ Testimoni Slider Loaded:', totalTestimoni, 'items, maxIndex:', maxIndex);
-</script>
    <!-- KONTAK -->
 <section id="kontak" class="py-20 bg-white">
     <div class="container mx-auto px-6">

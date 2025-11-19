@@ -287,3 +287,95 @@
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+/* 🎯 SOLUSI RAPI + TIDAK KEPOTONG */
+
+/* CONTAINER UTAMA - RAPI */
+#testimoni {
+    position: relative;
+    z-index: 10;
+}
+
+/* WRAPPER DENGAN TRICK */
+#testimoni .relative {
+    position: relative;
+}
+
+/* CARD TESTIMONI - ANIMASI YANG AMAN */
+.testimoni-card {
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    position: relative;
+    transform: translateY(0);
+}
+
+/* HOVER EFFECT YANG TIDAK KELUAR JALUR */
+.testimoni-card:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 
+        0 20px 40px rgba(0, 0, 0, 0.15),
+        0 0 0 1px rgba(139, 92, 246, 0.3) !important;
+    z-index: 50;
+    
+    /* EFFECT TAMBAHAN UNTUK "FEEL" LEBIH BAIK */
+    border-color: #8b5cf6 !important;
+}
+
+/* CREATE EXTRA SPACE DENGAN PSEUDO ELEMENTS */
+#testimoni::before {
+    content: '';
+    position: absolute;
+    top: -25px;
+    left: 0;
+    right: 0;
+    height: 25px;
+    background: transparent;
+    z-index: 5;
+}
+
+#testimoni::after {
+    content: '';
+    position: absolute;
+    bottom: -25px;
+    left: 0;
+    right: 0;
+    height: 25px;
+    background: transparent;
+    z-index: 5;
+}
+
+/* TOMBOL NAVIGASI */
+#btnTestimoniLeft,
+#btnTestimoniRight {
+    z-index: 60;
+}
+
+/* SLIDER CONTAINER */
+#testimoniSlider {
+    padding: 15px 0;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+    #testimoni .relative {
+        padding: 20px 0 !important;
+        margin: -20px 0 !important;
+    }
+    
+    #testimoni .px-10 {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+    
+    .testimoni-card:hover {
+        transform: translateY(-5px) scale(1.01);
+    }
+    
+    #testimoni::before {
+        top: -15px;
+        height: 15px;
+    }
+    
+    #testimoni::after {
+        bottom: -15px;
+        height: 15px;
+    }
+}

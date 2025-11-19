@@ -79,6 +79,53 @@ document.addEventListener('DOMContentLoaded', () => {
         
 });
 
+let currentTestimoniIndex = 0;
+const testimoniSlider = document.getElementById('testimoniSlider');
 
+function getVisibleItemsCount() {
+    if (!testimoniSlider) return 0;
+    const container = testimoniSlider.parentElement;
+    const containerWidth = container.offsetWidth;
+    const itemWidth = 300 + 24;
+    return Math.floor(containerWidth / itemWidth);
+}
 
-        
+function getMaxIndex() {
+    const totalTestimoni = testimoniSlider ? testimoniSlider.children.length : 0;
+    const visibleItems = getVisibleItemsCount();
+    return Math.max(0, totalTestimoni - visibleItems);
+}
+
+function scrollTestimoniLeft() {
+    if (currentTestimoniIndex > 0) {
+        currentTestimoniIndex--;
+        updateTestimoniSlider();
+    }
+}
+
+function scrollTestimoniRight() {
+    const maxIndex = getMaxIndex();
+    if (currentTestimoniIndex < maxIndex) {
+        currentTestimoniIndex++;
+        updateTestimoniSlider();
+    }
+}
+
+function updateTestimoniSlider() {
+    if (testimoniSlider) {
+        const itemWidth = 300 + 24;
+        const offset = -currentTestimoniIndex * itemWidth;
+        testimoniSlider.style.transform = `translateX(${offset}px)`;
+    }
+}
+
+// Handle resize
+window.addEventListener('resize', function() {
+    currentTestimoniIndex = Math.min(currentTestimoniIndex, getMaxIndex());
+    updateTestimoniSlider();
+});
+
+// Initialize
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('✅ Testimoni slider loaded - RAPI & TIDAK KEPOTONG!');
+});
