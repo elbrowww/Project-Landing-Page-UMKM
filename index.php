@@ -249,60 +249,140 @@ $query_testimoni = "SELECT * FROM testimoni ORDER BY created_at DESC";
 $result_testimoni = $koneksi->query($query_testimoni);
 ?>
 
-<!-- TESTIMONI -->
+<?php
+// Ambil testimoni dari database (pastikan ini sudah ada di atas)
+// $query_testimoni = "SELECT * FROM testimoni ORDER BY created_at DESC";
+// $result_testimoni = $koneksi->query($query_testimoni);
+?>
+
 <section id="testimoni" class="py-20 gradient-bg">
     <div class="container mx-auto px-6">
         <h2 class="text-4xl font-bold text-center mb-4 text-white fade-in">Apa Kata Mereka?</h2>
         <p class="text-center text-purple-100 mb-16 fade-in">Testimoni pelanggan yang puas dengan layanan kami</p>
 
-    <div class="relative">
-      <button id="scrollLeft" class="absolute left-0 top-1/2 -translate-y-1/2 bg-purple-600 text-white p-3 rounded-full shadow-md hover:bg-purple-700 z-10">
-        ◀
-      </button>
-        <div class="grid md:grid">
-          <div id="menuContainer" class="flex overflow-x-auto gap-6 scroll-smooth px-20 pb-20 no-scrollbar">
+        <?php if ($result_testimoni->num_rows > 0): ?>
+        <div class="relative">
+            <!-- Tombol Scroll KIRI untuk Testimoni -->
+            <button id="btnTestimoniLeft" onclick="scrollTestimoniLeft()" class="absolute left-0 top-1/2 -translate-y-1/2 bg-purple-600 text-white p-3 rounded-full shadow-md hover:bg-purple-700 z-10 transition">
+                ◀
+            </button>
 
-            <?php if ($result_testimoni->num_rows > 0): ?>
+            <div class="overflow-hidden px-12">
+                <div id="testimoniSlider" class="flex gap-6 transition-transform duration-500 ease-in-out">
 
-                <?php while ($row = $result_testimoni->fetch_assoc()): ?>
+                    <?php while ($row = $result_testimoni->fetch_assoc()): ?>
+                        <?php
+                            $icon = "👤";
+                            $bg = "bg-purple-200";
+                          
+                        ?>
 
-                    <!-- Tentukan ikon berdasarkan gender -->
-                    <?php
-                        $icon = "👤";
-                        $bg = "bg-purple-200";
-                    ?>
-
-                    <div class="fade-in bg-white p-8 rounded-2xl shadow-xl card-hover">
-                        <div class="flex items-center mb-4">
-                            <div class="w-12 h-12 <?= $bg ?> rounded-full flex items-center justify-center text-xl mr-4">
-                                <?= $icon ?>
+                        <div class="fade-in bg-white p-8 rounded-2xl shadow-xl card-hover min-w-[320px] max-w-[320px] flex-shrink-0">
+                            <div class="flex items-center mb-4">
+                                <div class="w-12 h-12 <?= $bg ?> rounded-full flex items-center justify-center text-xl mr-4">
+                                    <?= $icon ?>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold"><?= htmlspecialchars($row['nama']) ?></h4>
+                                    <div class="text-yellow-400 text-sm"><?= $stars ?></div>
+                                </div>
                             </div>
-                            <div>
-                                <h4 class="font-bold"><?= $row['nama'] ?></h4>
-                                <div class="text-yellow-400"><?= $stars ?></div>
-                            </div>
+                            <p class="text-gray-600">
+                                "<?= htmlspecialchars($row['pesan']) ?>"
+                            </p>
                         </div>
 
-                        <p class="text-gray-600">
-                            "<?= $row['pesan'] ?>"
-                        </p>
-                    </div>
+                    <?php endwhile; ?>
 
-                <?php endwhile; ?>
+                </div>
+            </div>
 
-            <?php else: ?>
-                <p class="text-center text-white col-span-3">Belum ada testimoni.</p>
-            <?php endif; ?>
-          
-      <button id="scrollRight" class="absolute right-0 top-1/2 -translate-y-1/2 bg-purple-600 text-white p-3 rounded-full shadow-md hover:bg-purple-700 z-10">
-        ▶
-      </button>
- </div>
+            <!-- Tombol Scroll KANAN untuk Testimoni -->
+            <button id="btnTestimoniRight" onclick="scrollTestimoniRight()" class="absolute right-0 top-1/2 -translate-y-1/2 bg-purple-600 text-white p-3 rounded-full shadow-md hover:bg-purple-700 z-10 transition">
+                ▶
+            </button>
         </div>
-      </div>
+
+        <?php else: ?>
+        <!-- Bagian ini TIDAK akan ditampilkan jika ada testimoni -->
+        <div class="w-full text-center">
+            <p class="text-white text-lg">Belum ada testimoni.</p>
+        </div>
+        <?php endif; ?>
+
     </div>
 </section>
 
+<script>
+// ========================================
+// SCRIPT TESTIMONI SLIDER
+// ========================================
+
+let currentTestimoniIndex = 0;
+const testimoniSlider = document.getElementById('testimoniSlider');
+const testimoniItems = testimoniSlider ? testimoniSlider.children : [];
+const totalTestimoni = testimoniItems.length;
+
+// Hitung berapa banyak item yang bisa ditampilkan sekaligus
+const containerWidth = testimoniSlider ? testimoniSlider.parentElement.offsetWidth : 0;
+const itemWidth = 320 + 24; // 320px width + 24px gap
+const visibleItems = Math.floor(containerWidth / itemWidth);
+const maxIndex = Math.max(0, totalTestimoni - visibleItems);
+
+function updateButtonStates() {
+    const btnLeft = document.getElementById('btnTestimoniLeft');
+    const btnRight = document.getElementById('btnTestimoniRight');
+    
+    if (btnLeft) {
+        btnLeft.style.opacity = currentTestimoniIndex === 0 ? '0.5' : '1';
+        btnLeft.style.cursor = currentTestimoniIndex === 0 ? 'not-allowed' : 'pointer';
+    }
+    
+    if (btnRight) {
+        btnRight.style.opacity = currentTestimoniIndex >= maxIndex ? '0.5' : '1';
+        btnRight.style.cursor = currentTestimoniIndex >= maxIndex ? 'not-allowed' : 'pointer';
+    }
+}
+
+function scrollTestimoniLeft() {
+    if (currentTestimoniIndex > 0) {
+        currentTestimoniIndex--;
+        updateTestimoniSlider();
+    }
+}
+
+function scrollTestimoniRight() {
+    if (currentTestimoniIndex < maxIndex) {
+        currentTestimoniIndex++;
+        updateTestimoniSlider();
+    }
+}
+
+function updateTestimoniSlider() {
+    if (testimoniSlider) {
+        const offset = -currentTestimoniIndex * itemWidth;
+        testimoniSlider.style.transform = `translateX(${offset}px)`;
+        updateButtonStates();
+    }
+}
+
+// Auto slide setiap 5 detik (opsional)
+let autoSlideInterval = setInterval(() => {
+    if (totalTestimoni > 0) {
+        if (currentTestimoniIndex >= maxIndex) {
+            currentTestimoniIndex = 0; // Kembali ke awal
+        } else {
+            currentTestimoniIndex++;
+        }
+        updateTestimoniSlider();
+    }
+}, 5000);
+
+// Initialize button states
+updateButtonStates();
+
+console.log('✅ Testimoni Slider Loaded:', totalTestimoni, 'items, maxIndex:', maxIndex);
+</script>
    <!-- KONTAK -->
 <section id="kontak" class="py-20 bg-white">
     <div class="container mx-auto px-6">
