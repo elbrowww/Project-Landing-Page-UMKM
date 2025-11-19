@@ -191,103 +191,56 @@
 
 
   <!-- LAYANAN -->
-<section id="layanan" class="py-20 bg-white">
-    <div class="container mx-auto px-6">
-        <h2 class="text-4xl font-bold text-center mb-16 gradient-text fade-in">
-            Layanan Kami
-        </h2>
-
-        <div class="grid md:grid-cols-2 gap-12 items-center">
-
-            <!-- Logo -->
-            <div class="fade-in">
-                <img src="asset/img/logo.png" alt="Layanan"
-                     class="rounded-2xl shadow-2xl">
-            </div>
-
-            <!-- List Layanan -->
-            <div class="fade-in space-y-8">
-
-                <!-- Acara Pernikahan -->
-                <div class="flex items-start gap-4">
-                    <div class="bg-purple-100 text-purple-600 w-12 h-12 rounded-full 
-                                flex items-center justify-center text-2xl flex-shrink-0">
-                        <!-- gambar cincin  nikah -->
-                        <svg width="26" height="26" fill="none" stroke="currentColor" stroke-width="2"
-                             stroke-linecap="round" stroke-linejoin="round">
-                            <circle cx="9" cy="15" r="6"></circle>
-                            <circle cx="17" cy="9" r="6"></circle>
-                        </svg>
+   <section id="layanan" class="py-20 bg-white">
+        <div class="container mx-auto px-6">
+            <h2 class="text-4xl font-bold text-center mb-16 gradient-text fade-in">Layanan Kami</h2>
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div class="fade-in">
+                    <img src="asset/img/logo.png"
+                        alt="Layanan" class="rounded-2xl shadow-2xl">
+                </div>
+                <div class="fade-in space-y-6">
+                    <div class="flex items-start gap-4">
+                        <div
+                            class="gradient-bg text-white w-12 h-12 rounded-full flex items-center justify-center text-xl flex-shrink-0">
+                            🎉</div>
+                        <div>
+                            <h3 class="text-xl font-bold mb-2">Acara Pernikahan</h3>
+                            <p class="text-gray-600">Layanan catering lengkap untuk hari spesial Anda dengan berbagai
+                                pilihan menu</p>
+                        </div>
                     </div>
-                    <div>
-                        <h3 class="text-xl font-bold mb-2">Acara Pernikahan</h3>
-                        <p class="text-gray-600">
-                            Layanan catering lengkap untuk hari spesial Anda dengan berbagai pilihan menu
-                        </p>
+                    <div class="flex items-start gap-4">
+                        <div
+                            class="gradient-bg text-white w-12 h-12 rounded-full flex items-center justify-center text-xl flex-shrink-0">
+                            🏢</div>
+                        <div>
+                            <h3 class="text-xl font-bold mb-2">Acara Kantor</h3>
+                            <p class="text-gray-600">Solusi catering untuk meeting, seminar, dan acara perusahaan</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-4">
+                        <div
+                            class="gradient-bg text-white w-12 h-12 rounded-full flex items-center justify-center text-xl flex-shrink-0">
+                            🎂</div>
+                        <div>
+                            <h3 class="text-xl font-bold mb-2">Acara Ulang Tahun</h3>
+                            <p class="text-gray-600">Paket spesial untuk merayakan momen berharga bersama keluarga</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-4">
+                        <div
+                            class="gradient-bg text-white w-12 h-12 rounded-full flex items-center justify-center text-xl flex-shrink-0">
+                            🎓</div>
+                        <div>
+                            <h3 class="text-xl font-bold mb-2">Acara Sekolah</h3>
+                            <p class="text-gray-600">Catering untuk acara sekolah, wisuda, dan kegiatan pendidikan</p>
+                        </div>
                     </div>
                 </div>
-
-                <!-- Acara Kantor -->
-                <div class="flex items-start gap-4">
-                    <div class="bg-purple-100 text-purple-600 w-12 h-12 rounded-full 
-                                flex items-center justify-center text-2xl flex-shrink-0">
-                        <!-- gambar tas kerja -->
-                        <svg width="26" height="26" fill="none" stroke="currentColor" stroke-width="2"
-                             stroke-linecap="round" stroke-linejoin="round">
-                            <rect x="3" y="7" width="18" height="14" rx="2" ry="2"></rect>
-                            <path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-                        </svg>
-                    </div>
-                    <div>
-                        <h3 class="text-xl font-bold mb-2">Acara Kantor</h3>
-                        <p class="text-gray-600">
-                            Solusi catering untuk meeting, seminar, dan acara perusahaan
-                        </p>
-                    </div>
-                </div>
-
-                <!-- Acara Ulang Tahun -->
-                <div class="flex items-start gap-4">
-                    <div class="bg-purple-100 text-purple-600 w-12 h-12 rounded-full 
-                                flex items-center justify-center text-2xl flex-shrink-0">
-                        <!-- balon -->
-                        <svg width="26" height="26" fill="none" stroke="currentColor" stroke-width="2"
-                             stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M12 2C8 2 5 5 5 9c0 5 7 11 7 11s7-6 7-11c0-4-3-7-7-7z"></path>
-                            <line x1="12" y1="22" x2="12" y2="15"></line>
-                        </svg>
-                    </div>
-                    <div>
-                        <h3 class="text-xl font-bold mb-2">Acara Ulang Tahun</h3>
-                        <p class="text-gray-600">
-                            Paket spesial untuk merayakan momen berharga bersama keluarga
-                        </p>
-                    </div>
-                </div>
-
-                <!-- Acara Sekolah -->
-                <div class="flex items-start gap-4">
-                    <div class="bg-purple-100 text-purple-600 w-12 h-12 rounded-full 
-                                flex items-center justify-center text-2xl flex-shrink-0">
-                        <!-- bangunan -->
-                        <svg width="26" height="26" fill="none" stroke="currentColor" stroke-width="2"
-                             stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M3 12l9-9 9 9"></path>
-                            <path d="M9 21V12h6v9"></path>
-                        </svg>
-                    </div>
-                    <div>
-                        <h3 class="text-xl font-bold mb-2">Acara Sekolah</h3>
-                        <p class="text-gray-600">
-                            Catering untuk acara sekolah, wisuda, dan kegiatan pendidikan
-                        </p>
-                    </div>
-                </div>
-
             </div>
         </div>
-    </div>
-</section>
+    </section>
 
 
 <?php
@@ -301,7 +254,7 @@ $result_testimoni = $koneksi->query($query_testimoni);
         <h2 class="text-4xl font-bold text-center mb-4 text-white fade-in">Apa Kata Mereka?</h2>
         <p class="text-center text-purple-100 mb-16 fade-in">Testimoni pelanggan yang puas dengan layanan kami</p>
 
-        <?php if ($result_testimoni && $result_testimoni->num_rows > 0): ?>
+        <?php if ($result_testimoni->num_rows > 0): ?>
         <div class="relative">
             <!-- Tombol Scroll KIRI untuk Testimoni -->
             <button id="btnTestimoniLeft" onclick="scrollTestimoniLeft()" class="absolute left-0 top-1/2 -translate-y-1/2 bg-purple-600 text-white p-3 rounded-full shadow-md hover:bg-purple-700 z-10 transition">
@@ -315,6 +268,7 @@ $result_testimoni = $koneksi->query($query_testimoni);
                         <?php
                             $icon = "👤";
                             $bg = "bg-purple-200";
+                          
                         ?>
 
                         <div class="fade-in bg-white p-8 rounded-2xl shadow-xl card-hover min-w-[320px] max-w-[320px] flex-shrink-0">
@@ -324,7 +278,7 @@ $result_testimoni = $koneksi->query($query_testimoni);
                                 </div>
                                 <div>
                                     <h4 class="font-bold"><?= htmlspecialchars($row['nama']) ?></h4>
-                                    <!-- HAPUS VARIABLE $stars YANG ERROR -->
+                                    <div class="text-yellow-400 text-sm"><?= $stars ?></div>
                                 </div>
                             </div>
                             <p class="text-gray-600">
@@ -335,7 +289,7 @@ $result_testimoni = $koneksi->query($query_testimoni);
                     <?php endwhile; ?>
 
                 </div>
-                    </div>
+            </div>
 
             <!-- Tombol Scroll KANAN untuk Testimoni -->
             <button id="btnTestimoniRight" onclick="scrollTestimoniRight()" class="absolute right-0 top-1/2 -translate-y-1/2 bg-purple-600 text-white p-3 rounded-full shadow-md hover:bg-purple-700 z-10 transition">
@@ -352,7 +306,6 @@ $result_testimoni = $koneksi->query($query_testimoni);
 
     </div>
 </section>
-
 
    <!-- KONTAK -->
 <section id="kontak" class="py-20 bg-white">
@@ -383,7 +336,7 @@ $result_testimoni = $koneksi->query($query_testimoni);
                             📍</div>
                         <div>
                             <p class="font-semibold">Alamat</p>
-                            <p class="text-gray-600">Merjoyo,Kec.purwosari,Kab.kediri,JAWA TIMUR</p>
+                            <p class="text-gray-600">Merjoyo, Purwosari,Kediri,Jawa Timur</p>
                         </div>
                     </div>
                     <div class="flex items-center gap-4">
@@ -397,38 +350,68 @@ $result_testimoni = $koneksi->query($query_testimoni);
                 </div>
             </div>
             <div class="fade-in">
-                <form id="contactForm" class="space-y-4">
-                    <div>
-                        <label class="block text-sm font-semibold mb-2">Nama Lengkap</label>
-                        <input type="text" id="nama" name="nama_pelanggan" required
-                            class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-purple-500 focus:outline-none transition"
-                            placeholder="Masukkan nama Anda">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-semibold mb-2">Email</label>
-                        <input type="email" id="email" name="email_pelanggan" required
-                            class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-purple-500 focus:outline-none transition"
-                            placeholder="email@contoh.com">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-semibold mb-2">No. Telepon</label>
-                        <input type="tel" id="notelp" name="notelp_pelanggan" required
-                            class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-purple-500 focus:outline-none transition"
-                            placeholder="+62 812-xxxx-xxxx">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-semibold mb-2">Pesan</label>
-                        <textarea id="pesan" name="isi_pesan" rows="4" required
-                            class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-purple-500 focus:outline-none transition"
-                            placeholder="Ceritakan kebutuhan acara Anda..."></textarea>
-                    </div>
-                    <button type="submit"
-                        class="w-full gradient-bg text-white py-4 rounded-lg font-semibold hover:opacity-90 transition">Kirim
-                        Pesan</button>
-                </form>
+    <div class="bg-white shadow-xl rounded-2xl p-8 border border-gray-100">
+
+        <h3 class="text-2xl font-bold mb-6 text-center text-purple-700">Kirim Pesan</h3>
+
+        <form id="contactForm" class="space-y-6">
+
+            <!-- Nama -->
+            <div class="relative">
+                <label class="block text-sm font-semibold mb-2">Nama Lengkap</label>
+                <span class="absolute left-4 top-1/2 -translate-y-1/2 text-purple-600 text-xl"></span>
+                <input 
+                    type="text" id="nama" name="nama_pelanggan" required
+                    class="w-full pl-12 pr-4 py-3 rounded-xl border border-purple-300 bg-white shadow-sm 
+                    focus:ring-2 focus:ring-purple-300 focus:border-purple-500 outline-none transition"
+                    placeholder="Masukkan nama Anda">
             </div>
-        </div>
+
+            <!-- Email -->
+            <div class="relative">
+                <label class="block text-sm font-semibold mb-2">Email</label>
+                <span class="absolute left-4 top-1/2 -translate-y-1/2 text-purple-600 text-xl"></span>
+                <input 
+                    type="email" id="email" name="email_pelanggan" required
+                    class="w-full pl-12 pr-4 py-3 rounded-xl border border-purple-300 bg-white shadow-sm 
+                    focus:ring-2 focus:ring-purple-300 focus:border-purple-500 outline-none transition"
+                    placeholder="email@contoh.com">
+            </div>
+
+            <!-- Nomor Telepon -->
+            <div class="relative">
+                <label class="block text-sm font-semibold mb-2">No. Telepon</label>
+                <span class="absolute left-4 top-1/2 -translate-y-1/2 text-purple-600 text-xl"></span>
+                <input 
+                    type="tel" id="notelp" name="notelp_pelanggan" required
+                    class="w-full pl-12 pr-4 py-3 rounded-xl border border-purple-300 bg-white shadow-sm 
+                    focus:ring-2 focus:ring-purple-300 focus:border-purple-500 outline-none transition"
+                    placeholder="+62 812-xxxx-xxxx">
+            </div>
+
+            <!-- Pesan -->
+            <div class="relative">
+                <label class="block text-sm font-semibold mb-2">Pesan</label>
+                <span class="absolute left-4 top-10 text-purple-600 text-xl"></span>
+                <textarea 
+                    id="pesan" name="isi_pesan" rows="4" required
+                    class="w-full pl-12 pr-4 py-3 rounded-xl border border-purple-300 bg-white shadow-sm 
+                    focus:ring-2 focus:ring-purple-300 focus:border-purple-500 outline-none transition"
+                    placeholder="Ceritakan kebutuhan acara Anda..."></textarea>
+            </div>
+
+            <!-- Tombol -->
+            <button 
+    type="submit"
+    class="w-full py-4 rounded-xl font-semibold text-white shadow-md 
+    bg-gradient-to-r from-blue-500 to-blue-700 hover:scale-[1.02] hover:shadow-lg transition">
+    Kirim Pesan
+</button>
+        </form>
+
     </div>
+</div>
+
 </section>
 
 <script>
@@ -515,7 +498,7 @@ document.getElementById('contactForm').addEventListener('submit', function(e) {
 
   <!-- Tombol WhatsApp Mengambang -->
   <a href="https://wa.me/6285236596617" target="_blank" class="wa-float" aria-label="Chat WhatsApp">
-    💬
+    
   </a>
  
   <script src="asset/js/HalamanUser.js"></script>
