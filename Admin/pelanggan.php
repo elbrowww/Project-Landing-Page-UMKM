@@ -13,7 +13,7 @@ include '../config/CRUD.php';
 
 // Query data pembeli (daftar pelanggan unik dari transaksi_penjualan)
 $query_pembeli = "
-  SELECT nama, telp, alamat, COUNT(*) as total_pesanan
+  SELECT nama, telp, alamat, id_pesanan
   FROM transaksi_penjualan
   GROUP BY nama, telp
   ORDER BY tgl_pesan ASC
@@ -54,7 +54,7 @@ $result_pembeli = $koneksi->query($query_pembeli);
                     <th>Nama</th>
                     <th>No. HP</th>
                     <th>Alamat</th>
-                    <th>Total Pesanan</th>
+                    <th>ID Pesanan</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -68,7 +68,7 @@ $result_pembeli = $koneksi->query($query_pembeli);
                     <td><strong><?= htmlspecialchars($row['nama']) ?></strong></td>
                     <td><?= htmlspecialchars($row['telp']) ?></td>
                     <td><?= htmlspecialchars($row['alamat']) ?></td>
-                    <td><span class="badge-qty"><?= htmlspecialchars($row['total_pesanan']) ?></span></td>
+                    <td><span class="badge-qty"><?= htmlspecialchars($row['id_pesanan']) ?></span></td>
                   </tr>
                   <?php endwhile; else: ?>
                   <tr><td colspan="4" class="no-data"><i class="fas fa-inbox"></i><p>Belum ada data</p></td></tr>

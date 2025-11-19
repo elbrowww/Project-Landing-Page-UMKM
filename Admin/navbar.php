@@ -25,7 +25,7 @@ $page = isset($_GET['page']) ? $_GET['page'] : 'dashboard';
         </li>
         <li class="nav-item">
           <a class="nav-link <?php echo ($page == 'menu') ? 'active' : ''; ?>" href="index.php?page=menu">
-            <i class="fa fa-coffee"></i> Kelola Menu
+            <i class="fas fa-hamburger"></i> Kelola Menu
           </a>
         </li>
         <li class="nav-item">
