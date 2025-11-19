@@ -191,56 +191,104 @@
 
 
   <!-- LAYANAN -->
-   <section id="layanan" class="py-20 bg-white">
-        <div class="container mx-auto px-6">
-            <h2 class="text-4xl font-bold text-center mb-16 gradient-text fade-in">Layanan Kami</h2>
-            <div class="grid md:grid-cols-2 gap-12 items-center">
-                <div class="fade-in">
-                    <img src="asset/img/logo.png"
-                        alt="Layanan" class="rounded-2xl shadow-2xl">
-                </div>
-                <div class="fade-in space-y-6">
-                    <div class="flex items-start gap-4">
-                        <div
-                            class="gradient-bg text-white w-12 h-12 rounded-full flex items-center justify-center text-xl flex-shrink-0">
-                            🎉</div>
-                        <div>
-                            <h3 class="text-xl font-bold mb-2">Acara Pernikahan</h3>
-                            <p class="text-gray-600">Layanan catering lengkap untuk hari spesial Anda dengan berbagai
-                                pilihan menu</p>
-                        </div>
+<section id="layanan" class="py-20 bg-white">
+    <div class="container mx-auto px-6">
+        <h2 class="text-4xl font-bold text-center mb-16 gradient-text fade-in">
+            Layanan Kami
+        </h2>
+
+        <div class="grid md:grid-cols-2 gap-12 items-center">
+
+            <!-- Logo -->
+            <div class="fade-in">
+                <img src="asset/img/logo.png" alt="Layanan"
+                     class="rounded-2xl shadow-2xl">
+            </div>
+
+            <!-- List Layanan -->
+            <div class="fade-in space-y-8">
+
+                <!-- Acara Pernikahan -->
+                <div class="flex items-start gap-4">
+                    <div class="bg-purple-100 text-purple-600 w-12 h-12 rounded-full 
+                                flex items-center justify-center text-2xl flex-shrink-0">
+                        <!-- gambar cincin  nikah -->
+                        <svg width="26" height="26" fill="none" stroke="currentColor" stroke-width="2"
+                             stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="9" cy="15" r="6"></circle>
+                            <circle cx="17" cy="9" r="6"></circle>
+                        </svg>
                     </div>
-                    <div class="flex items-start gap-4">
-                        <div
-                            class="gradient-bg text-white w-12 h-12 rounded-full flex items-center justify-center text-xl flex-shrink-0">
-                            🏢</div>
-                        <div>
-                            <h3 class="text-xl font-bold mb-2">Acara Kantor</h3>
-                            <p class="text-gray-600">Solusi catering untuk meeting, seminar, dan acara perusahaan</p>
-                        </div>
-                    </div>
-                    <div class="flex items-start gap-4">
-                        <div
-                            class="gradient-bg text-white w-12 h-12 rounded-full flex items-center justify-center text-xl flex-shrink-0">
-                            🎂</div>
-                        <div>
-                            <h3 class="text-xl font-bold mb-2">Acara Ulang Tahun</h3>
-                            <p class="text-gray-600">Paket spesial untuk merayakan momen berharga bersama keluarga</p>
-                        </div>
-                    </div>
-                    <div class="flex items-start gap-4">
-                        <div
-                            class="gradient-bg text-white w-12 h-12 rounded-full flex items-center justify-center text-xl flex-shrink-0">
-                            🎓</div>
-                        <div>
-                            <h3 class="text-xl font-bold mb-2">Acara Sekolah</h3>
-                            <p class="text-gray-600">Catering untuk acara sekolah, wisuda, dan kegiatan pendidikan</p>
-                        </div>
+                    <div>
+                        <h3 class="text-xl font-bold mb-2">Acara Pernikahan</h3>
+                        <p class="text-gray-600">
+                            Layanan catering lengkap untuk hari spesial Anda dengan berbagai pilihan menu
+                        </p>
                     </div>
                 </div>
+
+                <!-- Acara Kantor -->
+                <div class="flex items-start gap-4">
+                    <div class="bg-purple-100 text-purple-600 w-12 h-12 rounded-full 
+                                flex items-center justify-center text-2xl flex-shrink-0">
+                        <!-- gambar tas kerja -->
+                        <svg width="26" height="26" fill="none" stroke="currentColor" stroke-width="2"
+                             stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="3" y="7" width="18" height="14" rx="2" ry="2"></rect>
+                            <path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                        </svg>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold mb-2">Acara Kantor</h3>
+                        <p class="text-gray-600">
+                            Solusi catering untuk meeting, seminar, dan acara perusahaan
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Acara Ulang Tahun -->
+                <div class="flex items-start gap-4">
+                    <div class="bg-purple-100 text-purple-600 w-12 h-12 rounded-full 
+                                flex items-center justify-center text-2xl flex-shrink-0">
+                        <!-- balon -->
+                        <svg width="26" height="26" fill="none" stroke="currentColor" stroke-width="2"
+                             stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 2C8 2 5 5 5 9c0 5 7 11 7 11s7-6 7-11c0-4-3-7-7-7z"></path>
+                            <line x1="12" y1="22" x2="12" y2="15"></line>
+                        </svg>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold mb-2">Acara Ulang Tahun</h3>
+                        <p class="text-gray-600">
+                            Paket spesial untuk merayakan momen berharga bersama keluarga
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Acara Sekolah -->
+                <div class="flex items-start gap-4">
+                    <div class="bg-purple-100 text-purple-600 w-12 h-12 rounded-full 
+                                flex items-center justify-center text-2xl flex-shrink-0">
+                        <!-- bangunan -->
+                        <svg width="26" height="26" fill="none" stroke="currentColor" stroke-width="2"
+                             stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M3 12l9-9 9 9"></path>
+                            <path d="M9 21V12h6v9"></path>
+                        </svg>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold mb-2">Acara Sekolah</h3>
+                        <p class="text-gray-600">
+                            Catering untuk acara sekolah, wisuda, dan kegiatan pendidikan
+                        </p>
+                    </div>
+                </div>
+
             </div>
         </div>
-    </section>
+    </div>
+</section>
+
 
 
 <?php
