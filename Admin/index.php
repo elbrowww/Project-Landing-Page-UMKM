@@ -529,7 +529,7 @@ $result_testimoni = $koneksi->query($query_testimoni);
 <!-- HALAMAN TESTIMONI -->
 <div id="page-testimoni" class="page-content" style="display:none;">
   <div class="container">
-    <div class="page-header">
+    
   <div class="page-header d-flex justify-content-between align-items-center mb-3">
     <h3><i class="fas fa-star"></i> Kelola Testimoni</h3>
 
@@ -623,7 +623,13 @@ $result_testimoni = $koneksi->query($query_testimoni);
         </div>
 
       </form>
-
+<script>
+// Tambahkan script ini di bagian bawah halaman
+document.getElementById('btnTambahTestimoni').addEventListener('click', function() {
+    var modal = new bootstrap.Modal(document.getElementById('modalTestimoni'));
+    modal.show();
+});
+</script>
     </div>
   </div>
 </div>
