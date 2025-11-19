@@ -249,16 +249,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
       switch (rekening) {
         case "BRI": 
-          text = "📱 Nomor Rekening BRI: 1234-5678-999 a.n. Dapur Bu Mon"; 
+          text = "📱 Nomor Rekening BRI: 1234-5678-999 a.n. Dapur Bu Mon kirim bukti tranfer di nomer +62 852-3659-6617"; 
           break;
         case "BCA": 
-          text = "📱 Nomor Rekening BCA: 5678-1234-555 a.n. Dapur Bu Mon"; 
+          text = "📱 Nomor Rekening BCA: 5678-1234-555 a.n. Dapur Bu Mon kirim bukti tranfer di nomer +62 852-3659-6617"; 
           break;
         case "Mandiri": 
-          text = "📱 Nomor Rekening Mandiri: 1122-3344-5566 a.n. Dapur Bu Mon"; 
+          text = "📱 Nomor Rekening Mandiri: 1122-3344-5566 a.n. Dapur Bu Mon kirim bukti tranfer di nomer +62 852-3659-6617"; 
           break;
         case "BNI": 
-          text = "📱 Nomor Rekening BNI: 9988-7766-5544 a.n. Dapur Bu Mon"; 
+          text = "📱 Nomor Rekening BNI: 9988-7766-5544 a.n. Dapur Bu Mon kirim bukti tranfer di nomer +62 852-3659-6617"; 
           break;
         case "Cash":
           text = "💰 Pembayaran tunai saat pesanan diantar";
