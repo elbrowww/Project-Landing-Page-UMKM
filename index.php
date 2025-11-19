@@ -254,7 +254,7 @@ $result_testimoni = $koneksi->query($query_testimoni);
         <h2 class="text-4xl font-bold text-center mb-4 text-white fade-in">Apa Kata Mereka?</h2>
         <p class="text-center text-purple-100 mb-16 fade-in">Testimoni pelanggan yang puas dengan layanan kami</p>
 
-        <?php if ($result_testimoni->num_rows > 0): ?>
+        <?php if ($result_testimoni && $result_testimoni->num_rows > 0): ?>
         <div class="relative">
             <!-- Tombol Scroll KIRI untuk Testimoni -->
             <button id="btnTestimoniLeft" onclick="scrollTestimoniLeft()" class="absolute left-0 top-1/2 -translate-y-1/2 bg-purple-600 text-white p-3 rounded-full shadow-md hover:bg-purple-700 z-10 transition">
@@ -268,7 +268,6 @@ $result_testimoni = $koneksi->query($query_testimoni);
                         <?php
                             $icon = "👤";
                             $bg = "bg-purple-200";
-                          
                         ?>
 
                         <div class="fade-in bg-white p-8 rounded-2xl shadow-xl card-hover min-w-[320px] max-w-[320px] flex-shrink-0">
@@ -278,7 +277,7 @@ $result_testimoni = $koneksi->query($query_testimoni);
                                 </div>
                                 <div>
                                     <h4 class="font-bold"><?= htmlspecialchars($row['nama']) ?></h4>
-                                    <div class="text-yellow-400 text-sm"><?= $stars ?></div>
+                                    <!-- HAPUS VARIABLE $stars YANG ERROR -->
                                 </div>
                             </div>
                             <p class="text-gray-600">
@@ -289,7 +288,7 @@ $result_testimoni = $koneksi->query($query_testimoni);
                     <?php endwhile; ?>
 
                 </div>
-            </div>
+                    </div>
 
             <!-- Tombol Scroll KANAN untuk Testimoni -->
             <button id="btnTestimoniRight" onclick="scrollTestimoniRight()" class="absolute right-0 top-1/2 -translate-y-1/2 bg-purple-600 text-white p-3 rounded-full shadow-md hover:bg-purple-700 z-10 transition">
@@ -306,6 +305,7 @@ $result_testimoni = $koneksi->query($query_testimoni);
 
     </div>
 </section>
+
 
    <!-- KONTAK -->
 <section id="kontak" class="py-20 bg-white">
@@ -350,68 +350,38 @@ $result_testimoni = $koneksi->query($query_testimoni);
                 </div>
             </div>
             <div class="fade-in">
-    <div class="bg-white shadow-xl rounded-2xl p-8 border border-gray-100">
-
-        <h3 class="text-2xl font-bold mb-6 text-center text-purple-700">Kirim Pesan</h3>
-
-        <form id="contactForm" class="space-y-6">
-
-            <!-- Nama -->
-            <div class="relative">
-                <label class="block text-sm font-semibold mb-2">Nama Lengkap</label>
-                <span class="absolute left-4 top-1/2 -translate-y-1/2 text-purple-600 text-xl"></span>
-                <input 
-                    type="text" id="nama" name="nama_pelanggan" required
-                    class="w-full pl-12 pr-4 py-3 rounded-xl border border-purple-300 bg-white shadow-sm 
-                    focus:ring-2 focus:ring-purple-300 focus:border-purple-500 outline-none transition"
-                    placeholder="Masukkan nama Anda">
+                <form id="contactForm" class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-semibold mb-2">Nama Lengkap</label>
+                        <input type="text" id="nama" name="nama_pelanggan" required
+                            class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-purple-500 focus:outline-none transition"
+                            placeholder="Masukkan nama Anda">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold mb-2">Email</label>
+                        <input type="email" id="email" name="email_pelanggan" required
+                            class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-purple-500 focus:outline-none transition"
+                            placeholder="email@contoh.com">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold mb-2">No. Telepon</label>
+                        <input type="tel" id="notelp" name="notelp_pelanggan" required
+                            class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-purple-500 focus:outline-none transition"
+                            placeholder="+62 812-xxxx-xxxx">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold mb-2">Pesan</label>
+                        <textarea id="pesan" name="isi_pesan" rows="4" required
+                            class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-purple-500 focus:outline-none transition"
+                            placeholder="Ceritakan kebutuhan acara Anda..."></textarea>
+                    </div>
+                    <button type="submit"
+                        class="w-full gradient-bg text-white py-4 rounded-lg font-semibold hover:opacity-90 transition">Kirim
+                        Pesan</button>
+                </form>
             </div>
-
-            <!-- Email -->
-            <div class="relative">
-                <label class="block text-sm font-semibold mb-2">Email</label>
-                <span class="absolute left-4 top-1/2 -translate-y-1/2 text-purple-600 text-xl"></span>
-                <input 
-                    type="email" id="email" name="email_pelanggan" required
-                    class="w-full pl-12 pr-4 py-3 rounded-xl border border-purple-300 bg-white shadow-sm 
-                    focus:ring-2 focus:ring-purple-300 focus:border-purple-500 outline-none transition"
-                    placeholder="email@contoh.com">
-            </div>
-
-            <!-- Nomor Telepon -->
-            <div class="relative">
-                <label class="block text-sm font-semibold mb-2">No. Telepon</label>
-                <span class="absolute left-4 top-1/2 -translate-y-1/2 text-purple-600 text-xl"></span>
-                <input 
-                    type="tel" id="notelp" name="notelp_pelanggan" required
-                    class="w-full pl-12 pr-4 py-3 rounded-xl border border-purple-300 bg-white shadow-sm 
-                    focus:ring-2 focus:ring-purple-300 focus:border-purple-500 outline-none transition"
-                    placeholder="+62 812-xxxx-xxxx">
-            </div>
-
-            <!-- Pesan -->
-            <div class="relative">
-                <label class="block text-sm font-semibold mb-2">Pesan</label>
-                <span class="absolute left-4 top-10 text-purple-600 text-xl"></span>
-                <textarea 
-                    id="pesan" name="isi_pesan" rows="4" required
-                    class="w-full pl-12 pr-4 py-3 rounded-xl border border-purple-300 bg-white shadow-sm 
-                    focus:ring-2 focus:ring-purple-300 focus:border-purple-500 outline-none transition"
-                    placeholder="Ceritakan kebutuhan acara Anda..."></textarea>
-            </div>
-
-            <!-- Tombol -->
-            <button 
-    type="submit"
-    class="w-full py-4 rounded-xl font-semibold text-white shadow-md 
-    bg-gradient-to-r from-blue-500 to-blue-700 hover:scale-[1.02] hover:shadow-lg transition">
-    Kirim Pesan
-</button>
-        </form>
-
+        </div>
     </div>
-</div>
-
 </section>
 
 <script>
@@ -498,7 +468,7 @@ document.getElementById('contactForm').addEventListener('submit', function(e) {
 
   <!-- Tombol WhatsApp Mengambang -->
   <a href="https://wa.me/6285236596617" target="_blank" class="wa-float" aria-label="Chat WhatsApp">
-    
+    💬
   </a>
  
   <script src="asset/js/HalamanUser.js"></script>
