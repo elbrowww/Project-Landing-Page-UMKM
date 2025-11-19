@@ -1,158 +1,225 @@
-/* Reset dasar */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-/* Latar belakang futuristik */
-body {
-    font-family: 'Poppins', sans-serif;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: radial-gradient(circle at top left, #1a1a2e, #0f0f1a);
-    color: #fff;
-    overflow: hidden;
-}
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            height: 100vh;
+            background-image: url('../img/bgg.jpeg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
 
-/* Efek cahaya neon di belakang */
-body::before {
-    content: "";
-    position: absolute;
-    width: 500px;
-    height: 500px;
-    background: radial-gradient(circle, rgba(155, 89, 182, 0.4), transparent 70%);
-    top: -100px;
-    left: -100px;
-    filter: blur(100px);
-    z-index: 0;
-}
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1;
+        }
 
-body::after {
-    content: "";
-    position: absolute;
-    width: 400px;
-    height: 400px;
-    background: radial-gradient(circle, rgba(85, 99, 222, 0.5), transparent 70%);
-    bottom: -100px;
-    right: -100px;
-    filter: blur(120px);
-    z-index: 0;
-}
+        .login-container {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            max-width: 420px;
+            padding: 20px;
+        }
 
-/* Kotak utama */
-form {
-    position: relative;
-    z-index: 2;
-    background: rgba(20, 20, 40, 0.85);
-    padding: 40px 35px;
-    border-radius: 15px;
-    width: 350px;
-    box-shadow: 0 0 30px rgba(138, 43, 226, 0.4);
-    backdrop-filter: blur(10px);
-    text-align: center;
-    animation: fadeIn 0.7s ease;
-}
+        .login-box {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px 35px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
 
-/* Animasi */
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(-15px); }
-    to { opacity: 1; transform: translateY(0); }
-}
+        .logo {
+            margin-bottom: 8px;
+            color: #fff;
+        }
 
-/* Judul */
-form h3 {
-    font-size: 22px;
-    font-weight: 600;
-    margin-bottom: 25px;
-    color: #b3b3ff;
-}
+        .logo-content {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
 
-/* Input */
-input {
-    width: 100%;
-    margin-bottom: 15px;
-    padding: 12px 14px;
-    border: 1px solid #333;
-    border-radius: 10px;
-    background: rgba(255, 255, 255, 0.05);
-    color: #fff;
-    font-size: 14px;
-    transition: all 0.3s ease;
-}
+        .logo-img {
+            width: 80px;
+            height: 80px;
+            object-fit: contain;
+            filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.5));
+        }
 
-/* Placeholder */
-input::placeholder {
-    color: #aaa;
-}
+        .logo-text {
+            flex: 1;
+            text-align: left;
+        }
 
-/* Fokus input */
-input:focus {
-    border-color: #7d5fff;
-    box-shadow: 0 0 10px rgba(125, 95, 255, 0.5);
-    outline: none;
-}
+        .logo-text h1 {
+            font-size: 1.75rem;
+            margin-bottom: 3px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
 
-/* Tombol login */
-button {
-    width: 100%;
-    background: linear-gradient(135deg, #6e44ff, #8e2de2);
-    border: none;
-    padding: 12px;
-    color: white;
-    font-weight: 600;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: 0.3s;
-}
+        .logo-text p {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.9);
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
 
-button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 15px rgba(125, 95, 255, 0.5);
-}
+        .login-form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
 
-/* Teks link */
-a {
-    color: #8e2de2;
-    text-decoration: none;
-    font-size: 13px;
-}
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
 
-a:hover {
-    text-decoration: underline;
-}
+        .form-group label {
+            color: #fff;
+            font-size: 0.95rem;
+            margin-top: 15px;
+            font-weight: 500;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
 
-/* Tombol Google */
-.google-btn {
-    margin-top: 15px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    width: 100%;
-    background: #fff;
-    color: #333;
-    border-radius: 8px;
-    padding: 10px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: 0.3s;
-}
+        .form-group input[type="text"],
+        .form-group input[type="password"] {
+            padding: 14px 16px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.2);
+            color: #fff;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
 
-.google-btn img {
-    width: 20px;
-}
+        .form-group input[type="text"]::placeholder,
+        .form-group input[type="password"]::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
 
-.google-btn:hover {
-    background: #f2f2f2;
-}
+        .form-group input[type="text"]:focus,
+        .form-group input[type="password"]:focus {
+            outline: none;
+            border-color: rgba(255, 255, 255, 0.6);
+            background: rgba(255, 255, 255, 0.25);
+        }
 
-/* Responsif */
-@media (max-width: 400px) {
-    form {
-        width: 90%;
-        padding: 30px 25px;
-    }
-}
+
+        .btn-login {
+            padding: 14px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.05rem;
+            font-weight: 600;
+            margin-top: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-login:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+        }
+
+        .btn-login:active {
+            transform: translateY(0);
+        }
+
+        .forgot-password {
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .forgot-password a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 0.9rem;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+            transition: opacity 0.3s ease;
+        }
+
+        .forgot-password a:hover {
+            opacity: 0.8;
+            text-decoration: underline;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 480px) {
+            .login-container {
+                padding: 15px;
+            }
+
+            .login-box {
+                padding: 30px 25px;
+            }
+
+            .logo-content {
+                gap: 12px;
+            }
+
+            .logo-img {
+                width: 60px;
+                height: 60px;
+            }
+
+            .logo-text h1 {
+                font-size: 1.5rem;
+            }
+
+            .logo-text p {
+                font-size: 0.85rem;
+            }
+
+            .form-group input[type="text"],
+            .form-group input[type="password"] {
+                padding: 12px 14px;
+                font-size: 0.95rem;
+            }
+
+            .btn-login {
+                padding: 12px;
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .login-box {
+                padding: 25px 20px;
+            }
+
+            .logo-img {
+                width: 50px;
+                height: 50px;
+            }
+
+            .logo-text h1 {
+                font-size: 1.3rem;
+            }
+
+            .logo-text p {
+                font-size: 0.8rem;
+            }
+        }
