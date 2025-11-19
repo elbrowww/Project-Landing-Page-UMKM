@@ -133,53 +133,8 @@ $result_testimoni = $koneksi->query($query_testimoni);
 <body>
 
 <!-- Navbar -->
-<nav class="navbar navbar-expand-lg navbar-dark">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="javascript:void(0)" onclick="showPage('dashboard')">
-      <i class="fas fa-utensils"></i> Bu Mon Admin
-    </a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-      <span class="navbar-toggler-icon"></span>
-    </button>
+<?php include 'navbar.php'; ?>
 
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav me-auto">
-        <li class="nav-item">
-          <a class="nav-link active" href="javascript:void(0)" onclick="showPage('dashboard')" id="nav-dashboard">
-            <i class="fas fa-chart-line"></i> Dashboard
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="javascript:void(0)" onclick="showPage('penjualan')" id="nav-penjualan">
-            <i class="fas fa-shopping-cart"></i> Pesanan Masuk
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="javascript:void(0)" onclick="showPage('riwayat')" id="nav-riwayat">
-            <i class="fas fa-history"></i> Riwayat Pesanan
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="javascript:void(0)" onclick="showPage('testimoni')" id="nav-testimoni">
-        <i class="fas fa-star"></i> Testimoni
-        </a>
-      </li>
-      </ul>
-      <ul class="navbar-nav">
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
-            <i class="fas fa-user-circle"></i> Admin
-          </a>
-          <ul class="dropdown-menu dropdown-menu-end">
-            <li><a class="dropdown-item" href="#"><i class="fas fa-user"></i> Profil</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item text-danger" href="../config/logout.php"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
-          </ul>
-        </li>
-      </ul>
-    </div>
-  </div>
-</nav>
 <!-- POPUP DELETE -->
 <div id="popupConfirm" class="popup-overlay">
   <div class="popup-box">
@@ -193,7 +148,7 @@ $result_testimoni = $koneksi->query($query_testimoni);
   </div>
 </div>
 <!-- HALAMAN DASHBOARD MENU -->
-<div id="page-dashboard" class="page-content">
+<div id="page-menu" class="page-content">
   <div class="container">
     <div class="page-header d-flex justify-content-between align-items-center">
       <h3><i class="fas fa-list-alt"></i> Daftar Menu</h3>
@@ -254,98 +209,6 @@ $result_testimoni = $koneksi->query($query_testimoni);
   </div>
 </div>
 
-<!-- HALAMAN PENJUALAN -->
-<div id="page-penjualan" class="page-content" style="display:none;">
-  <div class="container">
-    <!-- Statistik Cards -->
-    <div class="row mb-4">
-      <div class="col-md-6 mb-3">
-        <div class="stats-card">
-          <div class="stats-icon bg-primary">
-            <i class="fas fa-shopping-cart"></i>
-          </div>
-          <div class="stats-info">
-            <h3><?= $stats['total_pesanan'] ?? 0 ?></h3>
-            <p>Total Pesanan</p>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-6 mb-3">
-        <div class="stats-card">
-          <div class="stats-icon bg-info">
-            <i class="fas fa-money-bill-wave"></i>
-          </div>
-          <div class="stats-info">
-            <h3>Rp <?= number_format($stats['total_penjualan'] ?? 0, 0, ',', '.') ?></h3>
-            <p>Total Penjualan</p>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="page-header">
-      <h3><i class="fas fa-shopping-cart"></i> Daftar Pesanan Masuk</h3>
-    </div>
-
-    <div class="card">
-      <div class="card-body p-0">
-        <div class="table-responsive">
-          <table class="table mb-0">
-            <thead>
-              <tr>
-                <th>No</th>
-                <th>Tanggal</th>
-                <th>ID Detail</th>
-                <th>Nama Menu</th>
-                <th>ID Pesanan</th>
-                <th>Jumlah</th>
-                <th>Harga Satuan</th>
-                <th>Subtotal</th>
-                <th>Aksi</th>
-              </tr>
-            </thead>
-            <tbody>
-              <?php 
-              $no = 1;
-              if ($result_pesanan && $result_pesanan->num_rows > 0):
-                while ($row_pesanan = $result_pesanan->fetch_assoc()):
-              ?>
-              <tr>
-                <td><?= $no++ ?></td>
-                <td><?= date('d/m/Y H:i', strtotime($row_pesanan['tgl_pesan'])) ?></td>
-                <td><strong><?= htmlspecialchars($row_pesanan['id_detail']) ?></strong></td>
-                <td><?= htmlspecialchars($row_pesanan['nama_menu']) ?></td>
-                <td><strong><?= htmlspecialchars($row_pesanan['id_pesanan']) ?></td>
-                <td><span class="badge-qty"><?= htmlspecialchars($row_pesanan['jumlah']) ?></span></td>
-                <td><span class="badge-price">Rp <?= number_format($row_pesanan['harga_satuan'], 0, ',', '.') ?></span></td>
-                <td><span class="badge-price">Rp <?= number_format($row_pesanan['subtotal'], 0, ',', '.') ?></span></td>
-                <td>
-                  <button class="btn btn-action btn-edit" 
-                          onclick="editPesanan('<?= $row_pesanan['id_detail'] ?>', '<?= $row_pesanan['id_menu'] ?>', <?= $row_pesanan['jumlah'] ?>, <?= $row_pesanan['harga_satuan'] ?>)">
-                    <i class="fas fa-edit"></i>
-                  </button>
-                  <a href="?hapus_pesanan=<?= $row_pesanan['id_detail'] ?>" 
-                     onclick="return confirm('Hapus pesanan dengan ID <?= htmlspecialchars($row_pesanan['id_detail']) ?>?')" 
-                     class="btn btn-action btn-delete">
-                    <i class="fas fa-trash-alt"></i>
-                  </a>
-                </td>
-              </tr>
-              <?php endwhile; else: ?>
-                <tr>
-                  <td colspan="8" class="no-data">
-                    <i class="fas fa-inbox"></i>
-                    <p>Belum ada pesanan masuk</p>
-                  </td>
-                </tr>
-              <?php endif; ?>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
 
 <!-- Modal Tambah/Edit Menu -->
 <div class="modal fade" id="tambahMenuModal" tabindex="-1">
@@ -385,38 +248,6 @@ $result_testimoni = $koneksi->query($query_testimoni);
             </div>
           </div>
           <button type="submit" name="simpan" class="btn btn-submit"><i class="fas fa-save"></i> Simpan</button>
-        </form>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- Modal Edit Pesanan -->
-<div class="modal fade" id="editPesananModal" tabindex="-1">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5><i class="fas fa-edit"></i> Edit Pesanan</h5>
-        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-      </div>
-      <div class="modal-body p-4">
-        <form method="POST" id="pesananForm">
-          <input type="hidden" name="id_detail" id="edit_id_detail">
-          <div class="mb-3">
-            <label class="form-label">ID Menu</label>
-            <input type="text" class="form-control" name="id_menu" id="edit_id_menu" required>
-          </div>
-          <div class="mb-3">
-            <label class="form-label">Jumlah</label>
-            <input type="number" class="form-control" name="jumlah" id="edit_jumlah" required min="1">
-          </div>
-          <div class="mb-3">
-            <label class="form-label">Harga Satuan</label>
-            <input type="number" class="form-control" name="harga_satuan" id="edit_harga_satuan" required min="0">
-          </div>
-          <button type="submit" name="update_pesanan" class="btn btn-submit">
-            <i class="fas fa-save"></i> Update Pesanan
-          </button>
         </form>
       </div>
     </div>
@@ -492,7 +323,8 @@ $result_testimoni = $koneksi->query($query_testimoni);
           <?php endif; ?>
         </tbody>
       </table>
-      <!-- Modal Update Status Pesanan -->
+
+<!-- Modal Update Status Pesanan -->
 <div class="modal fade" id="updateStatusModal" tabindex="-1">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -527,7 +359,7 @@ $result_testimoni = $koneksi->query($query_testimoni);
 </div>
 
 <!-- HALAMAN TESTIMONI -->
-<div id="page-testimoni" class="page-content" style="display:none;">
+<div id="page-testimoni" class="page-content">
   <div class="container">
     
   <div class="page-header d-flex justify-content-between align-items-center mb-3">
@@ -623,46 +455,18 @@ $result_testimoni = $koneksi->query($query_testimoni);
         </div>
 
       </form>
-<script>
-// Tambahkan script ini di bagian bawah halaman
-document.getElementById('btnTambahTestimoni').addEventListener('click', function() {
-    var modal = new bootstrap.Modal(document.getElementById('modalTestimoni'));
-    modal.show();
-});
-</script>
+      </div>
+      <script>
+    // Tambahkan script ini di bagian bawah halaman
+    document.getElementById('btnTambahTestimoni').addEventListener('click', function() {
+      var modal = new bootstrap.Modal(document.getElementById('modalTestimoni'));
+      modal.show();
+    });
+      </script>
     </div>
   </div>
 </div>
 
-
-<!-- Modal Update Status Pesanan -->
-<div class="modal fade" id="updateStatusModal" tabindex="-1">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5><i class="fas fa-edit"></i> Update Status Pesanan</h5>
-        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-      </div>
-      <div class="modal-body p-4">
-        <form method="POST" id="statusForm">
-          <input type="hidden" name="id_pesanan" id="status_id_pesanan">
-          <div class="mb-3">
-            <label class="form-label">Status Pesanan</label>
-            <select class="form-select" name="status" id="status_pesanan" required>
-              <option value="pending">Pending</option>
-              <option value="proses">Proses</option>
-              <option value="selesai">Selesai</option>
-              <option value="batal">Batal</option>
-            </select>
-          </div>
-          <button type="submit" name="update_status_pesanan" class="btn btn-submit">
-            <i class="fas fa-save"></i> Update Status
-          </button>
-        </form>
-      </div>
-    </div>
-  </div>
-</div>
 
 
 <!-- Bootstrap & JS -->

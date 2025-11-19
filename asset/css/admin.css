@@ -574,3 +574,19 @@ body {
   color: #ffc107;
   font-size: 18px;
 }
+
+.status-card {
+  text-align: center;
+  padding: 20px;
+  border-radius: 10px;
+  color: #fff;
+  margin-bottom: 10px;
+}
+.status-card h4 {
+  font-size: 32px;
+  margin: 0;
+}
+.status-card p {
+  margin: 0;
+  font-size: 14px;
+}
