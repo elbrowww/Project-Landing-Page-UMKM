@@ -199,11 +199,14 @@
 
         <div class="grid md:grid-cols-2 gap-12 items-center">
 
-            <!-- Logo -->
-            <div class="fade-in">
-                <img src="asset/img/logo.png" alt="Layanan"
-                     class="rounded-2xl shadow-2xl">
-            </div>
+            <!-- Logo dengan efek hover -->
+<div class="fade-in">
+    <a href="portofolio2.html" class="block group">
+        <img src="asset/img/logo.png" alt="Chef Profesional"
+             class="rounded-2xl shadow-2xl group-hover:shadow-purple-300 
+                    group-hover:scale-105 transition-all duration-300 cursor-pointer">
+    </a>
+</div>
 
             <!-- List Layanan -->
             <div class="fade-in space-y-8">

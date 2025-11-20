@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portofolio Kelompok - Catering Spesial</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        .gradient-text {
+            background: linear-gradient(135deg, #8B5CF6, #EC4899);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, #8B5CF6, #EC4899);
+        }
+        
+        .purple-gradient-bg {
+            background: linear-gradient(135deg, #8B5CF6, #A78BFA);
+        }
+        
+        .pink-gradient-bg {
+            background: linear-gradient(135deg, #EC4899, #F472B6);
+        }
+        
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+        
+        .team-card {
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+            border: 1px solid rgba(139, 92, 246, 0.1);
+        }
+        
+        .team-card:hover {
+            transform: translateY(-15px) scale(1.03);
+            box-shadow: 0 25px 50px rgba(139, 92, 246, 0.25);
+            border-color: rgba(139, 92, 246, 0.3);
+        }
+        
+        .floating {
+            animation: floating 3s ease-in-out infinite;
+        }
+        
+        @keyframes floating {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        .pulse-glow {
+            animation: pulse-glow 2s ease-in-out infinite alternate;
+        }
+        
+        @keyframes pulse-glow {
+            from { box-shadow: 0 0 20px rgba(139, 92, 246, 0.3); }
+            to { box-shadow: 0 0 30px rgba(236, 72, 153, 0.4); }
+        }
+        
+        .section-divider {
+            height: 3px;
+            background: linear-gradient(90deg, transparent, #8B5CF6, #EC4899, transparent);
+            margin: 4rem 0;
+        }
+        
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-purple-50 via-white to-pink-50">
+
+    <!-- Header -->
+    <header class="glass-effect sticky top-0 z-50">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="index.php" class="text-purple-600 font-bold text-xl flex items-center hover:text-purple-700 transition-colors">
+                <i class="fas fa-arrow-left mr-3 bg-purple-100 p-2 rounded-full"></i> 
+                Kembali ke Beranda
+            </a>
+            <div class="text-center">
+                <h1 class="text-xl font-bold gradient-text">Catering Spesial</h1>
+                <p class="text-xs text-gray-500">by Kelompok 3 - Gol A</p>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="relative py-24 gradient-bg text-white overflow-hidden">
+        <div class="absolute inset-0 bg-black opacity-10"></div>
+        <div class="absolute -top-24 -right-24 w-64 h-64 bg-white rounded-full opacity-10"></div>
+        <div class="absolute -bottom-32 -left-32 w-80 h-80 bg-white rounded-full opacity-10"></div>
+        
+        <div class="container mx-auto px-6 text-center relative z-10">
+            <div class="floating inline-block mb-6">
+                <div class="bg-white/20 p-6 rounded-2xl backdrop-blur-sm">
+                    <i class="fas fa-users text-4xl text-white"></i>
+                </div>
+            </div>
+            <h1 class="text-5xl md:text-6xl font-bold mb-6 fade-in">Kelompok 3</h1>
+            <div class="bg-white/20 backdrop-blur-sm rounded-2xl p-4 inline-block mb-6">
+                <p class="text-2xl md:text-3xl font-semibold">Golongan A</p>
+            </div>
+            <p class="text-xl md:text-2xl max-w-3xl mx-auto leading-relaxed fade-in">
+                Tim Inovatif yang Menghadirkan <span class="font-bold">Solusi Digital</span> untuk 
+                <span class="font-bold">Dunia Kuliner</span>
+            </p>
+        </div>
+    </section>
+
+    <!-- Foto Kelompok -->
+    <section class="py-20 bg-white">
+        <div class="container mx-auto px-6 max-w-6xl">
+            <div class="text-center mb-16 fade-in">
+                <h2 class="text-4xl font-bold mb-4 gradient-text">Kebersamaan yang Solid</h2>
+                <p class="text-gray-600 text-lg max-w-2xl mx-auto">
+                    Dari ide hingga eksekusi, kami bekerja sama menciptakan pengalaman digital yang memukau
+                </p>
+            </div>
+            
+            <!-- Foto Bersama -->
+            <div class="pulse-glow bg-gradient-to-r from-purple-500 to-pink-500 rounded-3xl p-1 mb-20 fade-in">
+                <div class="bg-white rounded-2xl p-8">
+                    <div class="bg-gradient-to-br from-purple-100 to-pink-100 rounded-2xl w-full h-96 flex items-center justify-center text-gray-500 text-xl relative overflow-hidden">
+                        <div class="absolute inset-0 bg-gradient-to-br from-purple-200/30 to-pink-200/30"></div>
+                        <div class="relative z-10 text-center">
+                            <i class="fas fa-camera text-6xl text-purple-300 mb-4"></i>
+                            <p class="text-2xl font-semibold text-purple-400">FOTO BERSAMA KELOMPOK 3</p>
+                            <p class="text-purple-300 mt-2">Team Collaboration Moment</p>
+                        </div>
+                    </div>
+                    <p class="text-center text-gray-600 mt-6 text-lg font-semibold">Tim Solid Kelompok 3 - Golongan A</p>
+                </div>
+            </div>
+
+            <!-- Anggota Tim -->
+            <div class="fade-in">
+                <h3 class="text-3xl font-bold text-center mb-12 gradient-text">Meet Our Dream Team</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
+                    
+                    <!-- Angelo -->
+                    <div class="team-card rounded-2xl p-6 text-center relative overflow-hidden">
+                        <div class="absolute top-0 left-0 w-full h-1 purple-gradient-bg"></div>
+                        <div class="purple-gradient-bg rounded-2xl w-28 h-28 mx-auto mb-4 flex items-center justify-center text-white text-2xl font-bold shadow-lg">
+                            <i class="fas fa-code"></i>
+                        </div>
+                        <h4 class="text-xl font-bold mb-2 text-gray-800">Angelo</h4>
+                        <p class="text-purple-600 font-semibold mb-3">Frontend Developer</p>
+                        <p class="text-gray-600 text-sm leading-relaxed">
+                            Spesialis dalam menciptakan interface yang intuitif dan pengalaman pengguna yang memukau
+                        </p>
+                        <div class="mt-4 flex justify-center space-x-2">
+                            <span class="bg-purple-100 text-purple-600 px-3 py-1 rounded-full text-xs">HTML/CSS</span>
+                            <span class="bg-purple-100 text-purple-600 px-3 py-1 rounded-full text-xs">JavaScript</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Cintya -->
+                    <div class="team-card rounded-2xl p-6 text-center relative overflow-hidden">
+                        <div class="absolute top-0 left-0 w-full h-1 pink-gradient-bg"></div>
+                        <div class="pink-gradient-bg rounded-2xl w-28 h-28 mx-auto mb-4 flex items-center justify-center text-white text-2xl font-bold shadow-lg">
+                            <i class="fas fa-pen-fancy"></i>
+                        </div>
+                        <h4 class="text-xl font-bold mb-2 text-gray-800">Cintya</h4>
+                        <p class="text-pink-600 font-semibold mb-3">Content Strategist</p>
+                        <p class="text-gray-600 text-sm leading-relaxed">
+                            Ahli dalam menyusun narasi yang engaging dan konten yang berbicara langsung kepada audiens
+                        </p>
+                        <div class="mt-4 flex justify-center space-x-2">
+                            <span class="bg-pink-100 text-pink-600 px-3 py-1 rounded-full text-xs">Writing</span>
+                            <span class="bg-pink-100 text-pink-600 px-3 py-1 rounded-full text-xs">Strategy</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Etnis -->
+                    <div class="team-card rounded-2xl p-6 text-center relative overflow-hidden">
+                        <div class="absolute top-0 left-0 w-full h-1 gradient-bg"></div>
+                        <div class="gradient-bg rounded-2xl w-28 h-28 mx-auto mb-4 flex items-center justify-center text-white text-2xl font-bold shadow-lg">
+                            <i class="fas fa-palette"></i>
+                        </div>
+                        <h4 class="text-xl font-bold mb-2 text-gray-800">Etnis</h4>
+                        <p class="text-purple-600 font-semibold mb-3">UI/UX Designer</p>
+                        <p class="text-gray-600 text-sm leading-relaxed">
+                            Menciptakan design yang tidak hanya indah tetapi juga functional dan user-friendly
+                        </p>
+                        <div class="mt-4 flex justify-center space-x-2">
+                            <span class="bg-purple-100 text-purple-600 px-3 py-1 rounded-full text-xs">Figma</span>
+                            <span class="bg-purple-100 text-purple-600 px-3 py-1 rounded-full text-xs">Adobe XD</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Nila -->
+                    <div class="team-card rounded-2xl p-6 text-center relative overflow-hidden">
+                        <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 to-cyan-500"></div>
+                        <div class="bg-gradient-to-r from-blue-500 to-cyan-500 rounded-2xl w-28 h-28 mx-auto mb-4 flex items-center justify-center text-white text-2xl font-bold shadow-lg">
+                            <i class="fas fa-tasks"></i>
+                        </div>
+                        <h4 class="text-xl font-bold mb-2 text-gray-800">Nila</h4>
+                        <p class="text-blue-600 font-semibold mb-3">Project Manager</p>
+                        <p class="text-gray-600 text-sm leading-relaxed">
+                            Mengkoordinasi tim dan memastikan setiap tahapan project berjalan sesuai timeline
+                        </p>
+                        <div class="mt-4 flex justify-center space-x-2">
+                            <span class="bg-blue-100 text-blue-600 px-3 py-1 rounded-full text-xs">Planning</span>
+                            <span class="bg-blue-100 text-blue-600 px-3 py-1 rounded-full text-xs">Coordination</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Ingka -->
+                    <div class="team-card rounded-2xl p-6 text-center relative overflow-hidden">
+                        <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-green-500 to-emerald-500"></div>
+                        <div class="bg-gradient-to-r from-green-500 to-emerald-500 rounded-2xl w-28 h-28 mx-auto mb-4 flex items-center justify-center text-white text-2xl font-bold shadow-lg">
+                            <i class="fas fa-magic"></i>
+                        </div>
+                        <h4 class="text-xl font-bold mb-2 text-gray-800">Ingka</h4>
+                        <p class="text-green-600 font-semibold mb-3">Creative Director</p>
+                        <p class="text-gray-600 text-sm leading-relaxed">
+                            Memastikan konsistensi visual dan creative excellence dalam setiap elemen project
+                        </p>
+                        <div class="mt-4 flex justify-center space-x-2">
+                            <span class="bg-green-100 text-green-600 px-3 py-1 rounded-full text-xs">Creative</span>
+                            <span class="bg-green-100 text-green-600 px-3 py-1 rounded-full text-xs">Branding</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- Tentang Kelompok -->
+    <section class="py-20 bg-gradient-to-br from-purple-50 to-pink-50">
+        <div class="container mx-auto px-6 max-w-5xl">
+            <div class="glass-effect rounded-3xl p-10 fade-in">
+                <h2 class="text-4xl font-bold mb-8 text-center gradient-text">Tentang Kelompok Kami</h2>
+                <div class="prose prose-lg max-w-none text-gray-700">
+                    <p class="text-xl mb-6 leading-relaxed">
+                        <strong class="gradient-text">Kelompok 3 Golongan A</strong> adalah kumpulan lima individu 
+                        passionate yang percaya bahwa kolaborasi adalah kunci menciptakan karya exceptional. 
+                        Dengan diversity latar belakang dan keahlian, kami menyatu dalam harmoni kreativitas 
+                        dan teknis untuk menghadirkan solusi digital yang meaningful.
+                    </p>
+                    <p class="text-xl mb-6 leading-relaxed">
+                        Setiap anggota membawa <strong>colorful perspective</strong> dan unique value yang 
+                        saling melengkapi, menciptakan ecosystem kreatif dimana ide-ide brilian dapat 
+                        tumbuh dan berkembang menjadi realitas digital yang inspiring.
+                    </p>
+                    <div class="bg-white rounded-2xl p-6 mt-8 border-l-4 border-purple-500">
+                        <p class="text-lg italic text-center text-gray-600">
+                            <i class="fas fa-quote-left text-purple-300 mr-2"></i>
+                            Individual commitment to a group effort—that is what makes a team work, 
+                            a company work, a society work, a civilization work.
+                            <i class="fas fa-quote-right text-purple-300 ml-2"></i>
+                        </p>
+                        <p class="text-right text-purple-500 font-semibold mt-2">- Vince Lombardi</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Visi Misi Kelompok -->
+    <section class="py-20 bg-white">
+        <div class="container mx-auto px-6 max-w-5xl">
+            <div class="grid lg:grid-cols-2 gap-8">
+                <div class="fade-in">
+                    <div class="gradient-bg rounded-3xl p-8 text-white h-full relative overflow-hidden">
+                        <div class="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -mt-16 -mr-16"></div>
+                        <div class="relative z-10">
+                            <div class="bg-white/20 w-16 h-16 rounded-2xl flex items-center justify-center mb-6">
+                                <i class="fas fa-eye text-2xl"></i>
+                            </div>
+                            <h3 class="text-2xl font-bold mb-4">Visi Kelompok</h3>
+                            <p class="text-lg leading-relaxed">
+                                Menjadi pioneer dalam digital innovation yang consistently 
+                                men-deliver outstanding solutions, sekaligus menjadi platform 
+                                growth bagi setiap anggota untuk mencapai ultimate potential 
+                                dalam dunia teknologi kreatif.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="fade-in">
+                    <div class="purple-gradient-bg rounded-3xl p-8 text-white h-full relative overflow-hidden">
+                        <div class="absolute bottom-0 left-0 w-32 h-32 bg-white/10 rounded-full -mb-16 -ml-16"></div>
+                        <div class="relative z-10">
+                            <div class="bg-white/20 w-16 h-16 rounded-2xl flex items-center justify-center mb-6">
+                                <i class="fas fa-bullseye text-2xl"></i>
+                            </div>
+                            <h3 class="text-2xl font-bold mb-4">Misi Kelompok</h3>
+                            <ul class="space-y-3 text-lg">
+                                <li class="flex items-start">
+                                    <i class="fas fa-check-circle mt-1 mr-3 text-white/80"></i>
+                                    Menghasilkan digital masterpiece yang impactful
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-check-circle mt-1 mr-3 text-white/80"></i>
+                                    Continuous learning dan skill enhancement
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-check-circle mt-1 mr-3 text-white/80"></i>
+                                    Collaborative dan supportive environment
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-check-circle mt-1 mr-3 text-white/80"></i>
+                                    Positive impact melalui karya digital
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Alasan Membuat Website -->
+    <section class="py-20 bg-gradient-to-br from-purple-50 to-pink-50">
+        <div class="container mx-auto px-6 max-w-5xl">
+            <div class="bg-white rounded-3xl shadow-xl p-10 fade-in">
+                <h2 class="text-4xl font-bold mb-8 text-center gradient-text">The Story Behind This Masterpiece</h2>
+                
+                <div class="prose prose-lg max-w-none text-gray-700">
+                    <p class="text-xl mb-8 leading-relaxed">
+                        Website <strong class="gradient-text">"Catering Spesial"</strong> ini merupakan manifestasi 
+                        dari perjalanan akademis yang transformative. Sebagai bagian integral dari 
+                        <strong>tugas mata kuliah Pemrograman Web</strong>, kami tidak hanya berfokus 
+                        pada pemenuhan technical requirements, tetapi juga berkomitmen untuk 
+                        menciptakan digital experience yang memorable dan impactful.
+                    </p>
+                    
+                    <div class="grid md:grid-cols-2 gap-8 mb-8">
+                        <div class="bg-gradient-to-br from-purple-500 to-pink-500 rounded-2xl p-6 text-white">
+                            <div class="text-4xl mb-4">🎯</div>
+                            <h3 class="text-xl font-bold mb-3">Beyond Academic Requirements</h3>
+                            <p class="text-white/90">
+                                Kami memilih industri catering sebagai canvas kreatif karena 
+                                melihat enormous potential untuk digital transformation dalam 
+                                bisnis kuliner tradisional.
+                            </p>
+                        </div>
+                        <div class="bg-gradient-to-br from-blue-500 to-cyan-500 rounded-2xl p-6 text-white">
+                            <div class="text-4xl mb-4">💡</div>
+                            <h3 class="text-xl font-bold mb-3">Creative Implementation</h3>
+                            <p class="text-white/90">
+                                Setiap teori dari kelas kami transform menjadi practical 
+                                implementation, dari responsive design hingga interactive elements.
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <p class="text-xl mb-8 leading-relaxed">
+                        Proses creative journey ini telah menjadi catalyst bagi pengembangan 
+                        <strong>hard skills dan soft skills</strong> secara bersamaan. Setiap 
+                        collaborative session, intensive discussion, dan creative problem-solving 
+                        moment telah membentuk kami menjadi dream team yang cohesive dan resilient.
+                    </p>
+                    
+                    <div class="bg-gradient-to-r from-purple-500 to-pink-500 rounded-2xl p-8 text-white text-center">
+                        <h3 class="text-2xl font-bold mb-4">From Assignment to Achievement</h3>
+                        <p class="text-lg">
+                            Website ini adalah bukti nyata bagaimana academic challenge dapat 
+                            ditransformasi menjadi creative opportunity yang menghasilkan 
+                            valuable digital asset dengan real-world applicability.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Proses Pembuatan -->
+    <section class="py-20 bg-white">
+        <div class="container mx-auto px-6 max-w-5xl">
+            <h2 class="text-4xl font-bold mb-16 text-center gradient-text">Our Creative Process</h2>
+            
+            <div class="grid md:grid-cols-5 gap-6">
+                <div class="text-center fade-in">
+                    <div class="gradient-bg w-20 h-20 rounded-2xl flex items-center justify-center text-2xl text-white font-bold mx-auto mb-4 shadow-lg">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    <h3 class="font-bold mb-2 text-gray-800">Discovery</h3>
+                    <p class="text-gray-600 text-sm">Market research & needs analysis</p>
+                </div>
+                <div class="text-center fade-in">
+                    <div class="gradient-bg w-20 h-20 rounded-2xl flex items-center justify-center text-2xl text-white font-bold mx-auto mb-4 shadow-lg">
+                        <i class="fas fa-pencil-alt"></i>
+                    </div>
+                    <h3 class="font-bold mb-2 text-gray-800">Design</h3>
+                    <p class="text-gray-600 text-sm">Wireframing & UI/UX design</p>
+                </div>
+                <div class="text-center fade-in">
+                    <div class="gradient-bg w-20 h-20 rounded-2xl flex items-center justify-center text-2xl text-white font-bold mx-auto mb-4 shadow-lg">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <h3 class="font-bold mb-2 text-gray-800">Development</h3>
+                    <p class="text-gray-600 text-sm">Coding & feature implementation</p>
+                </div>
+                <div class="text-center fade-in">
+                    <div class="gradient-bg w-20 h-20 rounded-2xl flex items-center justify-center text-2xl text-white font-bold mx-auto mb-4 shadow-lg">
+                        <i class="fas fa-bug"></i>
+                    </div>
+                    <h3 class="font-bold mb-2 text-gray-800">Testing</h3>
+                    <p class="text-gray-600 text-sm">Quality assurance & refinement</p>
+                </div>
+                <div class="text-center fade-in">
+                    <div class="gradient-bg w-20 h-20 rounded-2xl flex items-center justify-center text-2xl text-white font-bold mx-auto mb-4 shadow-lg">
+                        <i class="fas fa-rocket"></i>
+                    </div>
+                    <h3 class="font-bold mb-2 text-gray-800">Launch</h3>
+                    <p class="text-gray-600 text-sm">Deployment & optimization</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Backup Navigation -->
+    <section class="py-10 bg-white">
+        <div class="container mx-auto px-6 text-center">
+            <a href="index.php" class="inline-flex items-center gap-3 bg-gradient-to-r from-purple-500 to-pink-500 text-white px-8 py-4 rounded-2xl font-semibold hover:shadow-lg transition-all duration-300">
+                <i class="fas fa-home"></i>
+                Kembali ke Halaman Utama
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="gradient-bg text-white py-16">
+        <div class="container mx-auto px-6 text-center">
+            <div class="bg-white/10 backdrop-blur-sm rounded-3xl p-8 max-w-2xl mx-auto">
+                <h3 class="text-2xl font-bold mb-4">Kelompok 3 - Golongan A</h3>
+                <div class="flex flex-wrap justify-center gap-4 mb-6">
+                    <span class="bg-white/20 px-4 py-2 rounded-full">Angelo</span>
+                    <span class="bg-white/20 px-4 py-2 rounded-full">Cintya</span>
+                    <span class="bg-white/20 px-4 py-2 rounded-full">Etnis</span>
+                    <span class="bg-white/20 px-4 py-2 rounded-full">Nila</span>
+                    <span class="bg-white/20 px-4 py-2 rounded-full">Ingka</span>
+                </div>
+                <p class="text-white/80 mb-4">Project Website Catering Spesial - 2024</p>
+                <div class="flex justify-center space-x-6 text-white/60">
+                    <i class="fab fa-html5 text-xl hover:text-white transition-colors"></i>
+                    <i class="fab fa-css3-alt text-xl hover:text-white transition-colors"></i>
+                    <i class="fab fa-js text-xl hover:text-white transition-colors"></i>
+                    <i class="fab fa-figma text-xl hover:text-white transition-colors"></i>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const fadeElements = document.querySelectorAll('.fade-in');
+            
+            const fadeInOnScroll = function() {
+                fadeElements.forEach(element => {
+                    const elementTop = element.getBoundingClientRect().top;
+                    const elementVisible = 100;
+                    
+                    if (elementTop < window.innerHeight - elementVisible) {
+                        element.style.opacity = '1';
+                        element.style.transform = 'translateY(0)';
+                    }
+                });
+            };
+            
+            // Initialize
+            fadeElements.forEach(element => {
+                element.style.opacity = '0';
+                element.style.transform = 'translateY(30px)';
+            });
+            
+            window.addEventListener('scroll', fadeInOnScroll);
+            fadeInOnScroll();
+            
+            // Add scroll-triggered animations
+            const teamCards = document.querySelectorAll('.team-card');
+            teamCards.forEach((card, index) => {
+                card.style.transitionDelay = `${index * 0.1}s`;
+            });
+
+            // Fallback navigation
+            const backLinks = document.querySelectorAll('a[href="index.php"]');
+            backLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    console.log('Navigating to index.php...');
+                    // Let the default link behavior work first
+                });
+            });
+
+            // Debug info
+            console.log('Portofolio page loaded successfully');
+            console.log('Navigation target: index.php');
+        });
+    </script>
+</body>
+</html>
