@@ -319,7 +319,6 @@ $result_testimoni = $koneksi->query($query_testimoni);
                         <?php
                             $icon = "👤";
                             $bg = "bg-purple-200";
-                          
                         ?>
 
                         <div class="fade-in bg-white p-8 rounded-2xl shadow-xl card-hover min-w-[320px] max-w-[320px] flex-shrink-0">
@@ -329,7 +328,7 @@ $result_testimoni = $koneksi->query($query_testimoni);
                                 </div>
                                 <div>
                                     <h4 class="font-bold"><?= htmlspecialchars($row['nama']) ?></h4>
-                                    <div class="text-yellow-400 text-sm"><?= $stars ?></div>
+                                    <!-- HAPUS BAGIAN STARS YANG ERROR -->
                                 </div>
                             </div>
                             <p class="text-gray-600">
