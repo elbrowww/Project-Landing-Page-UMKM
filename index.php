@@ -105,18 +105,32 @@
       <h2 class="text-4xl font-bold text-center mb-12 gradient-text fade-in">Mengapa Memilih Kami?</h2>
       <div class="grid md:grid-cols-3 gap-8">
         <div class="fade-in card-hover bg-gradient-to-br from-white to-gray-50 p-8 rounded-2xl text-center">
-          <div class="text-5xl mb-4">📃</div>
+          <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-br from-purple-100 to-purple-300 flex items-center justify-center shadow-md">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-purple-700" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m1-6H8a2 2 0 00-2 2v14a2 2 0 002 2h8a2 2 0 002-2V6a2 2 0 00-2-2z" />
+             </svg>
+            </div>
+
+
           <h3 class="text-2xl font-bold mb-4">Bisa Custom Order</h3>
           <p class="text-gray-600">Menu dan porsi bisa disesuaikan dengan anggaran serta selera pelanggan.</p>
         </div>
         <div class="fade-in card-hover bg-gradient-to-br from-white to-gray-50 p-8 rounded-2xl text-center">
-          <div class="text-5xl mb-4">🥗</div>
-          <h3 class="text-2xl font-bold mb-4">Bahan Berkualitas</h3>
+        <div class="flex justify-center mb-4">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-14 h-14 text-purple-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M5 3v4a2 2 0 002 2h2a2 2 0 002-2V3m4 0v4a2 2 0 002 2h2a2 2 0 002-2V3M5 13v4a2 2 0 002 2h2a2 2 0 002-2v-4m4 0v4a2 2 0 002 2h2a2 2 0 002-2v-4" />
+          </svg>
+        </div>
+        <h3 class="text-2xl font-bold mb-4">Bahan Berkualitas</h3>
           <p class="text-gray-600">Menggunakan bahan segar pilihan untuk cita rasa terbaik.</p>
         </div>
-        <div class="fade-in card-hover bg-gradient-to-br from-white to-gray-50 p-8 rounded-2xl text-center">
-          <div class="text-5xl mb-4">⭐</div>
-          <h3 class="text-2xl font-bold mb-4">Pelayanan Prima</h3>
+       <div class="fade-in card-hover bg-gradient-to-br from-white to-gray-50 p-8 rounded-2xl text-center">
+        <div class="flex justify-center mb-4">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-14 h-14 text-purple-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.974a1 1 0 00.95.69h4.178c.969 0 1.371 1.24.588 1.81l-3.387 2.46a1 1 0 00-.364 1.118l1.287 3.974c.3.921-.755 1.688-1.538 1.118l-3.387-2.46a1 1 0 00-1.175 0l-3.387 2.46c-.783.57-1.838-.197-1.538-1.118l1.287-3.974a1 1 0 00-.364-1.118l-3.387-2.46c-.783-.57-.38-1.81.588-1.81h4.178a1 1 0 00.95-.69l1.286-3.974z" />
+          </svg>
+        </div>
+        <h3 class="text-2xl font-bold mb-4">Pelayanan Prima</h3>
           <p class="text-gray-600">Layanan ramah dan profesional untuk kepuasan Anda.</p>
         </div>
       </div>
@@ -386,32 +400,56 @@ $result_testimoni = $koneksi->query($query_testimoni);
                 <h3 class="text-2xl font-bold mb-6">Informasi Kontak</h3>
                 <div class="space-y-4">
                     <div class="flex items-center gap-4">
-                        <div class="gradient-bg text-white w-12 h-12 rounded-full flex items-center justify-center">
-                            📱</div>
+                      <!--tlepon-->
+                        <div class="w-12 h-12 bg-purple-100 flex items-center justify-center rounded-xl">
+                           <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-purple-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M3 5a2 2 0 012-2h2l3 7-3 2c1.5 2.5 3.5 4.5 6 6l2-3 7 3v2a2 2 0 01-2 2h-1C8 20 4 16 4 9V7a2 2 0 01-1-2z" />
+                           </svg>
+                         </div>
+
                         <div>
                             <p class="font-semibold">Telepon/WhatsApp</p>
-                            <a href="https://wa.me/6285236596617" target="_blank" class="text-purple-600 hover:text-purple-800 font-medium">+62 852-3659-6617</a>
+                            <a href="https://wa.me/6285236596617" target="_blank" class="text-gray-600 hover:text-gray-800 font-medium">+62 852-3659-6617</a>
                         </div>
                     </div>
+                    <!--email-->
                     <div class="flex items-center gap-4">
-                        <div class="gradient-bg text-white w-12 h-12 rounded-full flex items-center justify-center">
-                            📧</div>
+                        <div class="w-12 h-12 bg-purple-100 flex items-center justify-center rounded-xl">
+                          <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-purple-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                               d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8m-18 8h18a2 2 0 002-2V6a2 2 0 00-2-2H3a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                           </svg>
+                        </div>
+
                         <div>
                             <p class="font-semibold">Email</p>
                             <p class="text-gray-600">dwalan@gmail.com</p>
                         </div>
                     </div>
+                    <!--alamat-->
                     <div class="flex items-center gap-4">
-                        <div class="gradient-bg text-white w-12 h-12 rounded-full flex items-center justify-center">
-                            📍</div>
+                        <div class="w-12 h-12 bg-purple-100 flex items-center justify-center rounded-xl">
+                          <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-purple-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 11a4 4 0 100-8 4 4 0 000 8zm0 0c-4.418 0-8 3.134-8 7v1h16v-1c0-3.866-3.582-7-8-7z" />
+                          </svg>
+                         </div>
+
                         <div>
                             <p class="font-semibold">Alamat</p>
                             <p class="text-gray-600">Merjoyo, Purwosari,Kediri,Jawa Timur</p>
                         </div>
                     </div>
+                    <!--jam Operasional-->
                     <div class="flex items-center gap-4">
-                        <div class="gradient-bg text-white w-12 h-12 rounded-full flex items-center justify-center">
-                            🕐</div>
+                       <div class="w-12 h-12 bg-purple-100 flex items-center justify-center rounded-xl">
+                          <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-purple-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                               d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                          </svg>
+                        </div>
+
                         <div>
                             <p class="font-semibold">Jam Operasional</p>
                             <p class="text-gray-600">Senin - Minggu: 08.00 - 20.00 WIB</p>
