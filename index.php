@@ -84,9 +84,17 @@
             <a href="https://wa.me/6285236596617" target="_blank" class="btn-gradient text-white px-8 py-4 rounded-full font-semibold hover:opacity-90 transition">Hubungi Kami</a>
           </div>
         </div>
-        <div class="hidden md:block float-animation fade-in">
-          <img src="asset/img/logo.png" alt="Catering" class="rounded-3xl shadow-2xl w-full object-cover">
-        </div>
+      <div class="block md:hidden float-animation fade-in text-center -mt-60">
+        <img src="asset/img/logo.png" 
+        alt="Catering" 
+        class="rounded-3xl shadow-2xl inline-block object-cover">
+      </div>
+
+      <div class="hidden md:block float-animation fade-in -mt-57">
+        <img src="asset/img/logo.png" 
+          alt="Catering" 
+          class="rounded-3xl shadow-2xl w-full object-cover">
+      </div>
       </div>
     </div>
   </section>
@@ -127,12 +135,19 @@
         ◀
       </button>
 
-      <div id="menuContainer" class="flex overflow-x-auto gap-6 scroll-smooth px-10 pb-4 no-scrollbar">
+      <div id="menuContainer" 
+class="flex overflow-x-auto gap-6 scroll-smooth px-10 pb-4 no-scrollbar">
         <?php
         $query = mysqli_query($koneksi, "SELECT id_menu, nama_menu, stok_menu, deskripsi, harga_menu, gambar FROM menu");
         while ($data = mysqli_fetch_array($query)) {
         ?>
-          <div class="menu-item fade-in bg-white rounded-2xl shadow-lg hover:shadow-2xl hover:scale-[1.03] transition-all duration-300 overflow-hidden min-w-[280px] max-w-[320px] flex-shrink-0 cursor-pointer">
+          
+          <div class="menu-item fade-in bg-white rounded-2xl shadow-lg hover:shadow-2xl 
+          hover:scale-[1.03] transition-all duration-300 overflow-hidden 
+          min-w-[240px] max-w-[260px] md:min-w-[280px] md:max-w-[320px] flex-shrink-0 cursor-pointer mx-auto">
+
+
+
   <div class="relative">
     <img src="asset/uploads/<?php echo $data['gambar']; ?>"
          alt="<?php echo $data['nama_menu']; ?>"
@@ -313,7 +328,8 @@ $result_testimoni = $koneksi->query($query_testimoni);
             </button>
 
             <div class="overflow-hidden px-12">
-                <div id="testimoniSlider" class="flex gap-6 transition-transform duration-500 ease-in-out">
+                <div id="testimoniSlider" class="flex justify-center md:justify-start gap-4 md:gap-6 transition-transform duration-500 ease-in-out mx-auto">
+
 
                     <?php while ($row = $result_testimoni->fetch_assoc()): ?>
                         <?php
@@ -321,7 +337,11 @@ $result_testimoni = $koneksi->query($query_testimoni);
                             $bg = "bg-purple-200";
                         ?>
 
-                        <div class="fade-in bg-white p-8 rounded-2xl shadow-xl card-hover min-w-[320px] max-w-[320px] flex-shrink-0">
+                        <div class="fade-in bg-white p-6 md:p-8 rounded-2xl shadow-xl card-hover 
+                        min-w-[260px] max-w-[260px] 
+                        md:min-w-[320px] md:max-w-[320px] 
+                        flex-shrink-0 mx-auto">
+
                             <div class="flex items-center mb-4">
                                 <div class="w-12 h-12 <?= $bg ?> rounded-full flex items-center justify-center text-xl mr-4">
                                     <?= $icon ?>
