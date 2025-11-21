@@ -552,46 +552,75 @@ document.getElementById('contactForm').addEventListener('submit', function(e) {
 });
 </script>
     <!--lokasi kami-->
-    <section id="lokasi" class="py-20 bg-gray-50">
-      <div class="container mx-auto px-6">
-        <h2 class="text-4xl font-bold text-center mb-12 gradient-text fade-in">LOKASI KAMI</h2>
-        <div class="grid md:grid-cols-2 gap-8 items-center">
+<section id="lokasi" class="py-20 bg-gray-50">
+  <div class="container mx-auto px-6">
+    <h2 class="text-4xl font-bold text-center mb-12 gradient-text fade-in">LOKASI KAMI</h2>
+    <div class="grid md:grid-cols-2 gap-8 items-center">
 
-          <!--map-->
-          <div class="fade-in">
-            <div class="overflow-hidden rounded-2xl shadow-2xl border-4 border-purple-200">
-              <iframe
-              src="https://www.google.com/maps?q=-7.164886,112.651695&hl=id&z=15&output=embed"
-              width="100%"
-              height="350"
-              style="border:0;"
-              allowfullscreen=""
-              loading="lazy">
-            </iframe>
-            </div>
-          </div>
-          <!--info lokasi-->
-          <div class="fade-in space-y-6 text-center md:text-left">
-            <h3 class="text-2xl font-bold text-purple-700">Alamat kami</h3>
-          <p class=" text-gray-700 text-lg leading-relaxed">
-            📍<strong >DAPUR BUK MON</strong><br>
-            Merjoyo, Purwosari, Kediri, Jawa Timur.
-            </p>
-            <div class="flex flex-col items-center md:items-start">
-              <img src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=https://goo.gl/maps/7i99mAiHYk2v7FnY8"
-              alt="QR Code lokasi"
-              class="w-40 h-40 border-4 border-purple-300 rounded-xl shadow-md hover:scale-105 transition">
-              <a href="https://goo.gl/maps/7i99mAiHYk2v7FnY8"
-              target="_blank"
-              class="mt-4 inline-block gradient-bg text-white px-6 py-3 rounded-full font-semibold hover:opacity-90 transition">
-            BUKA DI GOOGLE MAPS
-            </a>
-            </div>
-          </p>
-          </div>
+      <!--map - menggunakan koordinat exact dari screenshot-->
+      <div class="fade-in">
+        <div class="overflow-hidden rounded-2xl shadow-2xl border-4 border-purple-200">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3953.083333333333!2d112.119213!3d-7.617010!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zN8KwMzcnMDEuMiJTIDExMsKwMDcnMDkuMiJF!5e0!3m2!1sid!2sid!4v1700000000000!5m2!1sid!2sid"
+            width="100%"
+            height="400"
+            style="border:0;"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            title="Lokasi Dapur Buk Mon di Merjoyo, Kediri">
+          </iframe>
         </div>
       </div>
-    </section>
+      
+      <!--info lokasi-->
+      <div class="fade-in space-y-6 text-center md:text-left">
+        <h3 class="text-2xl font-bold text-purple-700">Alamat Kami</h3>
+
+        <p class="text-gray-700 text-lg leading-relaxed">
+          📍<strong>DAPUR BUK MON</strong><br>
+          94M9+SWM MerjoyoKabupaten Kediri, Jawa Timur
+        <br>
+         
+        </p>
+        
+        <div class="space-y-4">
+          <div class="flex items-center text-gray-600">
+            <svg class="w-5 h-5 mr-3 text-purple-600" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/>
+            </svg>
+            <span>Lokasi: Merjoyo, Kabupaten Kediri</span>
+          </div>
+          
+          <div class="flex items-center text-gray-600">
+            <svg class="w-5 h-5 mr-3 text-purple-600" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/>
+            </svg>
+            <span>Buka setiap hari 08:00 - 22:00 WIB</span>
+          </div>
+        </div>
+
+        <div class="flex flex-col items-center md:items-start space-y-4">
+          <div class="text-center">
+            <p class="text-sm text-gray-600 mb-2">Scan QR Code untuk akses cepat</p>
+            <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://goo.gl/maps/7i99mAiHYk2v7FnY8?g_st=aw"
+              alt="QR Code lokasi Dapur Buk Mon Merjoyo Kediri"
+              class="w-32 h-32 border-4 border-purple-300 rounded-xl shadow-md hover:scale-105 transition mx-auto">
+          </div>
+          
+          <a href="https://goo.gl/maps/7i99mAiHYk2v7FnY8?g_st=aw"
+            target="_blank"
+            class="inline-flex items-center justify-center gradient-bg text-white px-6 py-3 rounded-full font-semibold hover:opacity-90 transition pulse-btn">
+            <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M12.586 4.586a2 2 0 112.828 2.828l-3 3a2 2 0 01-2.828 0 1 1 0 00-1.414 1.414 4 4 0 005.656 0l3-3a4 4 0 00-5.656-5.656l-1.5 1.5a1 1 0 101.414 1.414l1.5-1.5zm-5 5a2 2 0 012.828 0 1 1 0 101.414-1.414 4 4 0 00-5.656 0l-3 3a4 4 0 105.656 5.656l1.5-1.5a1 1 0 10-1.414-1.414l-1.5 1.5a2 2 0 11-2.828-2.828l3-3z" clip-rule="evenodd"/>
+            </svg>
+            BUKA DI GOOGLE MAPS
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
 <!-- FOOTER -->
   <footer class="gradient-bg text-white py-10">
