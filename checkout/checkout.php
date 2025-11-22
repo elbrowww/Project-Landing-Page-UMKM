@@ -39,7 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     try {
         // Insert pesanan
-        $sql_pesanan = "INSERT INTO transaksi_penjualan VALUES ('$id_pesanan', '$nama', '$telp', '$alamat', '$rekening', $total, NOW(), '$status')";
+        $sql_pesanan = "INSERT INTO transaksi_penjualan (id_pesanan, nama, telp, alamat, metode_pembayaran, total, tgl_pesan, status, id_user) VALUES ('$id_pesanan', '$nama', '$telp', '$alamat', '$rekening', $total, NOW(), '$status', 'US001')";
         if (!mysqli_query($koneksi, $sql_pesanan)) {
             throw new Exception(mysqli_error($koneksi));
         }
@@ -55,9 +55,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $harga = (int)$harga_arr[$i];
             $subtotal = $jumlah * $harga;
 
-            $sql_detail = "INSERT INTO detail_penjualan 
-                VALUES ('$id_detail', '$id_pesanan', '$id_menu', '$nama_menu', $jumlah, $harga, $subtotal, NOW())";
-
+            $sql_detail = "INSERT INTO detail_penjualan (id_detail, id_menu, id_pesanan, nama_menu, jumlah, harga_satuan, subtotal, tgl_pesan) VALUES ('$id_detail', '$id_menu', '$id_pesanan', '$nama_menu', $jumlah, $harga, $subtotal, NOW())";
             if (!mysqli_query($koneksi, $sql_detail)) {
                 throw new Exception(mysqli_error($koneksi));
             }
