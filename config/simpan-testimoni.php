@@ -1,5 +1,8 @@
 <?php
 
+session_start();
+$id_user = $_SESSION['id_user'];
+
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 include 'koneksi.php';
@@ -11,8 +14,8 @@ $no_telp = $_POST['no_telp'];
 $pesan   = $_POST['pesan'];
 
 
-$query = "INSERT INTO testimoni (nama, no_telp, pesan, created_at)
-          VALUES ('$nama', '$no_telp', '$pesan', NOW())";
+$query = "INSERT INTO testimoni (nama, no_telp, pesan, created_at, id_user)
+          VALUES ('$nama', '$no_telp', '$pesan', NOW(), '$id_user')";
 
 if ($koneksi->query($query)) {
     echo "<script>alert('Testimoni berhasil ditambahkan!'); window.location.href='/Project-Landing-Page-UMKM/Admin/index.php?page=testimoni';</script>";
