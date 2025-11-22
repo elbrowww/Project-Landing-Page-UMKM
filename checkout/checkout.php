@@ -2,6 +2,10 @@
 
 include '../config/koneksi.php';
 
+session_start();
+$id_user = $_SESSION['id_user'];
+
+
 // ✔ Generator ID urut
 function generateID($koneksi, $table, $column, $prefix) {
     $query = "SELECT $column FROM $table ORDER BY $column DESC LIMIT 1";
@@ -39,7 +43,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     try {
         // Insert pesanan
-        $sql_pesanan = "INSERT INTO transaksi_penjualan (id_pesanan, nama, telp, alamat, metode_pembayaran, total, tgl_pesan, status, id_user) VALUES ('$id_pesanan', '$nama', '$telp', '$alamat', '$rekening', $total, NOW(), '$status', 'US001')";
+        $sql_pesanan = "INSERT INTO transaksi_penjualan (id_pesanan, nama, telp, alamat, metode_pembayaran, total, tgl_pesan, status, id_user) 
+        VALUES ('$id_pesanan', '$nama', '$telp', '$alamat', '$rekening', $total, NOW(), '$status', 'US001')";
         if (!mysqli_query($koneksi, $sql_pesanan)) {
             throw new Exception(mysqli_error($koneksi));
         }
