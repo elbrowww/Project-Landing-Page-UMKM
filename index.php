@@ -230,11 +230,10 @@ class="flex overflow-x-auto gap-6 scroll-smooth px-10 pb-4 no-scrollbar">
 
             <!-- Logo dengan efek hover -->
 <div class="fade-in">
-    <a href="portofolio2.html" class="block group">
+    
         <img src="asset/img/logo.png" alt="Chef Profesional"
              class="rounded-2xl shadow-2xl group-hover:shadow-purple-300 
                     group-hover:scale-105 transition-all duration-300 cursor-pointer">
-    </a>
 </div>
 
             <!-- List Layanan -->
