@@ -155,18 +155,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <button type="submit" class="checkout-btn">
           <i class="fas fa-shopping-cart"></i> Checkout
         </button>
-        <a href="../index.php" class="back-btn" style="
-  display: inline-block;
-  margin-top: 10px;
-  padding: 10px 15px;
-  background: #555;
-  color: white;
-  text-decoration: none;
-  border-radius: 5px;
-  font-size: 14px;
-">
+       <a href="../index.php" class="back-btn">
   ← Kembali ke Beranda
 </a>
+
       </div>
     </form>
   </section>

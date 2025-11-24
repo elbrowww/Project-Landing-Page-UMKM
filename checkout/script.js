@@ -72,4 +72,3 @@ function showRekeningInfo() {
     window.location.href = "../index.php"; // Ganti dengan halaman utama kamu
   }, 2000);
 }
-
