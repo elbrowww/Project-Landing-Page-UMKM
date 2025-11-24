@@ -209,6 +209,13 @@ function editMenu(id, nama, stok, harga, deskripsi, gambar) {
   modal.show();
 }
 
+// Reset form saat modal ditutup
+document.getElementById('tambahMenuModal').addEventListener('hidden.bs.modal', function () {
+  document.getElementById('menuForm').reset();
+  document.getElementById('id_menu').value = '';
+  document.getElementById('currentImage').style.display = 'none';
+  document.getElementById('modalTitle').innerHTML = '<i class="fas fa-plus-circle"></i> Tambah Menu Baru';
+});
 
 function showDeletePopup(id, nama) {
   document.getElementById('popupText').innerHTML =
