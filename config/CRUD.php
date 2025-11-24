@@ -48,7 +48,7 @@ if (isset($_POST['simpan'])) {
     }
 
     $stmt->execute();
-    header("Location: index.php");
+    header("Location: menu.php");
     exit;
 }
 
@@ -57,7 +57,7 @@ if (isset($_POST['simpan'])) {
 if (isset($_GET['hapus'])) {
     $id = $_GET['hapus'];
     $koneksi->query("DELETE FROM menu WHERE id_menu='$id'");
-    header("Location: index.php");
+    header("Location: menu.php");
     exit;
 }
 
