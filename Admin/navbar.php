@@ -38,9 +38,9 @@ $page = isset($_GET['page']) ? $_GET['page'] : 'dashboard';
             <i class="fas fa-box"></i> Kelola Bahan
           </a>
         </li>
-            <li class="nav-item">
-          <a class="nav-link <?php echo ($page == 'pelanggan') ? 'active' : ''; ?>" href="pelanggan.php?page=pelanggan">
-            <i class="fa fa-users"></i> Pelanggan
+        <li class="nav-item">
+          <a class="nav-link <?php echo ($page == 'pesan') ? 'active' : ''; ?>" href="pesan.php?page=pesan">
+            <i class="fas fa-envelope-open"></i> Pesan
           </a>
         </li>
         <li class="nav-item">
@@ -55,8 +55,6 @@ $page = isset($_GET['page']) ? $_GET['page'] : 'dashboard';
             <i class="fas fa-user-circle"></i> Admin
           </a>
           <ul class="dropdown-menu dropdown-menu-end">
-            <li><a class="dropdown-item" href="#"><i class="fas fa-user"></i> Profil</a></li>
-            <li><hr class="dropdown-divider"></li>
             <li><a class="dropdown-item text-danger" href="../config/logout.php"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
           </ul>
         </li>
