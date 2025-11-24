@@ -18,7 +18,7 @@ $query = "INSERT INTO testimoni (nama, no_telp, pesan, created_at, id_user)
           VALUES ('$nama', '$no_telp', '$pesan', NOW(), '$id_user')";
 
 if ($koneksi->query($query)) {
-    echo "<script>alert('Testimoni berhasil ditambahkan!'); window.location.href='/Project-Landing-Page-UMKM/Admin/index.php?page=testimoni';</script>";
+    echo "<script>alert('Testimoni berhasil ditambahkan!'); window.location.href='/Project-Landing-Page-UMKM/Admin/testimoni.php?page=testimoni';</script>";
 } else {
     echo "Error: " . $koneksi->error;
 }

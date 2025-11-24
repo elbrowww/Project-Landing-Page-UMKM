@@ -15,11 +15,11 @@ if (isset($_GET['hapus_bahan'])) {
   $id_bahan = $_GET['hapus_bahan'];
   $query_hapus_bahan = "DELETE FROM bahan WHERE id_bahan = ?";
   $stmt_hapus_bahan = $koneksi->prepare($query_hapus_bahan);
-  $stmt_hapus_bahan->bind_param("i", $id_bahan);
+  $stmt_hapus_bahan->bind_param("s", $id_bahan);
   if ($stmt_hapus_bahan->execute()) {
-    echo "<script>alert('Bahan berhasil dihapus!'); window.location.href='index.php?page=bahan';</script>";
+    echo "<script>alert('Bahan berhasil dihapus!'); window.location.href='bahan.php?page=bahan';</script>";
   } else {
-    echo "<script>alert('Gagal menghapus bahan!'); window.location.href='index.php?page=bahan';</script>";
+    echo "<script>alert('Gagal menghapus bahan!'); window.location.href='bahan.php?page=bahan';</script>";
   }
   exit();
 }
@@ -36,7 +36,7 @@ if (isset($_POST['simpan_bahan'])) {
     // Edit bahan
     $query_edit = "UPDATE bahan SET nama_bahan=?, stok=?, harga_beli=?, satuan=? WHERE id_bahan=?";
     $stmt_edit = $koneksi->prepare($query_edit);
-    $stmt_edit->bind_param("siisi", $nama_bahan, $stok, $harga_beli, $satuan, $id_bahan);
+    $stmt_edit->bind_param("siiss", $nama_bahan, $stok, $harga_beli, $satuan, $id_bahan);
     if ($stmt_edit->execute()) {
       echo "<script>alert('Bahan berhasil diupdate!'); window.location.href='bahan.php?page=bahan';</script>";
     } else {

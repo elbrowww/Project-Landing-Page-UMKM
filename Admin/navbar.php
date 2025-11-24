@@ -29,7 +29,7 @@ $page = isset($_GET['page']) ? $_GET['page'] : 'dashboard';
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link <?php echo ($page == 'riwayat') ? 'active' : ''; ?>" href="index.php?page=riwayat">
+          <a class="nav-link <?php echo ($page == 'riwayat') ? 'active' : ''; ?>" href="riwayat.php?page=riwayat">
             <i class="fas fa-history"></i> Riwayat Pesanan
           </a>
         </li>
@@ -44,7 +44,7 @@ $page = isset($_GET['page']) ? $_GET['page'] : 'dashboard';
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link <?php echo ($page == 'testimoni') ? 'active' : ''; ?>" href="index.php?page=testimoni">
+          <a class="nav-link <?php echo ($page == 'testimoni') ? 'active' : ''; ?>" href="testimoni.php?page=testimoni">
             <i class="fas fa-star"></i> Testimoni
           </a>
         </li>

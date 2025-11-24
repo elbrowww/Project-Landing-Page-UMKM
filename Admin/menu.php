@@ -176,17 +176,17 @@ function showPage(pageName) {
   document.querySelectorAll('.page-content').forEach(page => {
     page.style.display = 'none';
   });
-  
-  // Hapus class active dari semua nav-link
-  document.querySelectorAll('.nav-link').forEach(link => {
-    link.classList.remove('active');
-  });
-  
+   
   // Tampilkan halaman yang dipilih
   document.getElementById('page-' + pageName).style.display = 'block';
   
   // Tambah class active ke nav-link yang dipilih
   document.getElementById('nav-' + pageName).classList.add('active');
+
+   // Hapus class active dari semua nav-link
+  document.querySelectorAll('.nav-link').forEach(link => {
+    link.classList.remove('active');
+  });
 }
 
 // Fungsi edit menu
@@ -231,14 +231,7 @@ function closePopup() {
 }
 
 
-// Cek URL parameter untuk navigasi
-window.addEventListener('DOMContentLoaded', function() {
-  const urlParams = new URLSearchParams(window.location.search);
-  const page = urlParams.get('page');
-  if (page) {
-    showPage(page);
-  }
-});
+
 </script>
 
 </body>

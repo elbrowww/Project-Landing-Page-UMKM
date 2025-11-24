@@ -18,9 +18,9 @@ if (isset($_GET['hapus_pesanan'])) {
   $stmt_hapus_pesanan->bind_param("s", $id_detail);
   
   if ($stmt_hapus_pesanan->execute()) {
-    echo "<script>alert('Pesanan berhasil dihapus!'); window.location.href='index.php';</script>";
+    echo "<script>alert('Pesanan berhasil dihapus!'); window.location.href='riwayat.php';</script>";
   } else {
-    echo "<script>alert('Gagal menghapus pesanan!'); window.location.href='index.php';</script>";
+    echo "<script>alert('Gagal menghapus pesanan!'); window.location.href='riwayat.php';</script>";
   }
   exit();
 }
@@ -38,9 +38,9 @@ if (isset($_POST['update_pesanan'])) {
   $stmt_update->bind_param("siiis", $id_menu, $jumlah, $harga_satuan, $subtotal, $id_detail);
   
   if ($stmt_update->execute()) {
-    echo "<script>alert('Pesanan berhasil diupdate!'); window.location.href='index.php';</script>";
+    echo "<script>alert('Pesanan berhasil diupdate!'); window.location.href='riwayat.php';</script>";
   } else {
-    echo "<script>alert('Gagal mengupdate pesanan!'); window.location.href='index.php';</script>";
+    echo "<script>alert('Gagal mengupdate pesanan!'); window.location.href='riwayat.php';</script>";
   }
   exit();
 }
@@ -55,9 +55,9 @@ if (isset($_POST['update_status_pesanan'])) {
   $stmt_update_status->bind_param("ss", $status, $id_pesanan);
   
   if ($stmt_update_status->execute()) {
-    echo "<script>alert('Status pesanan berhasil diupdate!'); window.location.href='index.php?page=riwayat';</script>";
+    echo "<script>alert('Status pesanan berhasil diupdate!'); window.location.href='riwayat.php?page=riwayat';</script>";
   } else {
-    echo "<script>alert('Gagal mengupdate status!'); window.location.href='index.php?page=riwayat';</script>";
+    echo "<script>alert('Gagal mengupdate status!'); window.location.href='riwayat.php?page=riwayat';</script>";
   }
   exit();
 }
@@ -105,20 +105,6 @@ $result_riwayat = $koneksi->query($query_riwayat);
 
 <!-- Navbar -->
 <?php include 'navbar.php'; ?>
-
-<!-- POPUP DELETE -->
-<div id="popupConfirm" class="popup-overlay">
-  <div class="popup-box">
-    <h4>Konfirmasi Hapus</h4>
-    <p id="popupText"></p>
-
-    <div class="popup-btns">
-      <button class="btn btn-secondary" onclick="closePopup()">Batal</button>
-      <a id="deleteLink" class="btn btn-danger">Hapus</a>
-    </div>
-  </div>
-</div>
-
 
 <!-- HALAMAN RIWAYAT PESANAN -->
 <div id="page-riwayat" class="page-content" style="display:none;">
@@ -235,11 +221,6 @@ function showPage(pageName) {
     page.style.display = 'none';
   });
   
-  // Hapus class active dari semua nav-link
-  document.querySelectorAll('.nav-link').forEach(link => {
-    link.classList.remove('active');
-  });
-  
   // Tampilkan halaman yang dipilih
   document.getElementById('page-' + pageName).style.display = 'block';
   
@@ -259,13 +240,6 @@ function editPesanan(id_detail, id_menu, jumlah, harga_satuan) {
   modal.show();
 }
 
-// Reset form saat modal ditutup
-document.getElementById('tambahMenuModal').addEventListener('hidden.bs.modal', function () {
-  document.getElementById('menuForm').reset();
-  document.getElementById('id_menu').value = '';
-  document.getElementById('currentImage').style.display = 'none';
-  document.getElementById('modalTitle').innerHTML = '<i class="fas fa-plus-circle"></i> Tambah Menu Baru';
-});
 
 function showDeletePopup(id, nama) {
   document.getElementById('popupText').innerHTML =
