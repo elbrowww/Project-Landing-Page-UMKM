@@ -522,9 +522,23 @@ $result_testimoni = $koneksi->query($query_testimoni);
 </section>
 
 <script>
+
+  // Debug: Override alert untuk menemukan sumbernya
+const originalAlert = window.alert;
+window.alert = function(msg) {
+    console.log('Alert dipanggil dari:', new Error().stack);
+    console.log('Pesan alert:', msg);
+
+};
+
 // Script untuk mengirim form ke database
 document.getElementById('contactForm').addEventListener('submit', async function(e) {
     e.preventDefault();
+    
+    // Nonaktifkan tombol submit untuk mencegah double submit
+    const submitBtn = this.querySelector('button[type="submit"]');
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Mengirim...';
     
     // Ambil nilai dari form
     const nama = document.getElementById('nama').value;
@@ -548,19 +562,47 @@ document.getElementById('contactForm').addEventListener('submit', async function
         const result = await response.json();
         
         if (result.success) {
-            // Tampilkan notifikasi sukses
-            alert('Pesan berhasil dikirim!');
-            
             // Reset form
             this.reset();
+            
+            // Tampilkan pesan sukses (ganti alert dengan custom notification)
+            showNotification('Pesan berhasil dikirim!', 'success');
         } else {
-            alert('Gagal mengirim pesan: ' + result.message);
+            showNotification('Gagal mengirim pesan: ' + result.message, 'error');
         }
     } catch (error) {
         console.error('Error:', error);
-        alert('Terjadi kesalahan saat mengirim pesan');
+        showNotification('Terjadi kesalahan saat mengirim pesan', 'error');
+    } finally {
+        // Aktifkan kembali tombol submit
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Kirim Pesan';
     }
 });
+
+// Fungsi untuk menampilkan notifikasi custom (bukan alert)
+function showNotification(message, type) {
+    const notification = document.createElement('div');
+    notification.className = `fixed top-4 right-4 p-4 rounded-lg shadow-lg z-50 transform transition-all duration-300 ${
+        type === 'success' ? 'bg-green-500' : 'bg-red-500'
+    } text-white`;
+    notification.textContent = message;
+    
+    document.body.appendChild(notification);
+    
+    // Animasi muncul
+    setTimeout(() => {
+        notification.style.transform = 'translateX(0)';
+    }, 10);
+    
+    // Hapus setelah 3 detik
+    setTimeout(() => {
+        notification.style.transform = 'translateX(400px)';
+        setTimeout(() => {
+            notification.remove();
+        }, 300);
+    }, 3000);
+}
 </script>
 
     <!--lokasi kami-->
