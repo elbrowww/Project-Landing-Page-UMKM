@@ -155,9 +155,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <button type="submit" class="checkout-btn">
           <i class="fas fa-shopping-cart"></i> Checkout
         </button>
-       <a href="../index.php" class="back-btn">
-  ← Kembali ke Beranda
-</a>
+       <a href="../index.php" class="back-btn">← Kembali ke Beranda</a>
+
 
       </div>
     </form>
