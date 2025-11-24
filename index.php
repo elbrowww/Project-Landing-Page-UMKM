@@ -522,8 +522,8 @@ $result_testimoni = $koneksi->query($query_testimoni);
 </section>
 
 <script>
-// Script untuk mengirim form ke WhatsApp
-document.getElementById('contactForm').addEventListener('submit', function(e) {
+// Script untuk mengirim form ke database
+document.getElementById('contactForm').addEventListener('submit', async function(e) {
     e.preventDefault();
     
     // Ambil nilai dari form
@@ -532,24 +532,37 @@ document.getElementById('contactForm').addEventListener('submit', function(e) {
     const notelp = document.getElementById('notelp').value;
     const pesan = document.getElementById('pesan').value;
     
-    // Format pesan WhatsApp
-    const message = `*Halo, Saya ingin bertanya:*%0A%0A` +
-                   `*Nama:* ${nama}%0A` +
-                   `*Email:* ${email}%0A` +
-                   `*No. Telepon:* ${notelp}%0A%0A` +
-                   `*Pesan:*%0A${pesan}`;
-    
-    // Nomor WhatsApp tujuan
-    const phoneNumber = '6285236596617';
-    
-    // Buka WhatsApp
-    const waUrl = `https://wa.me/${phoneNumber}?text=${message}`;
-    window.open(waUrl, '_blank');
-    
-    // Reset form setelah submit
-    this.reset();
+    // Kirim ke database
+    try {
+        const formData = new FormData();
+        formData.append('nama_pelanggan', nama);
+        formData.append('email_pelanggan', email);
+        formData.append('notelp_pelanggan', notelp);
+        formData.append('isi_pesan', pesan);
+        
+        const response = await fetch('simpan_pesan.php', {
+            method: 'POST',
+            body: formData
+        });
+        
+        const result = await response.json();
+        
+        if (result.success) {
+            // Tampilkan notifikasi sukses
+            alert('Pesan berhasil dikirim!');
+            
+            // Reset form
+            this.reset();
+        } else {
+            alert('Gagal mengirim pesan: ' + result.message);
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        alert('Terjadi kesalahan saat mengirim pesan');
+    }
 });
 </script>
+
     <!--lokasi kami-->
 <section id="lokasi" class="py-20 bg-gray-50">
   <div class="container mx-auto px-6">

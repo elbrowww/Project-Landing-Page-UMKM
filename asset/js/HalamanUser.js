@@ -69,13 +69,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             });
         });
-
-        // Form Submission
-        document.querySelector('form').addEventListener('submit', (e) => {
-            e.preventDefault();
-            alert('Terima kasih! Pesan Anda telah dikirim. Kami akan segera menghubungi Anda.');
-            e.target.reset();
-        });
         
 });
 
