@@ -565,3 +565,18 @@
     font-size: 14px;
   }
 }
+.back-btn {
+  display: inline-block;
+  margin-top: 12px;
+  padding: 10px 15px;
+  background: #6c6c6c;
+  color: #fff;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: 0.2s;
+}
+
+.back-btn:hover {
+  background: #444;
+}
+
