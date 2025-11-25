@@ -412,6 +412,7 @@ $result_testimoni = $koneksi->query($query_testimoni);
                             <a href="https://wa.me/6285236596617" target="_blank" class="text-gray-600 hover:text-gray-800 font-medium">+62 852-3659-6617</a>
                         </div>
                     </div>
+
                     <!--email-->
                     <div class="flex items-center gap-4">
                         <div class="w-12 h-12 bg-purple-100 flex items-center justify-center rounded-xl">
@@ -426,6 +427,7 @@ $result_testimoni = $koneksi->query($query_testimoni);
                             <p class="text-gray-600">dwalan@gmail.com</p>
                         </div>
                     </div>
+                    
                     <!--alamat-->
                     <div class="flex items-center gap-4">
                         <div class="w-12 h-12 bg-purple-100 flex items-center justify-center rounded-xl">
@@ -456,68 +458,64 @@ $result_testimoni = $koneksi->query($query_testimoni);
                     </div>
                 </div>
             </div>
-            <div class="fade-in">
-    <div class="bg-white shadow-xl rounded-2xl p-8 border border-gray-100">
+       <div class="fade-in">
+    <div class="bg-white border border-gray-300 rounded-2xl p-10">
 
-        <h3 class="text-2xl font-bold mb-6 text-center text-purple-700">Kirim Pesan</h3>
+        <h3 class="text-2xl font-bold mb-6 text-center text-gray-800">Kirim Pesan</h3>
 
-        <form id="contactForm" class="space-y-6">
+        <form id="contactForm" class="space-y-6 max-w-4xl mx-auto">
 
-            <!-- Nama -->
-            <div class="relative">
-                <label class="block text-sm font-semibold mb-2">Nama Lengkap</label>
-                <span class="absolute left-4 top-1/2 -translate-y-1/2 text-purple-600 text-xl"></span>
-                <input 
-                    type="text" id="nama" name="nama_pelanggan" required
-                    class="w-full pl-12 pr-4 py-3 rounded-xl border border-purple-300 bg-white shadow-sm 
-                    focus:ring-2 focus:ring-purple-300 focus:border-purple-500 outline-none transition"
-                    placeholder="Masukkan nama Anda">
+            <!-- 2 KOLOM -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                <!-- Nama -->
+                <div>
+                    <label class="block text-sm font-semibold mb-1">Nama Lengkap</label>
+                    <input type="text" id="nama" name="nama_pelanggan" required class="w-full px-4 py-3 rounded-xl border border-gray-400 bg-white focus:ring-2 focus:ring-gray-300 focus:border-gray-500 outline-none"placeholder="Masukkan nama Anda">
+                </div>
+
+                <!-- Email -->
+                <div>
+                    <label class="block text-sm font-semibold mb-1">Email</label>
+                    <input type="email" id="email" name="email_pelanggan" required class="w-full px-4 py-3 rounded-xl border border-gray-400 bg-white focus:ring-2 focus:ring-gray-300 focus:border-gray-500 outline-none"placeholder="email@contoh.com">
+                </div>
             </div>
 
-            <!-- Email -->
-            <div class="relative">
-                <label class="block text-sm font-semibold mb-2">Email</label>
-                <span class="absolute left-4 top-1/2 -translate-y-1/2 text-purple-600 text-xl"></span>
-                <input 
-                    type="email" id="email" name="email_pelanggan" required
-                    class="w-full pl-12 pr-4 py-3 rounded-xl border border-purple-300 bg-white shadow-sm 
-                    focus:ring-2 focus:ring-purple-300 focus:border-purple-500 outline-none transition"
-                    placeholder="email@contoh.com">
+            <!-- GRID 1 KOLOM -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                <!-- No Telepon -->
+            <div class="md:col-span-2">
+               <label class="block text-sm font-semibold mb-2">No. Telepon</label>
+              <input type="tel" id="notelp" name="notelp_pelanggan" required class="w-full px-4 py-3 rounded-xl border border-gray-400 bg-white  focus:ring-2 focus:ring-gray-300 focus:border-gray-500 outline-none" placeholder="+62 812-xxxx-xxxx">
+            </div>
             </div>
 
-            <!-- Nomor Telepon -->
-            <div class="relative">
-                <label class="block text-sm font-semibold mb-2">No. Telepon</label>
-                <span class="absolute left-4 top-1/2 -translate-y-1/2 text-purple-600 text-xl"></span>
-                <input 
-                    type="tel" id="notelp" name="notelp_pelanggan" required
-                    class="w-full pl-12 pr-4 py-3 rounded-xl border border-purple-300 bg-white shadow-sm 
-                    focus:ring-2 focus:ring-purple-300 focus:border-purple-500 outline-none transition"
-                    placeholder="+62 812-xxxx-xxxx">
-            </div>
-
-            <!-- Pesan -->
-            <div class="relative">
-                <label class="block text-sm font-semibold mb-2">Pesan</label>
-                <span class="absolute left-4 top-10 text-purple-600 text-xl"></span>
+            <!-- Pesan-->
+            <div>
+                <label class="block text-sm font-semibold mb-1">Pesan</label>
                 <textarea 
-                    id="pesan" name="isi_pesan" rows="4" required
-                    class="w-full pl-12 pr-4 py-3 rounded-xl border border-purple-300 bg-white shadow-sm 
-                    focus:ring-2 focus:ring-purple-300 focus:border-purple-500 outline-none transition"
+                    id="pesan" name="isi_pesan" rows="5" required
+                    class="w-full px-4 py-3 rounded-xl border border-gray-400 bg-white 
+                    focus:ring-2 focus:ring-gray-300 focus:border-gray-500 outline-none"
                     placeholder="Ceritakan kebutuhan acara Anda..."></textarea>
             </div>
 
             <!-- Tombol -->
-            <button 
-    type="submit"
-    class="w-full py-4 rounded-xl font-semibold text-white shadow-md 
-    bg-gradient-to-r from-blue-500 to-blue-700 hover:scale-[1.02] hover:shadow-lg transition">
-    Kirim Pesan
-</button>
+            <div class="flex justify-center">
+                <button 
+                    type="submit"
+                    class="px-10 py-3 rounded-lg border border-purple-400 text-purple-400 font-semibold
+                    hover:bg-purple-400 hover:text-black transition">
+                    Kirim Pesan
+                </button>
+            </div>
+
         </form>
 
     </div>
 </div>
+
 
 </section>
 
