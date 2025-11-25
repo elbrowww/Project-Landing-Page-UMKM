@@ -334,8 +334,15 @@ $result_testimoni = $koneksi->query($query_testimoni);
                 ◀
             </button>
 
-            <div class="overflow-hidden px-12">
-                <div id="testimoniSlider" class="flex justify-center md:justify-start gap-4 md:gap-6 transition-transform duration-500 ease-in-out mx-auto">
+            <div class="overflow-x-auto overflow-y-hidden px-4 md:px-12 no-scrollbar">
+              <div id="testimoniSlider" class="
+             flex 
+             justify-center md:justify-start 
+             gap-4 md:gap-6 
+             transition-transform duration-500 ease-in-out 
+             mx-auto
+             w-max
+              ">
 
 
                     <?php while ($row = $result_testimoni->fetch_assoc()): ?>
