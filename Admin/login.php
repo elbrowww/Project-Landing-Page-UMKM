@@ -44,7 +44,7 @@ if (isset($_POST['login'])) {
                     <img src="../asset/img/logo-nobg.png" alt="Dapur Bu Mon Logo" class="logo-img">
                     <div class="logo-text">
                         <h1>Dapur Bu Mon</h1>
-                        <p>Admin Dashboard</p>
+                        <p><a href="../index.php" class="btn-back">Admin Dashboard</a></p>
                     </div>
                 </div>
             </div>
@@ -61,7 +61,6 @@ if (isset($_POST['login'])) {
                 </div>
    
                 <button type="submit" class="btn-login" name="login">Masuk</button>
-                
 
             </form>
         </div>

@@ -148,24 +148,6 @@
             transform: translateY(0);
         }
 
-        .forgot-password {
-            text-align: center;
-            margin-top: 10px;
-        }
-
-        .forgot-password a {
-            color: #fff;
-            text-decoration: none;
-            font-size: 0.9rem;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
-            transition: opacity 0.3s ease;
-        }
-
-        .forgot-password a:hover {
-            opacity: 0.8;
-            text-decoration: underline;
-        }
-
         /* Responsive Design */
         @media (max-width: 480px) {
             .login-container {
