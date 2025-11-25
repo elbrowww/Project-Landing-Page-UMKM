@@ -684,7 +684,12 @@ function showNotification(message, type) {
         <h3 class="text-2xl font-bold">Dapur Buk Mon</h3>
         <p class="text-sky-100">Solusi catering terbaik untuk setiap acara spesial Anda</p>
       </div>
-      <p class="text-sm opacity-90">© 2025 Dapur Buk Mon. All rights reserved.</p>
+      <p class="text-sm opacity-90">
+  <a href="Admin/login.php" class="hover:underline hover:text-sky-200 transition">
+    © 2025 Dapur Buk Mon. All rights reserved.
+  </a>
+</p>
+
     </div>
   </footer>
 
