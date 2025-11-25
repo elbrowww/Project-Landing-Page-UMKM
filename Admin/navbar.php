@@ -19,7 +19,7 @@ $page = isset($_GET['page']) ? $_GET['page'] : 'dashboard';
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav me-auto">
         <li class="nav-item">
-          <a class="nav-link <?php echo ($page == 'dashboard') ? 'active' : ''; ?>" href="dashboard.php?page=dashboard">
+          <a class="nav-link <?php echo ($page == 'dashboard') ? 'active' : ''; ?>" href="index.php?page=dashboard">
             <i class="fa fa-bar-chart"></i> Dashboard
           </a>
         </li>

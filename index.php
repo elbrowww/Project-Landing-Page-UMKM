@@ -84,16 +84,10 @@
             <a href="https://wa.me/6285236596617" target="_blank" class="btn-gradient text-white px-8 py-4 rounded-full font-semibold hover:opacity-90 transition">Hubungi Kami</a>
           </div>
         </div>
-      <div class="block md:hidden float-animation fade-in text-center -mt-60">
+      <div class="row gy-4 flex-column-reverse flex-md-row float-animation fade-in -mt-57">
         <img src="asset/img/logo.png" 
         alt="Catering" 
         class="rounded-3xl shadow-2xl inline-block object-cover">
-      </div>
-
-      <div class="hidden md:block float-animation fade-in -mt-57">
-        <img src="asset/img/logo.png" 
-          alt="Catering" 
-          class="rounded-3xl shadow-2xl w-full object-cover">
       </div>
       </div>
     </div>
@@ -340,8 +334,15 @@ $result_testimoni = $koneksi->query($query_testimoni);
                 ◀
             </button>
 
-            <div class="overflow-hidden px-12">
-                <div id="testimoniSlider" class="flex justify-center md:justify-start gap-4 md:gap-6 transition-transform duration-500 ease-in-out mx-auto">
+            <div class="overflow-x-auto overflow-y-hidden px-4 md:px-12 no-scrollbar">
+              <div id="testimoniSlider" class="
+             flex 
+             justify-center md:justify-start 
+             gap-4 md:gap-6 
+             transition-transform duration-500 ease-in-out 
+             mx-auto
+             w-max
+              ">
 
 
                     <?php while ($row = $result_testimoni->fetch_assoc()): ?>
@@ -681,7 +682,12 @@ function showNotification(message, type) {
         <h3 class="text-2xl font-bold">Dapur Buk Mon</h3>
         <p class="text-sky-100">Solusi catering terbaik untuk setiap acara spesial Anda</p>
       </div>
-      <p class="text-sm opacity-90">© 2025 Dapur Buk Mon. All rights reserved.</p>
+      <p class="text-sm opacity-90">
+  <a href="Admin/login.php" class="hover:underline hover:text-sky-200 transition">
+    © 2025 Dapur Buk Mon. All rights reserved.
+  </a>
+</p>
+
     </div>
   </footer>
 
