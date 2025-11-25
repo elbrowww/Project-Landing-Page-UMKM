@@ -84,16 +84,10 @@
             <a href="https://wa.me/6285236596617" target="_blank" class="btn-gradient text-white px-8 py-4 rounded-full font-semibold hover:opacity-90 transition">Hubungi Kami</a>
           </div>
         </div>
-      <div class="block md:hidden float-animation fade-in text-center -mt-60">
+      <div class="row gy-4 flex-column-reverse flex-md-row float-animation fade-in -mt-57">
         <img src="asset/img/logo.png" 
         alt="Catering" 
         class="rounded-3xl shadow-2xl inline-block object-cover">
-      </div>
-
-      <div class="hidden md:block float-animation fade-in -mt-57">
-        <img src="asset/img/logo.png" 
-          alt="Catering" 
-          class="rounded-3xl shadow-2xl w-full object-cover">
       </div>
       </div>
     </div>
