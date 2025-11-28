@@ -3,9 +3,9 @@ header('Content-Type: application/json');
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-$conn = new mysqli('localhost', 'root', 'password', 'database_bu_mon');
+include '../Project-Landing-Page-UMKM/config/koneksi.php';
 
-if ($conn->connect_error) {
+if ($koneksi->connect_error) {
     echo json_encode(['cart' => []]);
     exit;
 }
@@ -16,7 +16,7 @@ if (empty($id_penjualan_temp)) {
     exit;
 }
 
-$result = $conn->query("SELECT nama_menu, harga_satuan, jumlah, subtotal FROM detail_penjualan WHERE id_penjualan = '$id_penjualan_temp'");
+$result = $koneksi->query("SELECT nama_menu, harga_satuan, jumlah, subtotal FROM detail_penjualan WHERE id_penjualan = '$id_penjualan_temp'");
 
 $cart = [];
 while ($row = $result->fetch_assoc()) {
@@ -24,5 +24,5 @@ while ($row = $result->fetch_assoc()) {
 }
 
 echo json_encode(['cart' => $cart]);
-$conn->close();
+$koneksi->close();
 ?>

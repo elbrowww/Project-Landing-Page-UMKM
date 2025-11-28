@@ -8,7 +8,6 @@ if (!isset($_SESSION['login'])) {
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 include '../config/koneksi.php';
-include '../config/CRUD.php';
 
 // Query statistik untuk dashboard
 $query_stats_dashboard = "

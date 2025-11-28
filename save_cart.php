@@ -3,14 +3,11 @@ header('Content-Type: application/json');
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-$servername = "localhost";
-$username = "root";  // Ganti sesuai setup Anda
-$password = "";
-$dbname = "database_bu_mon";
+include '../Project-Landing-Page-UMKM/config/koneksi.php';
 
-$conn = new mysqli($servername, $username, $password, $dbname);
-if ($conn->connect_error) {
-  echo json_encode(['success' => false, 'message' => 'Koneksi DB gagal: '.$conn->connect_error]);
+$koneksi = new mysqli($host, $user, $pass, $db);
+if ($koneksi->connect_error) {
+  echo json_encode(['success' => false, 'message' => 'Koneksi DB gagal: '.$koneksi->connect_error]);
   exit;
 }
 
@@ -24,12 +21,12 @@ if (empty($cart) || empty($id_penjualan_temp)) {
 }
 
 // Hapus data lama
-$stmtDel = $conn->prepare("DELETE FROM detail_penjualan WHERE id_penjualan = ?");
+$stmtDel = $koneksi->prepare("DELETE FROM detail_penjualan WHERE id_penjualan = ?");
 $stmtDel->bind_param('s', $id_penjualan_temp);
 $stmtDel->execute();
 $stmtDel->close();
 
-$stmtIns = $conn->prepare("INSERT INTO detail_penjualan (id_detail, id_penjualan, id_menu, nama_menu, jumlah, harga_satuan, subtotal) VALUES (?, ?, ?, ?, ?, ?, ?)");
+$stmtIns = $koneksi->prepare("INSERT INTO detail_penjualan (id_detail, id_penjualan, id_menu, nama_menu, jumlah, harga_satuan, subtotal) VALUES (?, ?, ?, ?, ?, ?, ?)");
 
 foreach ($cart as $item) {
   $nama_menu = $item['nama_menu'];
@@ -39,7 +36,7 @@ foreach ($cart as $item) {
   $id_detail = 'DTL' . rand(1000, 9999);
 
   // **DI SINI (sebelum insert)**: Ambil id_menu dari tabel menu berdasarkan nama_menu
-  $stmtMenu = $conn->prepare("SELECT id_menu FROM menu WHERE nama_menu = ?");
+  $stmtMenu = $koneksi->prepare("SELECT id_menu FROM menu WHERE nama_menu = ?");
   $stmtMenu->bind_param('s', $nama_menu);
   $stmtMenu->execute();
   $resultMenu = $stmtMenu->get_result();
@@ -65,5 +62,5 @@ foreach ($cart as $item) {
 
 $stmtIns->close();
 echo json_encode(['success' => true]);
-$conn->close();
+$koneksi->close();
 ?>
