@@ -31,6 +31,15 @@
         <a class="text-purple hover:text-sky-100" href="#testimoni">Testimoni</a>
         <a class="text-purple hover:text-sky-100" href="#kontak">Kontak</a>
         <a class="text-purple hover:text-sky-100" href="#lokasi">Lokasi</a>
+        <a class="text-purple hover:text-sky-100" href="#lokasi">Lokasi</a>
+
+<!-- ✅ TAMBAHKAN INI (TOMBOL SEARCH DESKTOP) -->
+<button id="searchBtn" class="hidden md:flex items-center gap-2 px-4 py-2 bg-white/20 hover:bg-white/30 rounded-full transition text-white">
+  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+  </svg>
+  <span class="font-medium">Cari Menu</span>
+</button>
         <a class="relative ml-4 flex items-center justify-center hover:scale-105 transition">
         <div class="bg-purple-100 p-2 rounded-full shadow-sm hover:bg-purple-200 transition">
           <i class="fa-solid fa-cart-shopping text-purple text-xl"></i>
@@ -50,7 +59,12 @@
         <span id="cart-count-mobile"
               class="absolute -top-1 -right-1 bg-red-500 text-white text-[10px] font-bold px-1.5 rounded-full shadow">0</span>
       </a>
-      
+      <!--  (ICON SEARCH MOBILE) -->
+<button id="searchBtnMobile" class="text-purple hover:text-sky-100 transition">
+  <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+  </svg>
+</button>
       <button id="menuBtn" class="text-purple" aria-label="Buka menu">
         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -211,6 +225,124 @@ class="flex overflow-x-auto gap-6 scroll-smooth px-10 pb-4 no-scrollbar">
     <p id="modalSuccessText" class="text-sm font-medium">Berhasil ditambahkan ke keranjang.</p>
   </div>
 </div>
+
+
+<!-- Modal Search -->
+<div id="searchModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-[60] hidden opacity-0 transition-opacity duration-300">
+  <div class="flex items-start justify-center min-h-screen pt-20 px-4">
+    <div id="searchModalContent" class="bg-white rounded-2xl shadow-2xl w-full max-w-2xl transform scale-95 transition-transform duration-300">
+      
+      <!-- Header Modal -->
+      <div class="p-6 border-b border-gray-200">
+        <div class="flex items-center justify-between mb-4">
+          <h3 class="text-2xl font-bold gradient-text">Cari Menu Favorit</h3>
+          <button id="closeSearchModal" class="text-gray-400 hover:text-gray-600 transition">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+            </svg>
+          </button>
+        </div>
+        
+        <!-- Search Input -->
+        <div class="relative">
+          <input 
+            type="text" 
+            id="searchInput" 
+            placeholder="Ketik nama menu... (contoh: ayam, nasi, bubur)"
+            class="w-full px-5 py-4 pr-12 rounded-xl border-2 border-purple-200 focus:border-purple-500 focus:ring-4 focus:ring-purple-100 outline-none transition text-lg"
+            autocomplete="off"
+          />
+          <svg class="w-6 h-6 text-purple-400 absolute right-4 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+          </svg>
+        </div>
+      </div>
+      
+      <!-- Search Results -->
+      <div id="searchResults" class="p-6 max-h-[60vh] overflow-y-auto">
+        <!-- Default state -->
+        <div id="searchEmpty" class="text-center py-12">
+          <svg class="w-20 h-20 mx-auto text-gray-300 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+          </svg>
+          <p class="text-gray-500 text-lg">Mulai ketik untuk mencari menu...</p>
+        </div>
+        
+        <!-- Results akan muncul di sini -->
+        <div id="searchResultsList" class="hidden space-y-3"></div>
+        
+        <!-- No Results -->
+        <div id="searchNoResults" class="hidden text-center py-12">
+          <svg class="w-20 h-20 mx-auto text-gray-300 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M12 12h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+          </svg>
+          <p class="text-gray-500 text-lg font-medium">Menu tidak ditemukan</p>
+          <p class="text-gray-400 mt-2">Coba kata kunci lain</p>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+</div>
+
+<!-- CSS untuk Search Modal -->
+<style>
+/* Search Modal Animations */
+#searchModal.show {
+  opacity: 1;
+}
+
+#searchModal.show #searchModalContent {
+  transform: scale(1);
+}
+
+/* Search Result Item Hover */
+.search-result-item {
+  transition: all 0.3s ease;
+}
+
+.search-result-item:hover {
+  transform: translateX(8px);
+  background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
+}
+
+/* Custom Scrollbar untuk Search Results */
+#searchResults::-webkit-scrollbar {
+  width: 6px;
+}
+
+#searchResults::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+#searchResults::-webkit-scrollbar-thumb {
+  background: #c4b5fd;
+  border-radius: 10px;
+}
+
+#searchResults::-webkit-scrollbar-thumb:hover {
+  background: #a78bfa;
+}
+
+/* Highlight matched text */
+.highlight {
+  background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+  padding: 2px 4px;
+  border-radius: 4px;
+  font-weight: 600;
+}
+
+/* Loading animation */
+@keyframes pulse-search {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+.loading-pulse {
+  animation: pulse-search 1.5s ease-in-out infinite;
+}
+</style>
 
 <!-- POPUP KERANJANG KOSONG -->
 <div id="modalKeranjangKosong" class="fixed top-4 left-1/2 transform -translate-x-1/2 hidden z-50">
@@ -978,5 +1110,252 @@ function showModalKeranjangKosong() {
   setTimeout(() => {
     modal.classList.add('hidden');
   }, 3000);
+}
+// ============================================
+// ✅ FITUR PENCARIAN MENU - TAMBAHKAN DI BAWAH
+// ============================================
+
+// Data menu dari PHP (ambil dari database)
+let menuData = [];
+
+// Setup saat halaman load
+(async function initSearch() {
+  await fetchMenuData();
+  setupSearchModal();
+})();
+
+// Fungsi untuk fetch data menu
+async function fetchMenuData() {
+  try {
+    const response = await fetch('get_menu.php');
+    const data = await response.json();
+    menuData = data;
+  } catch (error) {
+    console.error('Error fetching menu:', error);
+    menuData = extractMenuFromDOM();
+  }
+}
+
+// Fallback: ekstrak menu dari DOM
+function extractMenuFromDOM() {
+  const menus = [];
+  document.querySelectorAll('.menu-item').forEach(item => {
+    const btn = item.querySelector('.add-to-cart');
+    if (btn) {
+      menus.push({
+        id_menu: btn.dataset.id,
+        nama_menu: btn.dataset.name,
+        harga_menu: btn.dataset.price,
+        gambar: btn.dataset.image,
+        stok_menu: btn.dataset.stok,
+        deskripsi: item.querySelector('p.text-gray-600')?.textContent || ''
+      });
+    }
+  });
+  return menus;
+}
+
+// Setup Search Modal
+function setupSearchModal() {
+  const searchBtn = document.getElementById('searchBtn');
+  const searchBtnMobile = document.getElementById('searchBtnMobile');
+  const searchModal = document.getElementById('searchModal');
+  const closeSearchModal = document.getElementById('closeSearchModal');
+  const searchInput = document.getElementById('searchInput');
+  
+  function openSearchModal() {
+    searchModal.classList.remove('hidden');
+    setTimeout(() => {
+      searchModal.classList.add('show');
+      searchInput.focus();
+    }, 10);
+  }
+  
+  function closeModal() {
+    searchModal.classList.remove('show');
+    setTimeout(() => {
+      searchModal.classList.add('hidden');
+      searchInput.value = '';
+      showEmptyState();
+    }, 300);
+  }
+  
+  if (searchBtn) searchBtn.addEventListener('click', openSearchModal);
+  if (searchBtnMobile) searchBtnMobile.addEventListener('click', openSearchModal);
+  if (closeSearchModal) closeSearchModal.addEventListener('click', closeModal);
+  
+  searchModal.addEventListener('click', (e) => {
+    if (e.target === searchModal) closeModal();
+  });
+  
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && !searchModal.classList.contains('hidden')) {
+      closeModal();
+    }
+  });
+  
+  searchInput.addEventListener('input', debounce(performSearch, 300));
+}
+
+function debounce(func, wait) {
+  let timeout;
+  return function executedFunction(...args) {
+    const later = () => {
+      clearTimeout(timeout);
+      func(...args);
+    };
+    clearTimeout(timeout);
+    timeout = setTimeout(later, wait);
+  };
+}
+
+function performSearch() {
+  const searchInput = document.getElementById('searchInput');
+  const query = searchInput.value.trim().toLowerCase();
+  
+  const searchEmpty = document.getElementById('searchEmpty');
+  const searchResultsList = document.getElementById('searchResultsList');
+  const searchNoResults = document.getElementById('searchNoResults');
+  
+  if (query === '') {
+    showEmptyState();
+    return;
+  }
+  
+  const results = menuData.filter(menu => 
+    menu.nama_menu.toLowerCase().includes(query) ||
+    menu.deskripsi.toLowerCase().includes(query)
+  );
+  
+  searchEmpty.classList.add('hidden');
+  searchNoResults.classList.add('hidden');
+  searchResultsList.classList.add('hidden');
+  
+  if (results.length > 0) {
+    displayResults(results, query);
+  } else {
+    searchNoResults.classList.remove('hidden');
+  }
+}
+
+function showEmptyState() {
+  document.getElementById('searchEmpty').classList.remove('hidden');
+  document.getElementById('searchResultsList').classList.add('hidden');
+  document.getElementById('searchNoResults').classList.add('hidden');
+}
+
+function displayResults(results, query) {
+  const searchResultsList = document.getElementById('searchResultsList');
+  searchResultsList.innerHTML = '';
+  
+  results.forEach(menu => {
+    const resultItem = createResultItem(menu, query);
+    searchResultsList.appendChild(resultItem);
+  });
+  
+  searchResultsList.classList.remove('hidden');
+}
+
+function createResultItem(menu, query) {
+  const div = document.createElement('div');
+  div.className = 'search-result-item flex items-center gap-4 p-4 rounded-xl border border-gray-200 hover:border-purple-300 cursor-pointer bg-white';
+  
+  const highlightedName = highlightMatch(menu.nama_menu, query);
+  const stokStatus = parseInt(menu.stok_menu) > 0 ? 
+    `<span class="text-green-600 text-xs">✓ Tersedia</span>` : 
+    `<span class="text-red-600 text-xs">✗ Stok Habis</span>`;
+  
+  div.innerHTML = `
+    <img src="${menu.gambar}" alt="${menu.nama_menu}" class="w-20 h-20 rounded-lg object-cover">
+    <div class="flex-1">
+      <h4 class="font-bold text-lg mb-1">${highlightedName}</h4>
+      <p class="text-gray-600 text-sm mb-2 line-clamp-1">${menu.deskripsi}</p>
+      <div class="flex items-center justify-between">
+        <p class="text-purple-600 font-semibold">Rp ${parseInt(menu.harga_menu).toLocaleString('id-ID')}</p>
+        ${stokStatus}
+      </div>
+    </div>
+    <button class="add-from-search px-4 py-2 rounded-lg font-medium transition ${
+      parseInt(menu.stok_menu) > 0 ? 
+      'bg-purple-600 text-white hover:bg-purple-700' : 
+      'bg-gray-300 text-gray-500 cursor-not-allowed'
+    }" 
+    data-id="${menu.id_menu}"
+    data-name="${menu.nama_menu}"
+    data-price="${menu.harga_menu}"
+    data-image="${menu.gambar}"
+    data-stok="${menu.stok_menu}"
+    ${parseInt(menu.stok_menu) === 0 ? 'disabled' : ''}>
+      ${parseInt(menu.stok_menu) > 0 ? '+ Keranjang' : 'Habis'}
+    </button>
+  `;
+  
+  const addBtn = div.querySelector('.add-from-search');
+  if (addBtn && !addBtn.disabled) {
+    addBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      addToCartFromSearch(menu);
+    });
+  }
+  
+  div.addEventListener('click', (e) => {
+    if (!e.target.classList.contains('add-from-search')) {
+      scrollToMenu(menu.id_menu);
+    }
+  });
+  
+  return div;
+}
+
+function highlightMatch(text, query) {
+  const regex = new RegExp(`(${query})`, 'gi');
+  return text.replace(regex, '<span class="highlight">$1</span>');
+}
+
+async function addToCartFromSearch(menu) {
+  const id_menu = menu.id_menu;
+  const nama_menu = menu.nama_menu;
+  const harga_satuan = parseInt(menu.harga_menu);
+  const image = menu.gambar;
+
+  const response = await fetch(`check_stock.php?id_menu=${id_menu}`);
+  const stockData = await response.json();
+
+  if (!stockData.success) {
+    showModalStok("Gagal mengambil stok menu.");
+    return;
+  }
+
+  const stokTersedia = stockData.stok;
+  const existingItem = cart.find(item => item.id_menu === id_menu);
+  const jumlahSetelahTambah = existingItem ? existingItem.jumlah + 1 : 1;
+
+  if (jumlahSetelahTambah > stokTersedia) {
+    showModalStok(`Stok tidak mencukupi! Stok tersedia: ${stokTersedia}`);
+    return;
+  }
+
+  if (existingItem) {
+    existingItem.jumlah++;
+  } else {
+    cart.push({ id_menu, nama_menu, harga_satuan, image, jumlah: 1 });
+  }
+
+  saveCart();
+  renderCart();
+  showModalSuccess(`${nama_menu} berhasil ditambahkan ke keranjang.`);
+  performSearch();
+}
+
+function scrollToMenu(menuId) {
+  document.getElementById('searchModal').classList.remove('show');
+  setTimeout(() => {
+    document.getElementById('searchModal').classList.add('hidden');
+  }, 300);
+  
+  const menuSection = document.getElementById('menu');
+  if (menuSection) {
+    menuSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
 }
 </script>
