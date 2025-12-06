@@ -212,6 +212,12 @@ class="flex overflow-x-auto gap-6 scroll-smooth px-10 pb-4 no-scrollbar">
   </div>
 </div>
 
+<!-- POPUP KERANJANG KOSONG -->
+<div id="modalKeranjangKosong" class="fixed top-4 left-1/2 transform -translate-x-1/2 hidden z-50">
+  <div class="bg-red-600 text-white w-80 p-4 rounded-xl shadow-xl text-center animate-fade">
+    <p class="text-sm font-medium">⚠️ Maaf, keranjang Anda masih kosong. Tidak dapat mengirim pesan sekarang!</p>
+  </div>
+</div>
 
   <!-- LAYANAN -->
 <section id="layanan" class="py-20 bg-white">
@@ -906,7 +912,7 @@ function renderCart() {
   totalElement.textContent = `Rp ${total.toLocaleString('id-ID')}`;
   cartCount.textContent = totalItems;
   cartCountMobile.textContent = totalItems;
-  checkoutBtn.disabled = cart.length === 0;
+  // checkoutBtn.disabled = cart.length === 0;
 
   setupQtyButtons();
 }
@@ -915,13 +921,19 @@ function renderCart() {
 renderCart();
 
 
+
 // Checkout
 document.addEventListener('click', (e) => {
-  if (e.target.id === 'checkout-btn' && cart.length > 0) {
-    const total = cart.reduce((sum, item) => sum + item.harga_satuan * item.jumlah, 0);
-    window.location.href = "checkout/checkout.php";
-      }
-    });
+  if (e.target.id === 'checkout-btn') {
+    if (cart.length === 0) {
+      // Tampilkan pop-up keranjang kosong
+      showModalKeranjangKosong();
+    } else {
+      const total = cart.reduce((sum, item) => sum + item.harga_satuan * item.jumlah, 0);
+      window.location.href = "checkout/checkout.php";
+    }
+  }
+});
 
 // Kosongkan Keranjang
 document.addEventListener('click', (e) => {
@@ -956,4 +968,15 @@ function showModalSuccess(pesan) {
   }, 2000);
 }
 
+// Fungsi untuk menampilkan pop-up keranjang kosong
+function showModalKeranjangKosong() {
+  const modal = document.getElementById('modalKeranjangKosong');
+  
+  modal.classList.remove('hidden');
+
+  // Auto close setelah 3 detik
+  setTimeout(() => {
+    modal.classList.add('hidden');
+  }, 3000);
+}
 </script>

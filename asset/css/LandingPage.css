@@ -112,10 +112,8 @@
         .menu-btn-black {
             color: #1f2937;
         }
-        
-
-
-        
+      
+    
   /* Responsive Sidebar Cart */
   #cartSidebar {
     width: 22rem; /* default desktop */
@@ -236,9 +234,6 @@
   backdrop-filter: blur(10px);
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
-
-
-
 
 /* Animasi untuk mobile cart popup */
 #cartPopupContent {
