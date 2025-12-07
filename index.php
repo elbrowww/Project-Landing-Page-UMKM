@@ -21,56 +21,67 @@
   <!-- NAVBAR -->
   <nav class="sticky-nav fixed w-full z-50 top-0 left-0">
     <div class="container mx-auto px-6 py-4 flex items-center justify-between">
-      <div id="logo" class="text-2xl font-bold text-purple transition-colors duration-300">
-        🍴 Dapur Buk Mon
-      </div>
-      <div class="hidden md:flex items-center space-x-8">
-        <a class="text-purple hover:text-sky-100" href="#home">Beranda</a>
-        <a class="text-purple hover:text-sky-100" href="#menu">Menu</a>
-        <a class="text-purple hover:text-sky-100" href="#layanan">Layanan</a>
-        <a class="text-purple hover:text-sky-100" href="#testimoni">Testimoni</a>
-        <a class="text-purple hover:text-sky-100" href="#kontak">Kontak</a>
-        <a class="text-purple hover:text-sky-100" href="#lokasi">Lokasi</a>
-        <a class="text-purple hover:text-sky-100" href="#lokasi">Lokasi</a>
+      <!-- LOGO -->
+    <div id="logo" class="text-2xl font-bold text-purple transition-colors duration-300">
+      🍴 Dapur Buk Mon
+    </div>
 
-<!-- (TOMBOL SEARCH DESKTOP) -->
-<button id="searchBtn" 
-  class="hidden md:flex items-center gap-2 px-4 py-2 rounded-full transition text-white"
-  style="background: linear-gradient(135deg, #7F56D9 0%, #9E77ED 100%);">
-  
-  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-      d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
-  </svg>
+    <!-- MENU DESKTOP -->
+    <div class="hidden md:flex items-center space-x-8">
+      <a class="text-purple hover:text-sky-100" href="#home">Beranda</a>
+      <a class="text-purple hover:text-sky-100" href="#menu">Menu</a>
+      <a class="text-purple hover:text-sky-100" href="#layanan">Layanan</a>
+      <a class="text-purple hover:text-sky-100" href="#testimoni">Testimoni</a>
+      <a class="text-purple hover:text-sky-100" href="#kontak">Kontak</a>
+      <a class="text-purple hover:text-sky-100" href="#lokasi">Lokasi</a>
 
-  <span class="font-medium">Cari Menu</span>
-</button>
+      <!-- SEARCH DESKTOP -->
+      <button id="searchBtn" 
+        class="hidden md:flex items-center gap-2 px-4 py-2 rounded-full transition text-white"
+        style="background: linear-gradient(135deg, #7F56D9 0%, #9E77ED 100%);">
 
-<a class="relative ml-4 flex items-center justify-center hover:scale-105 transition">
-  <div class="bg-purple-100 p-2 rounded-full shadow-sm hover:bg-purple-200 transition">
-    <i class="fa-solid fa-cart-shopping text-purple text-xl"></i>
-  </div>
-  <span id="cart-count"
-        class="absolute -top-1 -right-1 bg-red-500 text-white text-[10px] font-bold px-1.5 rounded-full shadow">0</span>
-</a>
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+        </svg>
+        <span class="font-medium">Cari Menu</span>
+      </button>
 
-
-    <!-- Tombol Menu Mobile -->
-    <div class="flex items-center md:hidden space-x-4">
-      <!-- Icon Keranjang untuk Mobile -->
-      <a class="relative flex items-center justify-center hover:scale-105 transition">
+      <!-- CART DESKTOP -->
+      <a class="relative ml-4 flex items-center justify-center hover:scale-105 transition">
         <div class="bg-purple-100 p-2 rounded-full shadow-sm hover:bg-purple-200 transition">
           <i class="fa-solid fa-cart-shopping text-purple text-xl"></i>
         </div>
-        <span id="cart-count-mobile"
-              class="absolute -top-1 -right-1 bg-red-500 text-white text-[10px] font-bold px-1.5 rounded-full shadow">0</span>
+        <span id="cart-count"
+              class="absolute -top-1 -right-1 bg-red-500 text-white text-[10px] font-bold px-1.5 rounded-full shadow">
+          0
+        </span>
       </a>
-      <!--  (ICON SEARCH MOBILE) -->
-<button id="searchBtnMobile" class="text-purple hover:text-sky-100 transition">
-  <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
-  </svg>
-</button>
+    </div>
+
+    <!-- MENU MOBILE -->
+    <div class="flex items-center md:hidden space-x-4">
+
+      <!-- CART MOBILE -->
+      <a class="relative flex items-center justify-center">
+        <div class="bg-purple-100 p-2 rounded-full shadow-sm">
+          <i class="fa-solid fa-cart-shopping text-purple text-xl"></i>
+        </div>
+        <span id="cart-count-mobile"
+              class="absolute -top-1 -right-1 bg-red-500 text-white text-[10px] font-bold px-1.5 rounded-full shadow">
+          0
+        </span>
+      </a>
+
+      <!-- SEARCH MOBILE -->
+      <button id="searchBtnMobile" class="text-purple">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+        </svg>
+      </button>
+
+      <!-- MENU TOGGLE -->
       <button id="menuBtn" class="text-purple" aria-label="Buka menu">
         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -78,19 +89,19 @@
         </svg>
       </button>
     </div>
+
   </div>
-  
-    
-    
-    <div id="mobileMenu" class="hidden md:hidden bg-purple/90 backdrop-blur-sm px-4 py-4">
-      <a class="block py-2 text-gray-700" href="#home">Beranda</a>
-      <a class="block py-2 text-gray-700" href="#menu">Menu</a>
-      <a class="block py-2 text-gray-700" href="#layanan">Layanan</a>
-      <a class="block py-2 text-gray-700" href="#testimoni">Testimoni</a>
-      <a class="block py-2 text-gray-700" href="#kontak">Kontak</a>
-      <a class="block py-2 text-gray-700" href="#lokasi">Lokasi</a>
-    </div>
-  </nav>
+
+  <!-- DROPDOWN MENU MOBILE -->
+  <div id="mobileMenu" class="hidden md:hidden bg-purple/90 backdrop-blur-sm px-4 py-4">
+    <a class="block py-2 text-white" href="#home">Beranda</a>
+    <a class="block py-2 text-white" href="#menu">Menu</a>
+    <a class="block py-2 text-white" href="#layanan">Layanan</a>
+    <a class="block py-2 text-white" href="#testimoni">Testimoni</a>
+    <a class="block py-2 text-white" href="#kontak">Kontak</a>
+    <a class="block py-2 text-white" href="#lokasi">Lokasi</a>
+  </div>
+</nav>
 
   <!-- HERO -->
   <section id="home" class="gradient-bg min-h-screen flex items-center pt-24">
