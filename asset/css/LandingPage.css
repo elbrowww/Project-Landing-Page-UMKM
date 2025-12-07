@@ -374,3 +374,8 @@
         height: 15px;
     }
 }
+#searchBtn:hover {
+  background: linear-gradient(135deg, #5ba3ff 0%, #8d9db1 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(74, 144, 226, 0.3);
+}
