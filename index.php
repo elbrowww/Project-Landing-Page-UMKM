@@ -84,9 +84,9 @@
       <!-- MENU TOGGLE -->
       <button id="menuBtn" class="text-purple" aria-label="Buka menu">
         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M4 6h16M4 12h16M4 18h16" />
-        </svg>
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+          d="M4 6h16M4 12h16M4 18h16" />
+  </svg>
       </button>
     </div>
 
@@ -94,12 +94,12 @@
 
   <!-- DROPDOWN MENU MOBILE -->
   <div id="mobileMenu" class="hidden md:hidden bg-purple/90 backdrop-blur-sm px-4 py-4">
-    <a class="block py-2 text-white" href="#home">Beranda</a>
-    <a class="block py-2 text-white" href="#menu">Menu</a>
-    <a class="block py-2 text-white" href="#layanan">Layanan</a>
-    <a class="block py-2 text-white" href="#testimoni">Testimoni</a>
-    <a class="block py-2 text-white" href="#kontak">Kontak</a>
-    <a class="block py-2 text-white" href="#lokasi">Lokasi</a>
+    <a class="block py-2 text-black" href="#home">Beranda</a>
+    <a class="block py-2 text-black" href="#menu">Menu</a>
+    <a class="block py-2 text-black" href="#layanan">Layanan</a>
+    <a class="block py-2 text-black" href="#testimoni">Testimoni</a>
+    <a class="block py-2 text-black" href="#kontak">Kontak</a>
+    <a class="block py-2 text-black" href="#lokasi">Lokasi</a>
   </div>
 </nav>
 
