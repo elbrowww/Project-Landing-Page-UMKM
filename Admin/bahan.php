@@ -163,8 +163,10 @@ $result_bahan = $koneksi->query($query_bahan);
             </div>
           </div>
           <div class="mb-3">
-            <label class="form-label">Harga</label>
-            <input type="number" class="form-control" name="harga_beli" id="harga_beli" required min="0">
+            <label class="form-label">Harga Beli</label>
+            <input type="text" class="form-control" name="harga_beli_display" id="harga_beli_display" required placeholder="Contoh: 10.000">
+            <input type="hidden" name="harga_beli" id="harga_beli">
+            <small class="text-muted">Format: 10.000 atau 10000</small>
           </div>
           <div class="mb-3">
             <label class="form-label">Satuan</label>
@@ -181,13 +183,44 @@ $result_bahan = $koneksi->query($query_bahan);
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
 <script>
+// Format angka ke format Rupiah (10000 -> 10.000)
+function formatRupiah(angka) {
+  var number_string = angka.toString().replace(/[^,\d]/g, '');
+  var split = number_string.split(',');
+  var sisa = split[0].length % 3;
+  var rupiah = split[0].substr(0, sisa);
+  var ribuan = split[0].substr(sisa).match(/\d{3}/gi);
+
+  if (ribuan) {
+    separator = sisa ? '.' : '';
+    rupiah += separator + ribuan.join('.');
+  }
+
+  rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
+  return rupiah;
+}
+
+// Event listener untuk input harga beli
+document.getElementById('harga_beli_display').addEventListener('keyup', function(e) {
+  // Format tampilan
+  this.value = formatRupiah(this.value);
+  
+  // Simpan nilai asli (tanpa titik) ke hidden input
+  var nilaiAsli = this.value.replace(/\./g, '');
+  document.getElementById('harga_beli').value = nilaiAsli;
+});
+
 // Fungsi edit bahan
 function editBahan(id, nama, stok, harga, satuan) {
   document.getElementById('modalTitleBahan').innerHTML = '<i class="fas fa-edit"></i> Edit Bahan';
   document.getElementById('id_bahan').value = id;
   document.getElementById('nama_bahan').value = nama;
   document.getElementById('stok').value = stok;
+  
+  // Format harga untuk ditampilkan
+  document.getElementById('harga_beli_display').value = formatRupiah(harga.toString());
   document.getElementById('harga_beli').value = harga;
+  
   document.getElementById('satuan').value = satuan;
   
   var modal = new bootstrap.Modal(document.getElementById('tambahBahanModal'));
@@ -198,6 +231,8 @@ function editBahan(id, nama, stok, harga, satuan) {
 document.getElementById('tambahBahanModal').addEventListener('hidden.bs.modal', function () {
   document.getElementById('bahanForm').reset();
   document.getElementById('id_bahan').value = '';
+  document.getElementById('harga_beli').value = '';
+  document.getElementById('harga_beli_display').value = '';
   document.getElementById('modalTitleBahan').innerHTML = '<i class="fas fa-plus-circle"></i> Tambah Bahan Baru';
 });
 </script>
