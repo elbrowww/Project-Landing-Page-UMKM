@@ -45,23 +45,70 @@ if (isset($_POST['update_pesanan'])) {
   exit();
 }
 
-// Handler untuk update status pesanan di riwayat
+
+// Handler untuk update status pesanan dengan VALIDASI
 if (isset($_POST['update_status_pesanan'])) {
   $id_pesanan = $_POST['id_pesanan'];
-  $status = $_POST['status'];
+  $status_baru = $_POST['status'];
   
-  $query_update_status = "UPDATE transaksi_penjualan SET status=? WHERE id_pesanan=?";
-  $stmt_update_status = $koneksi->prepare($query_update_status);
-  $stmt_update_status->bind_param("ss", $status, $id_pesanan);
+  // Ambil status saat ini dari database
+  $query_cek_status = "SELECT status FROM transaksi_penjualan WHERE id_pesanan = ?";
+  $stmt_cek = $koneksi->prepare($query_cek_status);
+  $stmt_cek->bind_param("s", $id_pesanan);
+  $stmt_cek->execute();
+  $result_cek = $stmt_cek->get_result();
+  $data_cek = $result_cek->fetch_assoc();
+  $status_sekarang = $data_cek['status'];
   
-  if ($stmt_update_status->execute()) {
-    echo "<script>alert('Status pesanan berhasil diupdate!'); window.location.href='riwayat.php?page=riwayat';</script>";
+  // VALIDASI STATUS
+  $allowed = false;
+  $error_message = '';
+  
+  // Jika status sekarang adalah SELESAI atau BATAL, tidak boleh diubah
+  if ($status_sekarang === 'selesai') {
+    $error_message = 'Pesanan yang sudah SELESAI tidak dapat diubah statusnya!';
+  } elseif ($status_sekarang === 'batal') {
+    $error_message = 'Pesanan yang sudah DIBATALKAN tidak dapat diubah statusnya!';
+  } 
+  // Jika status sekarang adalah PROSES, hanya boleh diubah ke SELESAI atau BATAL
+  elseif ($status_sekarang === 'proses') {
+    if ($status_baru === 'selesai' || $status_baru === 'batal') {
+      $allowed = true;
+    } else {
+      $error_message = 'Status PROSES hanya dapat diubah ke SELESAI atau BATAL!';
+    }
+  }
+  // Jika status sekarang adalah PENDING, boleh diubah ke semua status
+  elseif ($status_sekarang === 'pending') {
+    $allowed = true;
+  }
+  
+  // Jika validasi lolos, update status
+  if ($allowed) {
+    $query_update_status = "UPDATE transaksi_penjualan SET status=? WHERE id_pesanan=?";
+    $stmt_update_status = $koneksi->prepare($query_update_status);
+    $stmt_update_status->bind_param("ss", $status_baru, $id_pesanan);
+    
+    if ($stmt_update_status->execute()) {
+      echo "<script>
+        alert('✅ Status pesanan berhasil diupdate!');
+        window.location.href='riwayat.php?page=riwayat';
+      </script>";
+    } else {
+      echo "<script>
+        alert('❌ Gagal mengupdate status!');
+        window.location.href='riwayat.php?page=riwayat';
+      </script>";
+    }
   } else {
-    echo "<script>alert('Gagal mengupdate status!'); window.location.href='riwayat.php?page=riwayat';</script>";
+    // Tampilkan error jika validasi gagal
+    echo "<script>
+      alert('⚠️ VALIDASI GAGAL\\n\\n$error_message');
+      window.location.href='riwayat.php?page=riwayat';
+    </script>";
   }
   exit();
-}
-
+};
 
 // Query untuk mengambil data pesanan dari detail_penjualan
 $query_pesanan = "SELECT * FROM detail_penjualan ORDER BY tgl_pesan DESC";
@@ -176,6 +223,7 @@ $result_riwayat = $koneksi->query($query_riwayat);
         </tbody>
       </table>
 
+
 <!-- Modal Update Status Pesanan -->
 <div class="modal fade" id="updateStatusModal" tabindex="-1">
   <div class="modal-dialog">
@@ -185,28 +233,47 @@ $result_riwayat = $koneksi->query($query_riwayat);
         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
       </div>
       <div class="modal-body p-4">
-        <form method="POST" id="statusForm">
+        
+        <!-- Info Box Status -->
+        <div class="alert alert-info mb-3">
+          <i class="fas fa-info-circle"></i> <strong>Aturan Status:</strong>
+          <ul class="mb-0 mt-2" style="font-size: 0.9em;">
+            <li><strong>Pending</strong> → Bisa diubah ke: Proses, Selesai, Batal</li>
+            <li><strong>Proses</strong> → Bisa diubah ke: Selesai, Batal</li>
+            <li><strong>Selesai</strong> → <span class="text-danger">Tidak bisa diubah lagi</span></li>
+            <li><strong>Batal</strong> → <span class="text-danger">Tidak bisa diubah lagi</span></li>
+          </ul>
+        </div>
+        
+        <form method="POST" id="statusForm" onsubmit="return confirmStatusChange()">
           <input type="hidden" name="id_pesanan" id="status_id_pesanan">
+          
           <div class="mb-3">
             <label class="form-label">Status Pesanan</label>
             <select class="form-select" name="status" id="status_pesanan" required>
-              <option value="pending">Pending</option>
-              <option value="proses">Proses</option>
-              <option value="selesai">Selesai</option>
-              <option value="batal">Batal</option>
+              <option value="pending">🕐 Pending</option>
+              <option value="proses">⚙️ Proses</option>
+              <option value="selesai">✅ Selesai</option>
+              <option value="batal">❌ Batal</option>
             </select>
           </div>
-          <button type="submit" name="update_status_pesanan" class="btn btn-submit">
+          
+          <div class="alert alert-warning" id="warningSelesai" style="display:none;">
+            <i class="fas fa-exclamation-triangle"></i> 
+            <strong>Perhatian!</strong> Status SELESAI tidak dapat diubah lagi setelah disimpan!
+          </div>
+          
+          <div class="alert alert-danger" id="warningBatal" style="display:none;">
+            <i class="fas fa-exclamation-triangle"></i> 
+            <strong>Perhatian!</strong> Status BATAL tidak dapat diubah lagi setelah disimpan!
+          </div>
+          
+          <button type="submit" name="update_status_pesanan" class="btn btn-submit w-100">
             <i class="fas fa-save"></i> Update Status
           </button>
         </form>
       </div>
     </div>
-  </div>
-</div>
-    </div>
-  </div>
-</div>
   </div>
 </div>
 
@@ -255,13 +322,52 @@ function closePopup() {
 }
 
 // Fungsi update status pesanan
+// Fungsi update status pesanan dengan validasi
 function updateStatus(id_pesanan, current_status) {
   document.getElementById('status_id_pesanan').value = id_pesanan;
-  document.getElementById('status_pesanan').value = current_status;
   
+  // Reset semua option dulu
+  const statusSelect = document.getElementById('status_pesanan');
+  const allOptions = statusSelect.querySelectorAll('option');
+  allOptions.forEach(opt => {
+    opt.disabled = false;
+    opt.style.display = 'block';
+  });
+  
+  // Validasi berdasarkan status saat ini
+  if (current_status === 'selesai') {
+    // Jika sudah selesai, tidak bisa diubah ke status lain
+    alert('⚠️ Pesanan yang sudah SELESAI tidak dapat diubah statusnya!');
+    return; // Jangan buka modal
+  }
+  
+  if (current_status === 'batal') {
+    // Jika sudah dibatalkan, tidak bisa diubah
+    alert('⚠️ Pesanan yang sudah DIBATALKAN tidak dapat diubah statusnya!');
+    return;
+  }
+  
+  if (current_status === 'proses') {
+    // Jika dalam proses, hanya bisa jadi selesai atau batal
+    // Disable option pending dan proses
+    statusSelect.querySelector('option[value="pending"]').disabled = true;
+    statusSelect.querySelector('option[value="pending"]').style.display = 'none';
+    statusSelect.querySelector('option[value="proses"]').disabled = true;
+    statusSelect.querySelector('option[value="proses"]').style.display = 'none';
+  }
+  
+  if (current_status === 'pending') {
+    // Jika pending, bisa diubah ke semua status
+    // Tidak ada pembatasan
+  }
+  
+  // Set nilai default ke status saat ini
+  statusSelect.value = current_status;
+  
+  // Buka modal
   var modal = new bootstrap.Modal(document.getElementById('updateStatusModal'));
   modal.show();
-}
+};
 
 // Cek URL parameter untuk navigasi
 window.addEventListener('DOMContentLoaded', function() {
@@ -271,6 +377,38 @@ window.addEventListener('DOMContentLoaded', function() {
     showPage(page);
   }
 });
+
+// Tampilkan warning saat pilih status selesai atau batal
+document.getElementById('status_pesanan').addEventListener('change', function() {
+  const warningSelesai = document.getElementById('warningSelesai');
+  const warningBatal = document.getElementById('warningBatal');
+  
+  // Sembunyikan semua warning dulu
+  warningSelesai.style.display = 'none';
+  warningBatal.style.display = 'none';
+  
+  // Tampilkan warning sesuai pilihan
+  if (this.value === 'selesai') {
+    warningSelesai.style.display = 'block';
+  } else if (this.value === 'batal') {
+    warningBatal.style.display = 'block';
+  }
+});
+
+// Konfirmasi sebelum submit
+function confirmStatusChange() {
+  const status = document.getElementById('status_pesanan').value;
+  
+  if (status === 'selesai') {
+    return confirm('⚠️ KONFIRMASI\n\nAnda yakin ingin mengubah status menjadi SELESAI?\n\nStatus ini TIDAK DAPAT diubah lagi setelah disimpan!');
+  }
+  
+  if (status === 'batal') {
+    return confirm('⚠️ KONFIRMASI\n\nAnda yakin ingin MEMBATALKAN pesanan ini?\n\nStatus ini TIDAK DAPAT diubah lagi setelah disimpan!');
+  }
+  
+  return true;
+}
 </script>
 
 </body>

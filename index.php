@@ -33,7 +33,7 @@
         <a class="text-purple hover:text-sky-100" href="#lokasi">Lokasi</a>
         <a class="text-purple hover:text-sky-100" href="#lokasi">Lokasi</a>
 
-<!-- ✅ TAMBAHKAN INI (TOMBOL SEARCH DESKTOP) -->
+<!-- (TOMBOL SEARCH DESKTOP) -->
 <button id="searchBtn" class="hidden md:flex items-center gap-2 px-4 py-2 bg-white/20 hover:bg-white/30 rounded-full transition text-white">
   <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
