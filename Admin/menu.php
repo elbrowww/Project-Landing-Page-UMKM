@@ -132,7 +132,9 @@ include '../config/CRUD.php';
           </div>
           <div class="mb-3">
             <label class="form-label">Harga</label>
-            <input type="number" class="form-control" name="harga_menu" id="harga_menu" required min="0">
+            <input type="text" class="form-control" name="harga_menu_display" id="harga_menu_display" required placeholder="Contoh: 10.000">
+            <input type="hidden" name="harga_menu" id="harga_menu">
+            <small class="text-muted">Format: 10.000 atau 10000</small>
           </div>
           <div class="mb-3">
             <label class="form-label">Deskripsi</label>
@@ -170,6 +172,33 @@ editMenu(
 <?php endif; ?>
 
 <script>
+// Format angka ke format Rupiah (10000 -> 10.000)
+function formatRupiah(angka) {
+  var number_string = angka.toString().replace(/[^,\d]/g, '');
+  var split = number_string.split(',');
+  var sisa = split[0].length % 3;
+  var rupiah = split[0].substr(0, sisa);
+  var ribuan = split[0].substr(sisa).match(/\d{3}/gi);
+
+  if (ribuan) {
+    separator = sisa ? '.' : '';
+    rupiah += separator + ribuan.join('.');
+  }
+
+  rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
+  return rupiah;
+}
+
+// Event listener untuk input harga
+document.getElementById('harga_menu_display').addEventListener('keyup', function(e) {
+  // Format tampilan
+  this.value = formatRupiah(this.value);
+  
+  // Simpan nilai asli (tanpa titik) ke hidden input
+  var nilaiAsli = this.value.replace(/\./g, '');
+  document.getElementById('harga_menu').value = nilaiAsli;
+});
+
 // Fungsi untuk menampilkan halaman
 function showPage(pageName) {
   // Sembunyikan semua halaman
@@ -195,7 +224,11 @@ function editMenu(id, nama, stok, harga, deskripsi, gambar) {
   document.getElementById('id_menu').value = id;
   document.getElementById('nama_menu').value = nama;
   document.getElementById('stok_menu').value = stok;
+  
+  // Format harga untuk ditampilkan
+  document.getElementById('harga_menu_display').value = formatRupiah(harga.toString());
   document.getElementById('harga_menu').value = harga;
+  
   document.getElementById('deskripsi').value = deskripsi;
   
   if (gambar) {
@@ -213,6 +246,8 @@ function editMenu(id, nama, stok, harga, deskripsi, gambar) {
 document.getElementById('tambahMenuModal').addEventListener('hidden.bs.modal', function () {
   document.getElementById('menuForm').reset();
   document.getElementById('id_menu').value = '';
+  document.getElementById('harga_menu').value = '';
+  document.getElementById('harga_menu_display').value = '';
   document.getElementById('currentImage').style.display = 'none';
   document.getElementById('modalTitle').innerHTML = '<i class="fas fa-plus-circle"></i> Tambah Menu Baru';
 });
@@ -229,9 +264,6 @@ function showDeletePopup(id, nama) {
 function closePopup() {
   document.getElementById('popupConfirm').style.display = "none";
 }
-
-
-
 </script>
 
 </body>
