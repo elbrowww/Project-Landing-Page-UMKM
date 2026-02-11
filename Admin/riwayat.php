@@ -234,16 +234,6 @@ $result_riwayat = $koneksi->query($query_riwayat);
       </div>
       <div class="modal-body p-4">
         
-        <!-- Info Box Status -->
-        <div class="alert alert-info mb-3">
-          <i class="fas fa-info-circle"></i> <strong>Aturan Status:</strong>
-          <ul class="mb-0 mt-2" style="font-size: 0.9em;">
-            <li><strong>Pending</strong> → Bisa diubah ke: Proses, Selesai, Batal</li>
-            <li><strong>Proses</strong> → Bisa diubah ke: Selesai, Batal</li>
-            <li><strong>Selesai</strong> → <span class="text-danger">Tidak bisa diubah lagi</span></li>
-            <li><strong>Batal</strong> → <span class="text-danger">Tidak bisa diubah lagi</span></li>
-          </ul>
-        </div>
         
         <form method="POST" id="statusForm" onsubmit="return confirmStatusChange()">
           <input type="hidden" name="id_pesanan" id="status_id_pesanan">
@@ -251,10 +241,10 @@ $result_riwayat = $koneksi->query($query_riwayat);
           <div class="mb-3">
             <label class="form-label">Status Pesanan</label>
             <select class="form-select" name="status" id="status_pesanan" required>
-              <option value="pending">🕐 Pending</option>
-              <option value="proses">⚙️ Proses</option>
-              <option value="selesai">✅ Selesai</option>
-              <option value="batal">❌ Batal</option>
+              <option value="pending">Pending</option>
+              <option value="proses">Proses</option>
+              <option value="selesai">Selesai</option>
+              <option value="batal">Batal</option>
             </select>
           </div>
           
