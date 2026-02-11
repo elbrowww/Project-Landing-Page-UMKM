@@ -200,7 +200,7 @@ body {
 
     .slider-container {
       position: relative;
-      overflow: hidden;
+      overflow: visible;
       margin: 0 40px;
     }
 
@@ -209,6 +209,9 @@ body {
       gap: 20px;
       transition: transform 0.5s ease;
       padding: 10px 0;
+      overflow-x: auto;       
+      -webkit-overflow-scrolling: touch; 
+      scroll-behavior: smooth; 
     }
 
     .menu-card {
@@ -297,9 +300,16 @@ body {
       cursor: pointer;
       box-shadow: 0 4px 15px rgba(0,0,0,0.15);
       transition: all 0.3s ease;
-      z-index: 10;
+      z-index: 999999;
       color: var(--dark);
     }
+
+    /* hide button di mobile */
+    @media (max-width: 768px) {
+    .slider-btn {
+      display: none; 
+    }
+  }
 
     .slider-btn:hover {
       background: var(--primary);
@@ -319,6 +329,11 @@ body {
       background: white;
       color: var(--dark);
       transform: translateY(-50%);
+    }
+    
+    /* SEMBUNYIKAN SCROLLBAR */
+    .slider-wrapper::-webkit-scrollbar {
+    display: none;  /* atau width: 0; */
     }
 
     /* No Data */

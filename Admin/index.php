@@ -203,60 +203,46 @@ $result_terlaris = $koneksi->query($query_terlaris);
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   
   <script>
-    let currentSlide = 0;
-    const slider = document.getElementById('menuSlider');
-    const cards = slider?.querySelectorAll('.menu-card');
-    const totalCards = cards?.length || 0;
+  const slider = document.getElementById('menuSlider');
+  const cards = slider?.querySelectorAll('.menu-card');
+  
+  function slideMenu(direction) {
+    if (!slider || !cards?.length) return;
     
-    // Menentukan jumlah card yang terlihat berdasarkan lebar layar
-    function getVisibleCards() {
-      const width = window.innerWidth;
-      if (width >= 1200) return 4;
-      if (width >= 992) return 3;
-      if (width >= 768) return 2;
-      return 1;
+    const cardWidth = cards[0].offsetWidth;
+    const gap = 20;
+    const scrollAmount = cardWidth + gap;
+    
+    if (direction === 'prev') {
+      slider.scrollLeft = Math.max(0, slider.scrollLeft - scrollAmount);
+    } else {
+      const maxScroll = slider.scrollWidth - slider.clientWidth;
+      slider.scrollLeft = Math.min(maxScroll, slider.scrollLeft + scrollAmount);
     }
+  }
+
+  // Optional: Update disabled state buttons
+  function updateButtons() {
+    const prevBtn = document.querySelector('.slider-btn.prev');
+    const nextBtn = document.querySelector('.slider-btn.next');
     
-    function slideMenu(direction) {
-      if (!slider || totalCards === 0) return;
-      
-      const visibleCards = getVisibleCards();
-      const maxSlide = Math.max(0, totalCards - visibleCards);
-      
-      if (direction === 'next' && currentSlide < maxSlide) {
-        currentSlide++;
-      } else if (direction === 'prev' && currentSlide > 0) {
-        currentSlide--;
-      }
-      
-      const cardWidth = cards[0].offsetWidth;
-      const gap = 20;
-      const offset = currentSlide * (cardWidth + gap);
-      
-      slider.style.transform = `translateX(-${offset}px)`;
-      updateButtons();
-    }
+    if (!slider || !prevBtn || !nextBtn) return;
     
-    function updateButtons() {
-      const visibleCards = getVisibleCards();
-      const maxSlide = Math.max(0, totalCards - visibleCards);
-      
-      const prevBtn = document.querySelector('.slider-btn.prev');
-      const nextBtn = document.querySelector('.slider-btn.next');
-      
-      if (prevBtn) prevBtn.disabled = currentSlide === 0;
-      if (nextBtn) nextBtn.disabled = currentSlide >= maxSlide;
-    }
-    
-    // Reset slide saat resize
+    prevBtn.disabled = slider.scrollLeft <= 5;
+    nextBtn.disabled = slider.scrollLeft >= (slider.scrollWidth - slider.clientWidth - 5);
+  }
+
+  // Event listeners
+  if (slider) {
+    slider.addEventListener('scroll', updateButtons);
     window.addEventListener('resize', () => {
-      currentSlide = 0;
-      if (slider) slider.style.transform = 'translateX(0)';
-      updateButtons();
+      // Update button state after resize
+      setTimeout(updateButtons, 100);
     });
     
-    // Initialize
-    updateButtons();
-  </script>
+    // Initial button state
+    setTimeout(updateButtons, 100);
+  }
+</script>
 </body>
 </html>
